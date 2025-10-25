@@ -79,6 +79,12 @@ func main() {
 	http.HandleFunc("/decrement", decrementHandler)
 	http.HandleFunc("/quote", rateLimitMiddleware(quoteHandler, 5)) // 5 requests per minute
 	http.HandleFunc("/ws", wsHandler)
+	http.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/robots.txt")
+	})
+	http.HandleFunc("/sitemap.xml", func(w http.ResponseWriter, r *http.Request) {
+		http.ServeFile(w, r, "static/sitemap.xml")
+	})
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 
 	// Get port from environment or use default
