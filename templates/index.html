@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{.Name}}'s Personal Website</title>
+</head>
+<body>
+    <h1>{{.Name}}</h1>
+
+    <nav>
+        <a href="#about">About</a> |
+        <a href="#counter">Counter</a> |
+        <a href="#projects">Projects</a> |
+        <a href="#resume">Resume</a> |
+        <a href="#quotes">Quotes</a>
+    </nav>
+
+    <hr>
+
+    <h2 id="about">About</h2>
+    <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="200">
+    <h3>Wyat</h3>
+    <p><strong>Full Stack Developer</strong></p>
+    <p>I always tell people that websites should just be lists.</p>
+
+    <h4>Experience</h4>
+    <p>
+        <strong>Waggoner Financial</strong> - Software Engineer (Jun 2024 – Present)<br>
+        Leading a 4-engineer squad building enterprise fintech solutions with TypeScript, NestJS, GraphQL, Next.js, and React Native.
+        Designed full-stack architecture, built CI/CD pipelines, and improved performance with Redis caching and query optimization.
+    </p>
+    <p>
+        <strong>Brass Raven</strong> - Co-founder (Oct 2022 – Present)<br>
+        Co-founded Audioparrot, an audiobook creation platform. Built Python Flask microservices with RabbitMQ and Redis,
+        improving processing speed by 500%. Secured 20 clients and strategic partnerships.
+    </p>
+    <p>
+        <strong>State of Michigan – DNR</strong> - Student Software Developer (May 2023 – Jun 2024)<br>
+        Developed Angular/.NET production application serving 500+ monthly users. Automated legacy data migration with SSIS and SQL.
+    </p>
+
+    <hr>
+
+    <h2>Webhook Counter</h2>
+    <p>Current count: <strong id="counter">{{.WebhookCount}}</strong></p>
+    <button id="increment-btn">Increment</button>
+    <button id="decrement-btn">Decrement</button>
+
+    <hr>
+
+    <h2 id="projects">GitHub Repositories</h2>
+    {{if .GitHubRepos}}
+        <ul>
+        {{range .GitHubRepos}}
+            <li>
+                <strong><a href="{{.HTMLURL}}" target="_blank">{{.Name}}</a></strong>
+                {{if .Description}}- {{.Description}}{{end}}
+                {{if .Language}}<br>Language: {{.Language}}{{end}}
+                {{if .StargazersCount}}<br>Stars: {{.StargazersCount}}{{end}}
+            </li>
+        {{end}}
+        </ul>
+    {{else}}
+        <p>No repositories found or unable to fetch repositories.</p>
+    {{end}}
+
+    <hr>
+
+    <h2 id="resume">Resume</h2>
+    <p><a href="/static/resume.pdf" target="_blank">Download Resume (PDF)</a></p>
+
+    <hr>
+
+    <h2 id="quotes">Quotes</h2>
+
+    <h3>Leave a Quote</h3>
+    <form action="/quote" method="POST">
+        <p>
+            <label for="name">Name (optional):</label><br>
+            <input type="text" id="name" name="name" size="40">
+        </p>
+        <p>
+            <label for="quote">Quote:</label><br>
+            <textarea id="quote" name="quote" rows="4" cols="50" required></textarea>
+        </p>
+        <button type="submit">Submit Quote</button>
+    </form>
+
+    <h3>All Quotes</h3>
+    {{if .Quotes}}
+        {{range .Quotes}}
+            <div style="border: 1px solid black; padding: 10px; margin: 10px 0;">
+                <p><strong><i>{{.Name}}</i></strong> - <span class="timestamp" data-time="{{.Timestamp.Format "2006-01-02T15:04:05Z07:00"}}">{{.Timestamp.Format "Jan 02, 2006 at 3:04 PM"}}</span></p>
+                <p>{{.Quote}}</p>
+            </div>
+        {{end}}
+    {{else}}
+        <p>No quotes yet. Be the first to quote!</p>
+    {{end}}
+
+    <hr>
+
+    <p><small>Page views: {{.PageViewCount}}</small></p>
+
+    <script>
+        // Convert timestamps to user's local timezone
+        document.querySelectorAll('.timestamp').forEach(function(el) {
+            const timeStr = el.getAttribute('data-time');
+            if (timeStr) {
+                const date = new Date(timeStr);
+                const options = {
+                    year: 'numeric',
+                    month: 'short',
+                    day: '2-digit',
+                    hour: 'numeric',
+                    minute: '2-digit',
+                    hour12: true
+                };
+                el.textContent = date.toLocaleString('en-US', options);
+            }
+        });
+
+        // WebSocket connection for real-time counter updates
+        const counterEl = document.getElementById('counter');
+        const incrementBtn = document.getElementById('increment-btn');
+        const decrementBtn = document.getElementById('decrement-btn');
+
+        let ws;
+        let reconnectTimeout;
+        let pendingRequests = 0; // Track pending optimistic updates
+        let lastServerCount = parseInt(counterEl.textContent); // Track last confirmed value
+
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = protocol + '//' + window.location.host + '/ws';
+
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = function() {
+                console.log('WebSocket connected');
+            };
+
+            ws.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                lastServerCount = data.count;
+
+                // Only update if we don't have pending requests
+                // This prevents overwriting optimistic updates during lag
+                if (pendingRequests === 0) {
+                    counterEl.textContent = data.count;
+                }
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+
+            ws.onclose = function() {
+                console.log('WebSocket disconnected, reconnecting...');
+                reconnectTimeout = setTimeout(connectWebSocket, 2000);
+            };
+        }
+
+        connectWebSocket();
+
+        // Optimistic UI updates with AJAX
+        incrementBtn.addEventListener('click', function() {
+            // Optimistically update UI
+            const currentCount = parseInt(counterEl.textContent);
+            counterEl.textContent = currentCount + 1;
+            pendingRequests++;
+
+            // Send request to server
+            fetch('/increment', { method: 'POST' })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    pendingRequests--;
+                    lastServerCount = data.count;
+                    // Update to server value if no more pending requests
+                    if (pendingRequests === 0) {
+                        counterEl.textContent = data.count;
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error incrementing:', error);
+                    pendingRequests--;
+                    // Revert on error
+                    if (pendingRequests === 0) {
+                        counterEl.textContent = lastServerCount;
+                    }
+                });
+        });
+
+        decrementBtn.addEventListener('click', function() {
+            // Optimistically update UI
+            const currentCount = parseInt(counterEl.textContent);
+            counterEl.textContent = currentCount - 1;
+            pendingRequests++;
+
+            // Send request to server
+            fetch('/decrement', { method: 'POST' })
+                .then(function(response) {
+                    return response.json();
+                })
+                .then(function(data) {
+                    pendingRequests--;
+                    lastServerCount = data.count;
+                    // Update to server value if no more pending requests
+                    if (pendingRequests === 0) {
+                        counterEl.textContent = data.count;
+                    }
+                })
+                .catch(function(error) {
+                    console.error('Error decrementing:', error);
+                    pendingRequests--;
+                    // Revert on error
+                    if (pendingRequests === 0) {
+                        counterEl.textContent = lastServerCount;
+                    }
+                });
+        });
+    </script>
+        <footer>
+            <p>Copyright &copy; 2025 Wyat</p>
+          <p>Inspired by <a href="https://motherfuckingwebsite.com/">https://motherfuckingwebsite.com/</a> and <a href="https://justfuckingusehtml.com/">https://justfuckingusehtml.com/</a>.</p>
+
+        </footer>
+</body>
+</html>
