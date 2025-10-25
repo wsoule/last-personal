@@ -70,6 +70,21 @@
     </script>
 
     <style>
+        /* Accessible touch targets for mobile */
+        a, button, input[type="submit"] {
+            display: inline-block;
+            min-height: 48px;
+            padding: 12px 16px;
+            margin: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type="text"], textarea {
+            min-height: 48px;
+            padding: 12px;
+            box-sizing: border-box;
+        }
+
         @media (prefers-color-scheme: dark) {
             body {
                 background-color: #1a1a1a;
@@ -104,7 +119,11 @@
     <hr>
 
     <h2 id="about">About</h2>
-    <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="200">
+    <picture>
+        <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
+        <source srcset="/static/headshot.jpg 1x, /static/headshot-2x.jpg 2x" type="image/jpeg">
+        <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="200" height="300">
+    </picture>
     <h3>Wyat</h3>
     <p><strong>Full Stack Developer</strong></p>
     <p>I always tell people that websites should just be lists.</p>
