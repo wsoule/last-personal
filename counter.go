@@ -42,6 +42,17 @@ func initializeCounters() {
 	if err != nil {
 		log.Println("Error initializing pageview counter:", err)
 	}
+
+	// Initialize total clicks counter
+	_, err = countersCollection.UpdateOne(
+		ctx,
+		bson.M{"_id": "totalClicks"},
+		bson.M{"$setOnInsert": bson.M{"count": 0}},
+		options.Update().SetUpsert(true),
+	)
+	if err != nil {
+		log.Println("Error initializing total clicks counter:", err)
+	}
 }
 
 // incrementHandler handles increment requests
@@ -54,30 +65,47 @@ func incrementHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	countersCollection := db.Collection("counters")
 
-	_, err := countersCollection.UpdateOne(
+	// Atomic increment and get updated value in one operation
+	var webhookCounter Counter
+	err := countersCollection.FindOneAndUpdate(
 		ctx,
 		bson.M{"_id": "webhook"},
 		bson.M{"$inc": bson.M{"count": 1}},
-	)
+		options.FindOneAndUpdate().SetReturnDocument(options.After),
+	).Decode(&webhookCounter)
 	if err != nil {
 		http.Error(w, "Error incrementing counter", http.StatusInternalServerError)
 		return
 	}
 
-	// Get updated counter value
-	var webhookCounter Counter
-	err = countersCollection.FindOne(ctx, bson.M{"_id": "webhook"}).Decode(&webhookCounter)
+	// Async increment total clicks counter (non-blocking)
+	go func() {
+		countersCollection.FindOneAndUpdate(
+			context.Background(),
+			bson.M{"_id": "totalClicks"},
+			bson.M{"$inc": bson.M{"count": 1}},
+			options.FindOneAndUpdate().SetReturnDocument(options.After),
+		)
+	}()
+
+	// Get total clicks for broadcast
+	var totalClicksCounter Counter
+	err = countersCollection.FindOne(ctx, bson.M{"_id": "totalClicks"}).Decode(&totalClicksCounter)
 	if err != nil {
-		http.Error(w, "Error getting counter", http.StatusInternalServerError)
-		return
+		log.Println("Error getting total clicks:", err)
+		totalClicksCounter.Count = 0
 	}
 
 	// Broadcast to all WebSocket clients
-	hub.broadcast <- CounterUpdate{Count: webhookCounter.Count}
+	update := CounterUpdate{
+		Count:       webhookCounter.Count,
+		TotalClicks: totalClicksCounter.Count,
+	}
+	hub.broadcast <- update
 
 	// Return JSON response
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(CounterUpdate{Count: webhookCounter.Count})
+	json.NewEncoder(w).Encode(update)
 }
 
 // decrementHandler handles decrement requests
@@ -90,28 +118,45 @@ func decrementHandler(w http.ResponseWriter, r *http.Request) {
 	ctx := context.Background()
 	countersCollection := db.Collection("counters")
 
-	_, err := countersCollection.UpdateOne(
+	// Atomic decrement and get updated value in one operation
+	var webhookCounter Counter
+	err := countersCollection.FindOneAndUpdate(
 		ctx,
 		bson.M{"_id": "webhook"},
 		bson.M{"$inc": bson.M{"count": -1}},
-	)
+		options.FindOneAndUpdate().SetReturnDocument(options.After),
+	).Decode(&webhookCounter)
 	if err != nil {
 		http.Error(w, "Error decrementing counter", http.StatusInternalServerError)
 		return
 	}
 
-	// Get updated counter value
-	var webhookCounter Counter
-	err = countersCollection.FindOne(ctx, bson.M{"_id": "webhook"}).Decode(&webhookCounter)
+	// Async increment total clicks counter (non-blocking)
+	go func() {
+		countersCollection.FindOneAndUpdate(
+			context.Background(),
+			bson.M{"_id": "totalClicks"},
+			bson.M{"$inc": bson.M{"count": 1}},
+			options.FindOneAndUpdate().SetReturnDocument(options.After),
+		)
+	}()
+
+	// Get total clicks for broadcast
+	var totalClicksCounter Counter
+	err = countersCollection.FindOne(ctx, bson.M{"_id": "totalClicks"}).Decode(&totalClicksCounter)
 	if err != nil {
-		http.Error(w, "Error getting counter", http.StatusInternalServerError)
-		return
+		log.Println("Error getting total clicks:", err)
+		totalClicksCounter.Count = 0
 	}
 
 	// Broadcast to all WebSocket clients
-	hub.broadcast <- CounterUpdate{Count: webhookCounter.Count}
+	update := CounterUpdate{
+		Count:       webhookCounter.Count,
+		TotalClicks: totalClicksCounter.Count,
+	}
+	hub.broadcast <- update
 
 	// Return JSON response
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(CounterUpdate{Count: webhookCounter.Count})
+	json.NewEncoder(w).Encode(update)
 }

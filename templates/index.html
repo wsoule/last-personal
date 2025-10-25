@@ -170,6 +170,7 @@
     <p>Current count: <strong id="counter">{{.WebhookCount}}</strong></p>
     <button id="decrement-btn">-</button>
     <button id="increment-btn">+</button>
+    <p><small>Total clicks: <span id="total-clicks">{{.TotalClicks}}</span></small></p>
 
     <hr>
 
@@ -247,6 +248,7 @@
 
         // WebSocket connection for real-time counter updates
         const counterEl = document.getElementById('counter');
+        const totalClicksEl = document.getElementById('total-clicks');
         const incrementBtn = document.getElementById('increment-btn');
         const decrementBtn = document.getElementById('decrement-btn');
 
@@ -269,10 +271,15 @@
                 const data = JSON.parse(event.data);
                 lastServerCount = data.count;
 
-                // Only update if we don't have pending requests
+                // Only update counter if we don't have pending requests
                 // This prevents overwriting optimistic updates during lag
                 if (pendingRequests === 0) {
                     counterEl.textContent = data.count;
+                }
+
+                // Always update total clicks (no optimistic update for this)
+                if (data.totalClicks !== undefined) {
+                    totalClicksEl.textContent = data.totalClicks;
                 }
             };
 

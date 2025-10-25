@@ -36,6 +36,7 @@ type PageData struct {
 	Name          string
 	WebhookCount  int
 	PageViewCount int
+	TotalClicks   int
 	Quotes        []Quote
 	GitHubRepos   []GitHubRepo
 }
@@ -47,9 +48,14 @@ func main() {
 		mongoURI = "mongodb://localhost:27017"
 	}
 
-	// Connect to MongoDB
+	// Connect to MongoDB with connection pooling for concurrency
 	var err error
-	client, err = mongo.Connect(context.Background(), options.Client().ApplyURI(mongoURI))
+	clientOptions := options.Client().
+		ApplyURI(mongoURI).
+		SetMaxPoolSize(100).    // Max 100 concurrent connections
+		SetMinPoolSize(10)       // Keep 10 warm connections
+
+	client, err = mongo.Connect(context.Background(), clientOptions)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -133,6 +139,14 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		pageViewCounter.Count = 0
 	}
 
+	// Get total clicks counter
+	var totalClicksCounter Counter
+	err = countersCollection.FindOne(ctx, bson.M{"_id": "totalClicks"}).Decode(&totalClicksCounter)
+	if err != nil {
+		log.Println("Error getting total clicks counter:", err)
+		totalClicksCounter.Count = 0
+	}
+
 	// Get quotes
 	quotesCollection := db.Collection("quotes")
 	cursor, err := quotesCollection.Find(ctx, bson.M{}, options.Find().SetSort(bson.D{{Key: "timestamp", Value: -1}}))
@@ -150,6 +164,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		Name:          "Wyat",
 		WebhookCount:  webhookCounter.Count,
 		PageViewCount: pageViewCounter.Count,
+		TotalClicks:   totalClicksCounter.Count,
 		Quotes:        quotes,
 		GitHubRepos:   repos,
 	}

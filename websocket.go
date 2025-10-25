@@ -27,7 +27,8 @@ type Hub struct {
 
 // CounterUpdate represents a counter value update
 type CounterUpdate struct {
-	Count int `json:"count"`
+	Count       int `json:"count"`
+	TotalClicks int `json:"totalClicks"`
 }
 
 // NewHub creates a new WebSocket hub
@@ -85,14 +86,20 @@ func wsHandler(w http.ResponseWriter, r *http.Request) {
 	// Register the new client
 	hub.register <- conn
 
-	// Send current counter value to new client
+	// Send current counter values to new client
 	ctx := context.Background()
 	countersCollection := db.Collection("counters")
+
 	var webhookCounter Counter
-	err = countersCollection.FindOne(ctx, bson.M{"_id": "webhook"}).Decode(&webhookCounter)
-	if err == nil {
-		conn.WriteJSON(CounterUpdate{Count: webhookCounter.Count})
-	}
+	var totalClicksCounter Counter
+
+	countersCollection.FindOne(ctx, bson.M{"_id": "webhook"}).Decode(&webhookCounter)
+	countersCollection.FindOne(ctx, bson.M{"_id": "totalClicks"}).Decode(&totalClicksCounter)
+
+	conn.WriteJSON(CounterUpdate{
+		Count:       webhookCounter.Count,
+		TotalClicks: totalClicksCounter.Count,
+	})
 
 	// Keep connection alive and handle cleanup
 	defer func() {
