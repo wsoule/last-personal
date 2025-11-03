@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"encoding/json"
 	"fmt"
@@ -8,8 +9,11 @@ import (
 	"log"
 	"net/http"
 	"os"
+	"path/filepath"
+	"strings"
 	"time"
 
+	"github.com/yuin/goldmark"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -39,6 +43,18 @@ type PageData struct {
 	TotalClicks   int
 	Quotes        []Quote
 	GitHubRepos   []GitHubRepo
+}
+
+// BlogInfo represents a blog post listing
+type BlogInfo struct {
+	Title    string
+	Filename string
+}
+
+// BlogPageData represents the data passed to individual blog pages
+type BlogPageData struct {
+	Title   string
+	Content template.HTML
 }
 
 func main() {
@@ -85,6 +101,8 @@ func main() {
 	http.HandleFunc("/decrement", decrementHandler)
 	http.HandleFunc("/quote", rateLimitMiddleware(quoteHandler, 5)) // 5 requests per minute
 	http.HandleFunc("/ws", wsHandler)
+	http.HandleFunc("/blogs", blogsHandler)
+	http.HandleFunc("/blog/", blogHandler)
 	http.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "static/robots.txt")
 	})
@@ -208,4 +226,95 @@ func getGitHubRepos(username string) []GitHubRepo {
 	}
 
 	return repos
+}
+
+// blogsHandler lists all blog posts
+func blogsHandler(w http.ResponseWriter, r *http.Request) {
+	files, err := filepath.Glob("blogs/*.md")
+	if err != nil {
+		http.Error(w, "Error reading blogs", http.StatusInternalServerError)
+		return
+	}
+
+	var blogs []BlogInfo
+	for _, file := range files {
+		// Read first line as title
+		content, err := os.ReadFile(file)
+		if err != nil {
+			continue
+		}
+
+		lines := strings.Split(string(content), "\n")
+		title := "Untitled"
+		for _, line := range lines {
+			line = strings.TrimSpace(line)
+			if strings.HasPrefix(line, "#") {
+				title = strings.TrimSpace(strings.TrimPrefix(line, "#"))
+				break
+			}
+		}
+
+		filename := strings.TrimSuffix(filepath.Base(file), ".md")
+		blogs = append(blogs, BlogInfo{
+			Title:    title,
+			Filename: filename,
+		})
+	}
+
+	data := struct {
+		Blogs []BlogInfo
+	}{
+		Blogs: blogs,
+	}
+
+	err = templates.ExecuteTemplate(w, "blogs.html", data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// blogHandler displays an individual blog post
+func blogHandler(w http.ResponseWriter, r *http.Request) {
+	// Extract filename from URL
+	filename := strings.TrimPrefix(r.URL.Path, "/blog/")
+	if filename == "" {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Read markdown file
+	filepath := filepath.Join("blogs", filename+".md")
+	content, err := os.ReadFile(filepath)
+	if err != nil {
+		http.NotFound(w, r)
+		return
+	}
+
+	// Parse title from first heading
+	lines := strings.Split(string(content), "\n")
+	title := "Blog Post"
+	for _, line := range lines {
+		line = strings.TrimSpace(line)
+		if strings.HasPrefix(line, "#") {
+			title = strings.TrimSpace(strings.TrimPrefix(line, "#"))
+			break
+		}
+	}
+
+	// Convert markdown to HTML
+	var buf bytes.Buffer
+	if err := goldmark.Convert(content, &buf); err != nil {
+		http.Error(w, "Error converting markdown", http.StatusInternalServerError)
+		return
+	}
+
+	data := BlogPageData{
+		Title:   title,
+		Content: template.HTML(buf.String()),
+	}
+
+	err = templates.ExecuteTemplate(w, "blog.html", data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
 }

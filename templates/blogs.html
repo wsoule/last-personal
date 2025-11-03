@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs - Wyat</title>
+</head>
+<body>
+    <h1>Blogs</h1>
+
+    <nav>
+        <a href="/">Home</a>
+    </nav>
+
+    <hr>
+
+    <h2>All Blog Posts</h2>
+    {{if .Blogs}}
+        <ul>
+        {{range .Blogs}}
+            <li>
+                <a href="/blog/{{.Filename}}">{{.Title}}</a>
+            </li>
+        {{end}}
+        </ul>
+    {{else}}
+        <p>No blog posts yet.</p>
+    {{end}}
+</body>
+</html>
