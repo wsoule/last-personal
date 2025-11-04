@@ -34,7 +34,7 @@ I would like to learn more about Go, it is similar, but close to Typescript so i
 # List
 ### Programming
 - learn infrastructure
-   - ~~build a microservices architecture~~
+   - DONE ~~build a microservices architecture~~
    - create a mini orchestrator
 - build a git clone
 

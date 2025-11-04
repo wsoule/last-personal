@@ -1,9 +1,10 @@
 # List
 ### Programming
 - learn infrastructure
-   -  <b>build a microservices architecture</b>
+   -  DONE build a microservices architecture
    - create a mini orchestrator
 - build a git clone
+- contribute to an open source project
 
 ### Physical
 - Handstand 1 minute
