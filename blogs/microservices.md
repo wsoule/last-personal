@@ -32,7 +32,6 @@ It was a cool project, very small - i learned about gateways, reverse proxy, int
 I would like to learn more about Go, it is similar, but close to Typescript so it is not too hard to understand.
 
 ## List
-# List
 ### Programming
 - [ ] learn infrastructure
    - [X] build a microservices architecture
