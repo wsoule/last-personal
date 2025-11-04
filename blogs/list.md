@@ -1,7 +1,7 @@
 # List
 ### Programming
 - learn infrastructure
-   - ~~build a microservices architecture~~
+   -  <b>build a microservices architecture</b>
    - create a mini orchestrator
 - build a git clone
 
@@ -19,3 +19,5 @@ this is just turing into a damn bucket list...
 ### Misc
 - Learn about renewable energy, costs, etc.
 
+
+okay well the styles dont work on this, sadly.
