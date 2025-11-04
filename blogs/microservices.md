@@ -31,25 +31,25 @@ Then i have a api-gateway that routes the requests to the correct service.
 It was a cool project, very small - i learned about gateways, reverse proxy, internal networks, a little about goroutines (for startup and gentle shutdown of each service).
 I would like to learn more about Go, it is similar, but close to Typescript so it is not too hard to understand.
 
-## List
+# List
 ### Programming
-- [ ] learn infrastructure
-   - [X] build a microservices architecture
-   - [ ] create a mini orchestrator
-- [ ] build a git clone
+- learn infrastructure
+   - ~~build a microservices architecture~~
+   - create a mini orchestrator
+- build a git clone
 
 ### Physical
-- [ ] Handstand 1 minute
-- [ ] Run a marathon
+- Handstand 1 minute
+- Run a marathon
 this is just turing into a damn bucket list...
 
 ### Tech
-- [ ] Create a VPS
-   - [ ] NAS
-   - [ ] Email host
-- [ ] Linux
+- Create a VPS
+   - NAS
+   - Email host
+- Linux
 
 ### Misc
-- [ ] Learn about renewable energy, costs, etc.
+- Learn about renewable energy, costs, etc.
 
 
