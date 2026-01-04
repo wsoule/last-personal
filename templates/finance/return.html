@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Total Return Calculator - Wyat</title>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</head>
+<body>
+    <header>
+        <span class="prompt">wyat@site:~/finance$</span>
+        <nav hx-boost="true">
+            <a href="/">[home]</a>
+            <a href="/blogs">[blogs]</a>
+            <a href="/finance">[finance]</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="box">
+            <h1>Total Return</h1>
+            <p class="text-dim">$ ./return --calculate</p>
+
+            <form hx-post="/api/return-calc" hx-target="#result">
+                <div class="form-row">
+                    <label>initial:</label>
+                    <input type="number" name="initialInvestment" placeholder="1000" step="0.01" required>
+                </div>
+                <div class="form-row">
+                    <label>final:</label>
+                    <input type="number" name="finalValue" placeholder="1500" step="0.01" required>
+                </div>
+                <div class="form-row">
+                    <label>years:</label>
+                    <input type="number" name="years" placeholder="5" step="0.1" required>
+                </div>
+                <button type="submit">[execute]</button>
+            </form>
+
+            <div id="result"></div>
+        </section>
+
+        <p><a href="/finance">[← back]</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Wyat</p>
+    </footer>
+</body>
+</html>

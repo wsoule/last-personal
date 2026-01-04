@@ -4,56 +4,32 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{.Title}} - Wyat</title>
-
-    <style>
-        /* Accessible touch targets for mobile */
-        a, button, input[type="submit"] {
-            display: inline-block;
-            min-height: 48px;
-            padding: 12px 16px;
-            margin: 4px;
-            box-sizing: border-box;
-        }
-
-        input[type="text"], textarea {
-            min-height: 48px;
-            padding: 12px;
-            box-sizing: border-box;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1a1a1a;
-                color: #e0e0e0;
-            }
-
-            a {
-                color: #6b9eff;
-            }
-
-            hr {
-                border-color: #444444;
-            }
-
-            img {
-                filter: brightness(0.8);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <nav>
-        <a href="/">Home</a> | <a href="/blogs">All Blogs</a>
-    </nav>
+    <header>
+        <span class="prompt">wyat@site:~/blogs$</span>
+        <nav hx-boost="true">
+            <a href="/">[home]</a>
+            <a href="/blogs">[blogs]</a>
+            <a href="/finance">[finance]</a>
+            <a href="https://github.com/wsoule" target="_blank">[github]</a>
+        </nav>
+    </header>
 
-    <hr>
+    <main>
+        <p class="text-dim">$ cat {{.Title | printf "%s.md"}}</p>
 
-    <article>
-        {{.Content}}
-    </article>
+        <article class="box">
+            {{.Content}}
+        </article>
 
-    <hr>
+        <p><a href="/blogs">[← back to blogs]</a></p>
+    </main>
 
-    <p><a href="/blogs">Back to all blogs</a></p>
+    <footer>
+        <p>&copy; 2025 Wyat</p>
+    </footer>
 </body>
 </html>

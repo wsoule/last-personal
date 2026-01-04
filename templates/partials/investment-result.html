@@ -1,0 +1,10 @@
+{{define "investment-result"}}
+<div class="output">
+    <p class="text-dim">--- output: {{.Ticker}} ---</p>
+    <p class="text-dim">period: {{.StartDate}} to {{.EndDate}}</p>
+    <p>total_invested:    ${{printf "%.2f" .TotalInvested}} ({{.Investments}} buys)</p>
+    <p>total_shares:      {{printf "%.4f" .TotalShares}}</p>
+    <p>final_value:       ${{printf "%.2f" .FinalValue}}</p>
+    <p>total_return:      ${{printf "%.2f" .TotalReturn}} ({{printf "%.2f" .PercentReturn}}%)</p>
+</div>
+{{end}}

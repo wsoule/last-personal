@@ -1,0 +1,8 @@
+{{define "return-result"}}
+<div class="output">
+    <p class="text-dim">--- output ---</p>
+    <p>total_return:      ${{printf "%.2f" .TotalReturn}}</p>
+    <p>percent_return:    {{printf "%.2f" .PercentReturn}}%</p>
+    <p>cagr:              {{printf "%.2f" .AnnualizedReturn}}%</p>
+</div>
+{{end}}

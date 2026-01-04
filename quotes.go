@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 )
@@ -49,6 +50,17 @@ func quoteHandler(w http.ResponseWriter, r *http.Request) {
 	_, err = quotesCollection.InsertOne(ctx, quote)
 	if err != nil {
 		http.Error(w, "Error saving quote", http.StatusInternalServerError)
+		return
+	}
+
+	// Return HTML fragment for HTMX, redirect for regular form submission
+	if isHTMXRequest(r) {
+		w.Header().Set("Content-Type", "text/html")
+		err := templates.ExecuteTemplate(w, "quote-item", quote)
+		if err != nil {
+			log.Println("Error executing quote template:", err)
+			http.Error(w, "Template error", http.StatusInternalServerError)
+		}
 		return
 	}
 

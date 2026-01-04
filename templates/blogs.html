@@ -4,63 +4,41 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Blogs - Wyat</title>
-
-    <style>
-        /* Accessible touch targets for mobile */
-        a, button, input[type="submit"] {
-            display: inline-block;
-            min-height: 48px;
-            padding: 12px 16px;
-            margin: 4px;
-            box-sizing: border-box;
-        }
-
-        input[type="text"], textarea {
-            min-height: 48px;
-            padding: 12px;
-            box-sizing: border-box;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1a1a1a;
-                color: #e0e0e0;
-            }
-
-            a {
-                color: #6b9eff;
-            }
-
-            hr {
-                border-color: #444444;
-            }
-
-            img {
-                filter: brightness(0.8);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>Blogs</h1>
+    <header>
+        <span class="prompt">wyat@site:~/blogs$</span>
+        <nav hx-boost="true">
+            <a href="/">[home]</a>
+            <a href="/blogs">[blogs]</a>
+            <a href="/finance">[finance]</a>
+            <a href="https://github.com/wsoule" target="_blank">[github]</a>
+        </nav>
+    </header>
 
-    <nav>
-        <a href="/">Home</a>
-    </nav>
+    <main>
+        <section class="box">
+            <h1>Blogs</h1>
+            <p class="text-dim">$ ls -la ./posts/</p>
 
-    <hr>
+            {{if .Blogs}}
+                {{range .Blogs}}
+                <div class="repo-item">
+                    <a href="/blog/{{.Filename}}">{{.Title}}</a>
+                </div>
+                {{end}}
+            {{else}}
+                <p class="text-dim">No blog posts yet.</p>
+            {{end}}
+        </section>
 
-    <h2>All Blog Posts</h2>
-    {{if .Blogs}}
-        <ul>
-        {{range .Blogs}}
-            <li>
-                <a href="/blog/{{.Filename}}">{{.Title}}</a>
-            </li>
-        {{end}}
-        </ul>
-    {{else}}
-        <p>No blog posts yet.</p>
-    {{end}}
+        <p><a href="/">[← back]</a></p>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Wyat</p>
+    </footer>
 </body>
 </html>

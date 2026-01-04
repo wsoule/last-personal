@@ -10,6 +10,17 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
+// CounterData represents data passed to counter partial template
+type CounterData struct {
+	Count       int
+	TotalClicks int
+}
+
+// isHTMXRequest checks if the request came from HTMX
+func isHTMXRequest(r *http.Request) bool {
+	return r.Header.Get("HX-Request") == "true"
+}
+
 // Counter represents a counter document in MongoDB
 type Counter struct {
 	ID    string `bson:"_id" json:"id"`
@@ -103,7 +114,22 @@ func incrementHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	hub.broadcast <- update
 
-	// Return JSON response
+	// Return HTML fragment for HTMX, JSON for other clients
+	if isHTMXRequest(r) {
+		w.Header().Set("Content-Type", "text/html")
+		data := CounterData{
+			Count:       webhookCounter.Count,
+			TotalClicks: totalClicksCounter.Count,
+		}
+		err := templates.ExecuteTemplate(w, "counter", data)
+		if err != nil {
+			log.Println("Error executing counter template:", err)
+			http.Error(w, "Template error", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	// Return JSON response for non-HTMX clients
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(update)
 }
@@ -156,7 +182,22 @@ func decrementHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	hub.broadcast <- update
 
-	// Return JSON response
+	// Return HTML fragment for HTMX, JSON for other clients
+	if isHTMXRequest(r) {
+		w.Header().Set("Content-Type", "text/html")
+		data := CounterData{
+			Count:       webhookCounter.Count,
+			TotalClicks: totalClicksCounter.Count,
+		}
+		err := templates.ExecuteTemplate(w, "counter", data)
+		if err != nil {
+			log.Println("Error executing counter template:", err)
+			http.Error(w, "Template error", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	// Return JSON response for non-HTMX clients
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(update)
 }

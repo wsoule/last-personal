@@ -1,0 +1,14 @@
+{{define "savings-goal-result"}}
+<div class="output">
+    <p class="text-dim">--- required savings ---</p>
+    <p>monthly:           ${{printf "%.2f" .MonthlySavings}}</p>
+    <p>weekly:            ${{printf "%.2f" .WeeklySavings}}</p>
+    <p>yearly:            ${{printf "%.2f" .YearlySavings}}</p>
+
+    <p class="text-dim">--- breakdown ---</p>
+    <p>years_to_goal:     {{.YearsToGoal}}</p>
+    <p>contributions:     ${{printf "%.2f" .TotalContributions}}</p>
+    <p>interest_earned:   ${{printf "%.2f" .InterestEarned}}</p>
+    <p>current_growth:    ${{printf "%.2f" .CurrentSavingsGrowth}}</p>
+</div>
+{{end}}

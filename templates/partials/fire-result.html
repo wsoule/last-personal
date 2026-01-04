@@ -1,0 +1,14 @@
+{{define "fire-result"}}
+<div class="output">
+    <p class="text-dim">--- FIRE analysis ---</p>
+    <p>fire_number:       ${{printf "%.0f" .FIRENumber}} (25x expenses)</p>
+    <p>years_to_fire:     {{printf "%.1f" .YearsToFIRE}}</p>
+    <p>fire_age:          {{.FIREAge}}</p>
+    <p>savings_rate:      {{printf "%.1f" .SavingsRate}}%</p>
+
+    <p class="text-dim">--- details ---</p>
+    <p>annual_savings:    ${{printf "%.2f" .AnnualSavings}}</p>
+    <p>monthly_savings:   ${{printf "%.2f" .MonthlySavings}}</p>
+    <p>portfolio_at_fire: ${{printf "%.0f" .PortfolioAtFIRE}}</p>
+</div>
+{{end}}

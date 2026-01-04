@@ -1,0 +1,19 @@
+{{define "debt-result"}}
+<div class="output">
+    <p class="text-dim">--- minimum payment only ---</p>
+    <p>months_to_payoff:  {{.MinimumMonths}} ({{printf "%.1f" .MinimumYears}} years)</p>
+    <p>total_interest:    ${{printf "%.2f" .MinimumInterest}}</p>
+    <p>total_paid:        ${{printf "%.2f" .MinimumTotal}}</p>
+
+{{if gt .ExtraPayment 0}}
+    <p class="text-dim">--- with extra ${{printf "%.2f" .ExtraPayment}}/month ---</p>
+    <p>months_to_payoff:  {{.ExtraMonths}} ({{printf "%.1f" .ExtraYears}} years)</p>
+    <p>total_interest:    ${{printf "%.2f" .ExtraInterest}}</p>
+    <p>total_paid:        ${{printf "%.2f" .ExtraTotal}}</p>
+
+    <p class="text-dim">--- savings ---</p>
+    <p>time_saved:        {{.MonthsSaved}} months</p>
+    <p>interest_saved:    ${{printf "%.2f" .InterestSaved}}</p>
+{{end}}
+</div>
+{{end}}

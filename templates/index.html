@@ -7,8 +7,8 @@
     <!-- Primary Meta Tags -->
     <title>Wyat - Full Stack Developer | TypeScript, React, Go</title>
     <meta name="title" content="Wyat - Full Stack Developer | TypeScript, React, Go">
-    <meta name="description" content="Full Stack Developer specializing in TypeScript, React, Next.js, NestJS, and Go. Building enterprise fintech solutions and scalable web applications. Software Engineer at Waggoner Financial.">
-    <meta name="keywords" content="Wyat, Full Stack Developer, Software Engineer, TypeScript, React, Next.js, Go, NestJS, GraphQL, MongoDB, PostgreSQL, Waggoner Financial">
+    <meta name="description" content="Full Stack Developer specializing in TypeScript, React, Next.js, NestJS, and Go. Building enterprise fintech solutions and scalable web applications.">
+    <meta name="keywords" content="Wyat, Full Stack Developer, Software Engineer, TypeScript, React, Next.js, Go, NestJS, GraphQL, MongoDB, PostgreSQL">
     <meta name="author" content="Wyat">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://wyat.me">
@@ -17,14 +17,14 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wyat.me">
     <meta property="og:title" content="Wyat - Full Stack Developer">
-    <meta property="og:description" content="Full Stack Developer specializing in TypeScript, React, Next.js, NestJS, and Go. Building enterprise fintech solutions and scalable web applications.">
+    <meta property="og:description" content="Full Stack Developer specializing in TypeScript, React, Next.js, NestJS, and Go.">
     <meta property="og:image" content="https://wyat.me/static/headshot.jpg">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://wyat.me">
     <meta property="twitter:title" content="Wyat - Full Stack Developer">
-    <meta property="twitter:description" content="Full Stack Developer specializing in TypeScript, React, Next.js, NestJS, and Go. Building enterprise fintech solutions and scalable web applications.">
+    <meta property="twitter:description" content="Full Stack Developer specializing in TypeScript, React, Next.js, NestJS, and Go.">
     <meta property="twitter:image" content="https://wyat.me/static/headshot.jpg">
 
     <!-- Structured Data (JSON-LD) -->
@@ -36,332 +36,211 @@
       "jobTitle": "Full Stack Developer",
       "url": "https://wyat.me",
       "image": "https://wyat.me/static/headshot.jpg",
-      "email": "wsoule679+resume@gmail.com",
-      "telephone": "+1-231-253-4037",
       "sameAs": [
         "https://github.com/wsoule",
         "https://linkedin.com/in/wyat-soule"
       ],
-      "alumniOf": {
-        "@type": "CollegeOrUniversity",
-        "name": "Michigan State University"
-      },
       "worksFor": {
         "@type": "Organization",
         "name": "Waggoner Financial"
-      },
-      "knowsAbout": [
-        "TypeScript",
-        "JavaScript",
-        "React",
-        "Next.js",
-        "NestJS",
-        "Node.js",
-        "GraphQL",
-        "Go",
-        "Python",
-        "PostgreSQL",
-        "MongoDB",
-        "Redis",
-        "Docker",
-        "Git"
-      ]
+      }
     }
     </script>
 
-    <style>
-        /* Accessible touch targets for mobile */
-        a, button, input[type="submit"] {
-            display: inline-block;
-            min-height: 48px;
-            padding: 12px 16px;
-            margin: 4px;
-            box-sizing: border-box;
-        }
-
-        input[type="text"], textarea {
-            min-height: 48px;
-            padding: 12px;
-            box-sizing: border-box;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            body {
-                background-color: #1a1a1a;
-                color: #e0e0e0;
-            }
-
-            a {
-                color: #6b9eff;
-            }
-
-            hr {
-                border-color: #444444;
-            }
-
-            img {
-                filter: brightness(0.8);
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <h1>{{.Name}}</h1>
+    <header>
+        <span class="prompt">wyat@site:~$</span>
+        <nav hx-boost="true">
+            <a href="/">[home]</a>
+            <a href="/blogs">[blogs]</a>
+            <a href="/finance">[finance]</a>
+            <a href="https://github.com/wsoule" target="_blank">[github]</a>
+            <a href="https://linkedin.com/in/wyat-soule" target="_blank">[linkedin]</a>
+        </nav>
+    </header>
 
-    <nav>
-        <a href="#about">About</a> |
-        <a href="#counter">Counter</a> |
-        <a href="#projects">Projects</a> |
-        <a href="#resume">Resume</a> |
-        <a href="#quotes">Quotes</a> |
-        <a href="/blogs">Blogs</a>
-    </nav>
-
-    <hr>
-
-    <h2 id="about">About</h2>
-    <picture>
-        <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
-        <source srcset="/static/headshot.jpg 1x, /static/headshot-2x.jpg 2x" type="image/jpeg">
-        <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="200" height="300" fetchpriority="high">
-    </picture>
-    <h3>Wyat</h3>
-    <p><strong>Full Stack Developer</strong></p>
-    <p>I always tell people that websites should just be lists.</p>
-    <h4>Skills</h4>
-        <ul>
-            <li>Docker</li>
-            <li>Git</li>
-            <li>Go</li>
-            <li>GraphQL</li>
-            <li>HTML</li>
-            <li>JavaScript</li>
-            <li>MongoDB</li>
-            <li>Next.js</li>
-            <li>Node.js</li>
-            <li>PostgreSQL</li>
-            <li>Python</li>
-            <li>React</li>
-            <li>Redis</li>
-            <li>TypeScript</li>
-            <li><s>UI</s></li>
-            <li>UX</li>
-            </ul>
-
-
-    <h4>Experience</h4>
-    <p>
-        <strong>Waggoner Financial</strong> - Software Engineer (Jun 2024 – Present)<br>
-        Leading a 4-engineer squad building enterprise fintech solutions with TypeScript, NestJS, GraphQL, Next.js, and React Native.
-        Designed full-stack architecture, built CI/CD pipelines, and improved performance with Redis caching and query optimization.
-    </p>
-    <p>
-        <strong>Brass Raven</strong> - Co-founder (Oct 2022 – Present)<br>
-        Co-founded Audioparrot, an audiobook creation platform. Built Python Flask microservices with RabbitMQ and Redis,
-        improving processing speed by 500%.
-    </p>
-    <p>
-        <strong>State of Michigan – DNR</strong> - Student Software Developer (May 2023 – Jun 2024)<br>
-        Developed Angular/.NET production application serving 500+ monthly users. Automated legacy data migration with SSIS and SQL.
-    </p>
-
-    <hr>
-
-    <h2>Webhook Counter</h2>
-    <p>Current count: <strong id="counter">{{.WebhookCount}}</strong></p>
-    <button id="decrement-btn">-</button>
-    <button id="increment-btn">+</button>
-    <p><small>Total clicks: <span id="total-clicks">{{.TotalClicks}}</span></small></p>
-
-    <hr>
-
-    <h2 id="projects">GitHub Repositories</h2>
-    {{if .GitHubRepos}}
-        <ul>
-        {{range .GitHubRepos}}
-            <li>
-                <strong><a href="{{.HTMLURL}}" target="_blank">{{.Name}}</a></strong>
-                {{if .Description}}- {{.Description}}{{end}}
-                {{if .Language}}<br>Language: {{.Language}}{{end}}
-                {{if .StargazersCount}}<br>Stars: {{.StargazersCount}}{{end}}
-            </li>
-        {{end}}
-        </ul>
-    {{else}}
-        <p>No repositories found or unable to fetch repositories.</p>
-    {{end}}
-
-    <hr>
-
-    <h2 id="resume">Resume</h2>
-    <p><a href="/static/wyat_resume.pdf" target="_blank">Download Resume (PDF)</a></p>
-
-    <hr>
-
-    <h2 id="quotes">Quotes</h2>
-
-    <h3>Leave a Quote</h3>
-    <form action="/quote" method="POST">
-        <p>
-            <label for="name">Name (optional):</label><br>
-            <input type="text" id="name" name="name" size="40">
-        </p>
-        <p>
-            <label for="quote">Quote:</label><br>
-            <textarea id="quote" name="quote" rows="4" cols="50" required></textarea>
-        </p>
-        <button type="submit">Submit Quote</button>
-    </form>
-
-    <h3>All Quotes</h3>
-    {{if .Quotes}}
-        {{range .Quotes}}
-            <div style="border: 1px solid black; padding: 10px; margin: 10px 0;">
-                <p><strong><i>{{.Name}}</i></strong> - <span class="timestamp" data-time="{{.Timestamp.Format "2006-01-02T15:04:05Z07:00"}}">{{.Timestamp.Format "Jan 02, 2006 at 3:04 PM"}}</span></p>
-                <p>{{.Quote}}</p>
+    <main>
+        <!-- About Section -->
+        <section class="box" id="about">
+            <h2>About</h2>
+            <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start;">
+                <picture>
+                    <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
+                    <source srcset="/static/headshot.jpg 1x, /static/headshot-2x.jpg 2x" type="image/jpeg">
+                    <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="150" height="225">
+                </picture>
+                <div>
+                    <p><strong>{{.Name}}</strong></p>
+                    <p class="text-dim">Full Stack Developer</p>
+                    <p>I always tell people that websites should just be lists.</p>
+                </div>
             </div>
-        {{end}}
-    {{else}}
-        <p>No quotes yet. Be the first to write an inspiring quote!</p>
-    {{end}}
+        </section>
 
-    <hr>
+        <!-- Skills Section -->
+        <section class="box" id="skills">
+            <h2>Skills</h2>
+            <p class="text-dim">$ skills --list</p>
+            <ul class="skills-list">
+                <li>Docker</li>
+                <li>Git</li>
+                <li>Go</li>
+                <li>GraphQL</li>
+                <li>JavaScript</li>
+                <li>MongoDB</li>
+                <li>Next.js</li>
+                <li>Node.js</li>
+                <li>PostgreSQL</li>
+                <li>Python</li>
+                <li>React</li>
+                <li>Redis</li>
+                <li>TypeScript</li>
+                <li><s>UI</s></li>
+            </ul>
+        </section>
 
-    <p><small>Page views: {{.PageViewCount}}</small></p>
+        <!-- Experience Section -->
+        <section class="box" id="experience">
+            <h2>Experience</h2>
+            <p class="text-dim">$ cat experience.log</p>
+
+            <div class="experience-entry">
+                <p><span class="company">Waggoner Financial</span> <span class="text-dim">-</span> <span class="role">Software Engineer</span></p>
+                <p class="date">Jun 2024 – Present</p>
+                <p>Leading a 4-engineer squad building enterprise fintech solutions with TypeScript, NestJS, GraphQL, Next.js, and React Native.</p>
+            </div>
+
+            <div class="experience-entry">
+                <p><span class="company">Brass Raven</span> <span class="text-dim">-</span> <span class="role">Co-founder</span></p>
+                <p class="date">Oct 2022 – Present</p>
+                <p>Co-founded Audioparrot, an audiobook creation platform. Built Python Flask microservices with RabbitMQ and Redis.</p>
+            </div>
+
+            <div class="experience-entry">
+                <p><span class="company">State of Michigan – DNR</span> <span class="text-dim">-</span> <span class="role">Student Software Developer</span></p>
+                <p class="date">May 2023 – Jun 2024</p>
+                <p>Developed Angular/.NET production application serving 500+ monthly users.</p>
+            </div>
+        </section>
+
+        <!-- Counter Section -->
+        <section class="box" id="counter">
+            <h2>Counter</h2>
+            <p class="text-dim">$ ./counter --interactive</p>
+            <div id="counter-section">
+                <p class="counter-display" id="counter-value">{{.WebhookCount}}</p>
+                <div class="counter-buttons">
+                    <button hx-post="/decrement" hx-target="#counter-section" hx-swap="innerHTML">-</button>
+                    <button hx-post="/increment" hx-target="#counter-section" hx-swap="innerHTML">+</button>
+                </div>
+                <p class="text-dim mt-1">total_clicks: <span id="total-clicks">{{.TotalClicks}}</span></p>
+            </div>
+        </section>
+
+        <!-- GitHub Repos Section -->
+        <section class="box" id="projects">
+            <h2>Repositories</h2>
+            <p class="text-dim">$ gh repo list wsoule</p>
+            {{if .GitHubRepos}}
+                {{range .GitHubRepos}}
+                <div class="repo-item">
+                    <div>
+                        <a href="{{.HTMLURL}}" target="_blank" class="repo-name">{{.Name}}</a>
+                        {{if .Description}}<span class="text-dim"> - {{.Description}}</span>{{end}}
+                    </div>
+                    <div class="repo-meta">
+                        {{if .Language}}{{.Language}}{{end}}
+                        {{if .StargazersCount}} · ★{{.StargazersCount}}{{end}}
+                    </div>
+                </div>
+                {{end}}
+            {{else}}
+                <p class="text-dim">No repositories found.</p>
+            {{end}}
+        </section>
+
+        <!-- Resume Section -->
+        <section class="box" id="resume">
+            <h2>Resume</h2>
+            <p><a href="/static/wyat_resume.pdf" target="_blank">[download resume.pdf]</a></p>
+        </section>
+
+        <!-- Quotes Section -->
+        <section class="box" id="quotes">
+            <h2>Quotes</h2>
+            <p class="text-dim">$ quote --submit</p>
+
+            <form hx-post="/quote" hx-target="#quotes-list" hx-swap="afterbegin" hx-on::after-request="this.reset()">
+                <div class="form-row">
+                    <label for="name">name:</label>
+                    <input type="text" id="name" name="name" placeholder="anonymous">
+                </div>
+                <div class="form-row">
+                    <label for="quote">quote:</label>
+                    <input type="text" id="quote" name="quote" required style="flex: 1;">
+                </div>
+                <button type="submit">[submit]</button>
+            </form>
+
+            <p class="text-dim mt-1">$ quote --list</p>
+            <div id="quotes-list">
+            {{if .Quotes}}
+                {{range .Quotes}}
+                    {{template "quote-item" .}}
+                {{end}}
+            {{else}}
+                <p class="text-dim" id="no-quotes">No quotes yet.</p>
+            {{end}}
+            </div>
+        </section>
+
+        <!-- Stats -->
+        <p class="text-dim">page_views: {{.PageViewCount}}</p>
+    </main>
+
+    <footer>
+        <p>
+            <a href="https://github.com/wsoule" target="_blank">[github]</a>
+            <a href="https://linkedin.com/in/wyat-soule" target="_blank">[linkedin]</a>
+        </p>
+        <p>&copy; 2025 Wyat</p>
+    </footer>
 
     <script>
         // Convert timestamps to user's local timezone
-        document.querySelectorAll('.timestamp').forEach(function(el) {
-            const timeStr = el.getAttribute('data-time');
-            if (timeStr) {
-                const date = new Date(timeStr);
-                const options = {
-                    year: 'numeric',
-                    month: 'short',
-                    day: '2-digit',
-                    hour: 'numeric',
-                    minute: '2-digit',
-                    hour12: true
-                };
-                el.textContent = date.toLocaleString('en-US', options);
-            }
-        });
+        function convertTimestamps() {
+            document.querySelectorAll('.timestamp').forEach(function(el) {
+                const timeStr = el.getAttribute('data-time');
+                if (timeStr) {
+                    const date = new Date(timeStr);
+                    el.textContent = date.toLocaleString('en-US', {
+                        year: 'numeric', month: 'short', day: '2-digit',
+                        hour: 'numeric', minute: '2-digit', hour12: true
+                    });
+                }
+            });
+        }
+        convertTimestamps();
+        document.body.addEventListener('htmx:afterSwap', convertTimestamps);
 
-        // WebSocket connection for real-time counter updates
-        const counterEl = document.getElementById('counter');
-        const totalClicksEl = document.getElementById('total-clicks');
-        const incrementBtn = document.getElementById('increment-btn');
-        const decrementBtn = document.getElementById('decrement-btn');
-
+        // WebSocket for real-time updates
         let ws;
-        let reconnectTimeout;
-        let pendingRequests = 0; // Track pending optimistic updates
-        let lastServerCount = parseInt(counterEl.textContent); // Track last confirmed value
-
         function connectWebSocket() {
             const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-            const wsUrl = protocol + '//' + window.location.host + '/ws';
-
-            ws = new WebSocket(wsUrl);
-
-            ws.onopen = function() {
-                console.log('WebSocket connected');
-            };
-
+            ws = new WebSocket(protocol + '//' + window.location.host + '/ws');
             ws.onmessage = function(event) {
                 const data = JSON.parse(event.data);
-                lastServerCount = data.count;
-
-                // Only update counter if we don't have pending requests
-                // This prevents overwriting optimistic updates during lag
-                if (pendingRequests === 0) {
-                    counterEl.textContent = data.count;
-                }
-
-                // Always update total clicks (no optimistic update for this)
-                if (data.totalClicks !== undefined) {
-                    totalClicksEl.textContent = data.totalClicks;
-                }
+                const counter = document.getElementById('counter-value');
+                const clicks = document.getElementById('total-clicks');
+                if (counter) counter.textContent = data.count;
+                if (clicks && data.totalClicks !== undefined) clicks.textContent = data.totalClicks;
             };
-
-            ws.onerror = function(error) {
-                console.error('WebSocket error:', error);
-            };
-
-            ws.onclose = function() {
-                console.log('WebSocket disconnected, reconnecting...');
-                reconnectTimeout = setTimeout(connectWebSocket, 2000);
-            };
+            ws.onclose = function() { setTimeout(connectWebSocket, 2000); };
         }
-
         connectWebSocket();
-
-        // Optimistic UI updates with AJAX
-        incrementBtn.addEventListener('click', function() {
-            // Optimistically update UI
-            const currentCount = parseInt(counterEl.textContent);
-            counterEl.textContent = currentCount + 1;
-            pendingRequests++;
-
-            // Send request to server
-            fetch('/increment', { method: 'POST' })
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(data) {
-                    pendingRequests--;
-                    lastServerCount = data.count;
-                    // Update to server value if no more pending requests
-                    if (pendingRequests === 0) {
-                        counterEl.textContent = data.count;
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error incrementing:', error);
-                    pendingRequests--;
-                    // Revert on error
-                    if (pendingRequests === 0) {
-                        counterEl.textContent = lastServerCount;
-                    }
-                });
-        });
-
-        decrementBtn.addEventListener('click', function() {
-            // Optimistically update UI
-            const currentCount = parseInt(counterEl.textContent);
-            counterEl.textContent = currentCount - 1;
-            pendingRequests++;
-
-            // Send request to server
-            fetch('/decrement', { method: 'POST' })
-                .then(function(response) {
-                    return response.json();
-                })
-                .then(function(data) {
-                    pendingRequests--;
-                    lastServerCount = data.count;
-                    // Update to server value if no more pending requests
-                    if (pendingRequests === 0) {
-                        counterEl.textContent = data.count;
-                    }
-                })
-                .catch(function(error) {
-                    console.error('Error decrementing:', error);
-                    pendingRequests--;
-                    // Revert on error
-                    if (pendingRequests === 0) {
-                        counterEl.textContent = lastServerCount;
-                    }
-                });
-        });
     </script>
-        <footer>
-            <p>
-                <a href="https://github.com/wsoule" target="_blank" rel="noopener noreferrer">GitHub</a> |
-                <a href="https://linkedin.com/in/wyat-soule" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-            </p>
-            <p>Copyright &copy; 2025 Wyat</p>
-            <p>Inspired by <a href="https://motherfuckingwebsite.com/">https://motherfuckingwebsite.com/</a> & <a href="https://justfuckingusehtml.com/">https://justfuckingusehtml.com/</a>.</p>
-        </footer>
 </body>
 </html>

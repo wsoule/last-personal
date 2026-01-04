@@ -1,0 +1,9 @@
+{{define "inflation-result"}}
+<div class="output">
+    <p class="text-dim">--- output ---</p>
+    <p>future_value:      ${{printf "%.2f" .FutureValueNeeded}}</p>
+    <p>power_lost:        ${{printf "%.2f" .PurchasingPowerLost}} ({{printf "%.1f" .PercentLost}}%)</p>
+
+    <p class="text-dim">In {{.Years}} years, ${{printf "%.2f" .FutureValueNeeded}} = ${{printf "%.2f" .CurrentAmount}} today</p>
+</div>
+{{end}}

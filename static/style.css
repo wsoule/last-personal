@@ -1,0 +1,484 @@
+/* =============================================================================
+   Terminal Aesthetic - JetBrains Mono, Boxy, Dark
+   ============================================================================= */
+
+/* Font Import */
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap');
+
+/* CSS Variables */
+:root {
+    --bg: #0d0d0d;
+    --bg-light: #1a1a1a;
+    --bg-highlight: #2a2a2a;
+    --text: #e0e0e0;
+    --text-dim: #888888;
+    --border: #333333;
+    --link: #6b9eff;
+    --link-hover: #8fb4ff;
+}
+
+/* Reset */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* Base */
+html {
+    font-size: 16px;
+}
+
+body {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    padding-top: 60px; /* Space for fixed header */
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+h1 { font-size: 1.5rem; }
+h2 { font-size: 1.25rem; }
+h3 { font-size: 1.1rem; }
+
+h1::before { content: '# '; color: var(--text-dim); }
+h2::before { content: '## '; color: var(--text-dim); }
+h3::before { content: '### '; color: var(--text-dim); }
+
+p {
+    margin-bottom: 1rem;
+}
+
+/* Links */
+a {
+    color: var(--link);
+    text-decoration: none;
+}
+
+a:hover {
+    color: var(--link-hover);
+}
+
+/* Fixed Header */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem 2rem;
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.prompt {
+    color: var(--text);
+    white-space: nowrap;
+}
+
+header nav {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+header nav a {
+    color: var(--text);
+}
+
+header nav a:hover {
+    color: var(--link);
+}
+
+/* Main Content */
+main {
+    padding: 2rem;
+}
+
+/* Box Component */
+.box {
+    border: 1px solid var(--border);
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.box-title {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+/* Lists */
+ul, ol {
+    margin-left: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+li {
+    margin-bottom: 0.25rem;
+}
+
+li::marker {
+    color: var(--text-dim);
+}
+
+/* Forms */
+.form-row {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.75rem;
+    gap: 0.5rem;
+}
+
+.form-row label {
+    min-width: 120px;
+    color: var(--text-dim);
+}
+
+.form-row label::before {
+    content: '> ';
+    color: var(--text-dim);
+}
+
+input, textarea, select {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0.5rem 0.75rem;
+    min-height: 48px;
+}
+
+input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: var(--link);
+}
+
+input::placeholder, textarea::placeholder {
+    color: var(--text-dim);
+}
+
+/* Buttons */
+button, .btn {
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-family: inherit;
+    font-size: inherit;
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    min-height: 48px;
+}
+
+button:hover, .btn:hover {
+    background: var(--bg-highlight);
+    border-color: var(--text-dim);
+}
+
+button:active, .btn:active {
+    background: var(--border);
+}
+
+/* Output/Result Area */
+.output {
+    border: 1px solid var(--border);
+    padding: 1rem;
+    margin-top: 1rem;
+    background: var(--bg-light);
+}
+
+.output::before {
+    content: '--- output ---';
+    display: block;
+    color: var(--text-dim);
+    margin-bottom: 0.75rem;
+}
+
+.output-line {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.output-label {
+    color: var(--text-dim);
+}
+
+.output-value {
+    color: var(--text);
+    text-align: right;
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+}
+
+th, td {
+    border: 1px solid var(--border);
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+}
+
+th {
+    background: var(--bg-light);
+    color: var(--text-dim);
+}
+
+td {
+    font-variant-numeric: tabular-nums;
+}
+
+/* Quote Box */
+.quote-box {
+    border: 1px solid var(--border);
+    padding: 1rem;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.quote-box::before {
+    content: '┌─ quote ─';
+    position: absolute;
+    top: -0.7rem;
+    left: 0.5rem;
+    background: var(--bg);
+    padding: 0 0.5rem;
+    color: var(--text-dim);
+    font-size: 0.85rem;
+}
+
+.quote-text {
+    font-style: italic;
+    margin-bottom: 0.5rem;
+}
+
+.quote-text::before {
+    content: '"';
+}
+
+.quote-text::after {
+    content: '"';
+}
+
+.quote-author {
+    text-align: right;
+    color: var(--text-dim);
+}
+
+.quote-author::before {
+    content: '— ';
+}
+
+/* Counter Section */
+.counter-display {
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 1rem 0;
+}
+
+.counter-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.counter-buttons button {
+    width: 48px;
+    padding: 0;
+    font-size: 1.5rem;
+}
+
+/* Skills List */
+.skills-list {
+    list-style: none;
+    margin-left: 0;
+    columns: 2;
+}
+
+.skills-list li::before {
+    content: '- ';
+    color: var(--text-dim);
+}
+
+/* Experience Entry */
+.experience-entry {
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--border);
+}
+
+.experience-entry .company {
+    color: var(--link);
+    font-weight: 700;
+}
+
+.experience-entry .role {
+    color: var(--text);
+}
+
+.experience-entry .date {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+/* GitHub Repo List */
+.repo-item {
+    border: 1px solid var(--border);
+    padding: 0.75rem 1rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+}
+
+.repo-name {
+    font-weight: 700;
+}
+
+.repo-meta {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+}
+
+/* Footer */
+footer {
+    border-top: 1px solid var(--border);
+    padding: 2rem;
+    margin-top: 2rem;
+    text-align: center;
+    color: var(--text-dim);
+}
+
+footer a {
+    color: var(--text-dim);
+}
+
+footer a:hover {
+    color: var(--link);
+}
+
+/* Utility Classes */
+.text-dim { color: var(--text-dim); }
+.text-right { text-align: right; }
+.mt-1 { margin-top: 1rem; }
+.mb-1 { margin-bottom: 1rem; }
+.hidden { display: none; }
+
+/* Details/Summary for collapsible content */
+details {
+    border: 1px solid var(--border);
+    margin: 1rem 0;
+}
+
+summary {
+    padding: 0.75rem 1rem;
+    cursor: pointer;
+    background: var(--bg-light);
+    border-bottom: 1px solid var(--border);
+}
+
+summary:hover {
+    background: var(--bg-highlight);
+}
+
+details[open] summary {
+    border-bottom: 1px solid var(--border);
+}
+
+details > *:not(summary) {
+    padding: 1rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.5rem;
+        padding: 0.75rem 1rem;
+    }
+
+    body {
+        padding-top: 100px;
+    }
+
+    main {
+        padding: 1rem;
+    }
+
+    .skills-list {
+        columns: 1;
+    }
+
+    .form-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .form-row label {
+        min-width: auto;
+    }
+
+    input, textarea, select {
+        width: 100%;
+    }
+}
+
+/* Image styling */
+img {
+    max-width: 100%;
+    height: auto;
+    border: 1px solid var(--border);
+}
+
+/* Horizontal rule */
+hr {
+    border: none;
+    border-top: 1px solid var(--border);
+    margin: 2rem 0;
+}
+
+/* Code/pre blocks for blog posts */
+pre, code {
+    font-family: 'JetBrains Mono', monospace;
+    background: var(--bg-light);
+    border: 1px solid var(--border);
+}
+
+code {
+    padding: 0.2rem 0.4rem;
+}
+
+pre {
+    padding: 1rem;
+    overflow-x: auto;
+}
+
+pre code {
+    border: none;
+    padding: 0;
+}
+
+/* Article styling for blog posts */
+article {
+    max-width: 80ch;
+}
+
+article h1::before,
+article h2::before,
+article h3::before {
+    content: none;
+}

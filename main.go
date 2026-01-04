@@ -88,8 +88,10 @@ func main() {
 	// Initialize counters if they don't exist
 	initializeCounters()
 
-	// Parse templates
+	// Parse templates (main templates, partials, and finance)
 	templates = template.Must(template.ParseGlob("templates/*.html"))
+	template.Must(templates.ParseGlob("templates/partials/*.html"))
+	template.Must(templates.ParseGlob("templates/finance/*.html"))
 
 	// Initialize and start WebSocket hub
 	hub = NewHub()
@@ -103,6 +105,25 @@ func main() {
 	http.HandleFunc("/ws", wsHandler)
 	http.HandleFunc("/blogs", blogsHandler)
 	http.HandleFunc("/blog/", blogHandler)
+
+	// Finance calculator pages
+	http.HandleFunc("/finance", financeIndexHandler)
+	http.HandleFunc("/finance/investment", financeInvestmentHandler)
+	http.HandleFunc("/finance/return", financeReturnHandler)
+	http.HandleFunc("/finance/loan", financeLoanHandler)
+	http.HandleFunc("/finance/savings-goal", financeSavingsGoalHandler)
+	http.HandleFunc("/finance/fire", financeFIREHandler)
+	http.HandleFunc("/finance/inflation", financeInflationHandler)
+	http.HandleFunc("/finance/debt", financeDebtHandler)
+
+	// Finance calculator APIs
+	http.HandleFunc("/api/investment-calc", rateLimitMiddleware(investmentCalcHandler, 10))
+	http.HandleFunc("/api/return-calc", returnCalcHandler)
+	http.HandleFunc("/api/loan-comparison", loanComparisonHandler)
+	http.HandleFunc("/api/savings-goal", savingsGoalHandler)
+	http.HandleFunc("/api/fire-calc", fireCalcHandler)
+	http.HandleFunc("/api/inflation-calc", inflationCalcHandler)
+	http.HandleFunc("/api/debt-calc", debtCalcHandler)
 	http.HandleFunc("/robots.txt", func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "static/robots.txt")
 	})
