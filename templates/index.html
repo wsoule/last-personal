@@ -51,163 +51,161 @@
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <span class="prompt">wyat@site:~$</span>
-        <nav hx-boost="true">
-            <a href="/">[home]</a>
-            <a href="/blogs">[blogs]</a>
-            <a href="/finance">[finance]</a>
-            <a href="https://github.com/wsoule" target="_blank">[github]</a>
-            <a href="https://linkedin.com/in/wyat-soule" target="_blank">[linkedin]</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
 
-    <main>
-        <!-- About Section -->
-        <section class="box" id="about">
-            <h2>About</h2>
-            <div style="display: flex; gap: 2rem; flex-wrap: wrap; align-items: flex-start;">
-                <picture>
-                    <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
-                    <source srcset="/static/headshot.jpg 1x, /static/headshot-2x.jpg 2x" type="image/jpeg">
-                    <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="150" height="225">
-                </picture>
-                <div>
-                    <p><strong>{{.Name}}</strong></p>
-                    <p class="text-dim">Full Stack Developer</p>
-                    <p>I always tell people that websites should just be lists.</p>
-                </div>
-            </div>
-        </section>
+            <nav class="page-toc">
+                <h3>On This Page</h3>
+                <ul>
+                    <li><a href="#about" data-section="about">About</a></li>
+                    <li><a href="#skills" data-section="skills">Skills</a></li>
+                    <li><a href="#experience" data-section="experience">Experience</a></li>
+                    <li><a href="#counter" data-section="counter">Counter</a></li>
+                    <li><a href="#projects" data-section="projects">Repositories</a></li>
+                    <li><a href="#resume" data-section="resume">Resume</a></li>
+                    <li><a href="#quotes" data-section="quotes">Quotes</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-        <!-- Skills Section -->
-        <section class="box" id="skills">
-            <h2>Skills</h2>
-            <p class="text-dim">$ skills --list</p>
-            <ul class="skills-list">
-                <li>Docker</li>
-                <li>Git</li>
-                <li>Go</li>
-                <li>GraphQL</li>
-                <li>JavaScript</li>
-                <li>MongoDB</li>
-                <li>Next.js</li>
-                <li>Node.js</li>
-                <li>PostgreSQL</li>
-                <li>Python</li>
-                <li>React</li>
-                <li>Redis</li>
-                <li>TypeScript</li>
-                <li><s>UI</s></li>
-            </ul>
-        </section>
+        <div class="divider"></div>
 
-        <!-- Experience Section -->
-        <section class="box" id="experience">
-            <h2>Experience</h2>
-            <p class="text-dim">$ cat experience.log</p>
-
-            <div class="experience-entry">
-                <p><span class="company">Waggoner Financial</span> <span class="text-dim">-</span> <span class="role">Software Engineer</span></p>
-                <p class="date">Jun 2024 – Present</p>
-                <p>Leading a 4-engineer squad building enterprise fintech solutions with TypeScript, NestJS, GraphQL, Next.js, and React Native.</p>
-            </div>
-
-            <div class="experience-entry">
-                <p><span class="company">Brass Raven</span> <span class="text-dim">-</span> <span class="role">Co-founder</span></p>
-                <p class="date">Oct 2022 – Present</p>
-                <p>Co-founded Audioparrot, an audiobook creation platform. Built Python Flask microservices with RabbitMQ and Redis.</p>
-            </div>
-
-            <div class="experience-entry">
-                <p><span class="company">State of Michigan – DNR</span> <span class="text-dim">-</span> <span class="role">Student Software Developer</span></p>
-                <p class="date">May 2023 – Jun 2024</p>
-                <p>Developed Angular/.NET production application serving 500+ monthly users.</p>
-            </div>
-        </section>
-
-        <!-- Counter Section -->
-        <section class="box" id="counter">
-            <h2>Counter</h2>
-            <p class="text-dim">$ ./counter --interactive</p>
-            <div id="counter-section">
-                <p class="counter-display" id="counter-value">{{.WebhookCount}}</p>
-                <div class="counter-buttons">
-                    <button hx-post="/decrement" hx-target="#counter-section" hx-swap="innerHTML">-</button>
-                    <button hx-post="/increment" hx-target="#counter-section" hx-swap="innerHTML">+</button>
-                </div>
-                <p class="text-dim mt-1">total_clicks: <span id="total-clicks">{{.TotalClicks}}</span></p>
-            </div>
-        </section>
-
-        <!-- GitHub Repos Section -->
-        <section class="box" id="projects">
-            <h2>Repositories</h2>
-            <p class="text-dim">$ gh repo list wsoule</p>
-            {{if .GitHubRepos}}
-                {{range .GitHubRepos}}
-                <div class="repo-item">
+        <main class="content">
+            <!-- About Section -->
+            <section id="about">
+                <h2>About</h2>
+                <div class="flex gap-2 flex-wrap items-start">
+                    <picture>
+                        <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
+                        <source srcset="/static/headshot.jpg 1x, /static/headshot-2x.jpg 2x" type="image/jpeg">
+                        <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="150" height="225">
+                    </picture>
                     <div>
-                        <a href="{{.HTMLURL}}" target="_blank" class="repo-name">{{.Name}}</a>
-                        {{if .Description}}<span class="text-dim"> - {{.Description}}</span>{{end}}
-                    </div>
-                    <div class="repo-meta">
-                        {{if .Language}}{{.Language}}{{end}}
-                        {{if .StargazersCount}} · ★{{.StargazersCount}}{{end}}
+                        <p><strong>{{.Name}}</strong></p>
+                        <p class="text-secondary">Full Stack Developer</p>
+                        <p>I always tell people that websites should just be lists.</p>
                     </div>
                 </div>
-                {{end}}
-            {{else}}
-                <p class="text-dim">No repositories found.</p>
-            {{end}}
-        </section>
+            </section>
 
-        <!-- Resume Section -->
-        <section class="box" id="resume">
-            <h2>Resume</h2>
-            <p><a href="/static/wyat_resume.pdf" target="_blank">[download resume.pdf]</a></p>
-        </section>
+            <!-- Skills Section -->
+            <section id="skills">
+                <h2>Skills</h2>
+                <ul class="skills-list">
+                    <li>Docker</li>
+                    <li>Git</li>
+                    <li>Go</li>
+                    <li>GraphQL</li>
+                    <li>JavaScript</li>
+                    <li>MongoDB</li>
+                    <li>Next.js</li>
+                    <li>Node.js</li>
+                    <li>PostgreSQL</li>
+                    <li>Python</li>
+                    <li>React</li>
+                    <li>Redis</li>
+                    <li>TypeScript</li>
+                </ul>
+            </section>
 
-        <!-- Quotes Section -->
-        <section class="box" id="quotes">
-            <h2>Quotes</h2>
-            <p class="text-dim">$ quote --submit</p>
+            <!-- Experience Section -->
+            <section id="experience">
+                <h2>Experience</h2>
 
-            <form hx-post="/quote" hx-target="#quotes-list" hx-swap="afterbegin" hx-on::after-request="this.reset()">
-                <div class="form-row">
-                    <label for="name">name:</label>
-                    <input type="text" id="name" name="name" placeholder="anonymous">
+                <div class="experience-entry">
+                    <p><span class="company">Waggoner Financial</span> <span class="text-muted">-</span> <span class="role">Software Engineer</span></p>
+                    <p class="date">Jun 2024 – Present</p>
+                    <p>Leading a 4-engineer squad building enterprise fintech solutions with TypeScript, NestJS, GraphQL, Next.js, and React Native.</p>
                 </div>
-                <div class="form-row">
-                    <label for="quote">quote:</label>
-                    <input type="text" id="quote" name="quote" required style="flex: 1;">
+
+                <div class="experience-entry">
+                    <p><span class="company">Brass Raven</span> <span class="text-muted">-</span> <span class="role">Co-founder</span></p>
+                    <p class="date">Oct 2022 – Present</p>
+                    <p>Co-founded Audioparrot, an audiobook creation platform. Built Python Flask microservices with RabbitMQ and Redis.</p>
                 </div>
-                <button type="submit">[submit]</button>
-            </form>
 
-            <p class="text-dim mt-1">$ quote --list</p>
-            <div id="quotes-list">
-            {{if .Quotes}}
-                {{range .Quotes}}
-                    {{template "quote-item" .}}
+                <div class="experience-entry">
+                    <p><span class="company">State of Michigan – DNR</span> <span class="text-muted">-</span> <span class="role">Student Software Developer</span></p>
+                    <p class="date">May 2023 – Jun 2024</p>
+                    <p>Developed Angular/.NET production application serving 500+ monthly users.</p>
+                </div>
+            </section>
+
+            <!-- Counter Section -->
+            <section id="counter">
+                <h2>Counter</h2>
+                <div id="counter-section">
+                    <p class="counter-display" id="counter-value">{{.WebhookCount}}</p>
+                    <div class="counter-buttons">
+                        <button hx-post="/decrement" hx-target="#counter-section" hx-swap="innerHTML">-</button>
+                        <button hx-post="/increment" hx-target="#counter-section" hx-swap="innerHTML">+</button>
+                    </div>
+                    <p class="text-muted mt-1">Total clicks: <span id="total-clicks">{{.TotalClicks}}</span></p>
+                </div>
+            </section>
+
+            <!-- GitHub Repos Section -->
+            <section id="projects">
+                <h2>Repositories</h2>
+                {{if .GitHubRepos}}
+                    {{range .GitHubRepos}}
+                    <div class="repo-item">
+                        <div>
+                            <a href="{{.HTMLURL}}" target="_blank" class="repo-name">{{.Name}}</a>
+                            {{if .Description}}<span class="text-muted"> - {{.Description}}</span>{{end}}
+                        </div>
+                        <div class="repo-meta">
+                            {{if .Language}}{{.Language}}{{end}}
+                            {{if .StargazersCount}} · ★{{.StargazersCount}}{{end}}
+                        </div>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <p class="text-muted">No repositories found.</p>
                 {{end}}
-            {{else}}
-                <p class="text-dim" id="no-quotes">No quotes yet.</p>
-            {{end}}
-            </div>
-        </section>
+            </section>
 
-        <!-- Stats -->
-        <p class="text-dim">page_views: {{.PageViewCount}}</p>
-    </main>
+            <!-- Resume Section -->
+            <section id="resume">
+                <h2>Resume</h2>
+                <p><a href="/static/wyat_resume.pdf" target="_blank">Download Resume (PDF)</a></p>
+            </section>
 
-    <footer>
-        <p>
-            <a href="https://github.com/wsoule" target="_blank">[github]</a>
-            <a href="https://linkedin.com/in/wyat-soule" target="_blank">[linkedin]</a>
-        </p>
-        <p>&copy; 2025 Wyat</p>
-    </footer>
+            <!-- Quotes Section -->
+            <section id="quotes">
+                <h2>Quotes</h2>
+
+                <form hx-post="/quote" hx-target="#quotes-list" hx-swap="afterbegin" hx-on::after-request="this.reset()">
+                    <div class="form-row">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" name="name" placeholder="Anonymous">
+                    </div>
+                    <div class="form-row">
+                        <label for="quote">Quote</label>
+                        <input type="text" id="quote" name="quote" required>
+                    </div>
+                    <button type="submit">Submit</button>
+                </form>
+
+                <div id="quotes-list" class="mt-1">
+                {{if .Quotes}}
+                    {{range .Quotes}}
+                        {{template "quote-item" .}}
+                    {{end}}
+                {{else}}
+                    <p class="text-muted" id="no-quotes">No quotes yet.</p>
+                {{end}}
+                </div>
+            </section>
+
+            <p class="text-muted">Page views: {{.PageViewCount}}</p>
+
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
 
     <script>
         // Convert timestamps to user's local timezone
@@ -241,6 +239,34 @@
             ws.onclose = function() { setTimeout(connectWebSocket, 2000); };
         }
         connectWebSocket();
+
+        // Scrollspy for TOC
+        function initScrollspy() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.page-toc a[data-section]');
+
+            if (sections.length === 0 || tocLinks.length === 0) return;
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(link => link.classList.remove('active'));
+                        const activeLink = document.querySelector(
+                            '.page-toc a[data-section="' + entry.target.id + '"]'
+                        );
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '-20% 0px -60% 0px',
+                threshold: 0
+            });
+
+            sections.forEach(section => observer.observe(section));
+        }
+        initScrollspy();
     </script>
 </body>
 </html>

@@ -164,7 +164,8 @@ type DebtResult struct {
 // ================== Page Handlers ==================
 
 func financeIndexHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "finance-index.html", nil)
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "finance-index.html", data)
 	if err != nil {
 		log.Println("Error executing finance index template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)
@@ -172,7 +173,8 @@ func financeIndexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func financeInvestmentHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "investment.html", nil)
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "investment.html", data)
 	if err != nil {
 		log.Println("Error executing investment template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)
@@ -180,7 +182,8 @@ func financeInvestmentHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func financeReturnHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "return.html", nil)
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "return.html", data)
 	if err != nil {
 		log.Println("Error executing return template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)
@@ -188,7 +191,8 @@ func financeReturnHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func financeLoanHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "loan.html", nil)
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "loan.html", data)
 	if err != nil {
 		log.Println("Error executing loan template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)
@@ -196,7 +200,8 @@ func financeLoanHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func financeSavingsGoalHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "savings-goal.html", nil)
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "savings-goal.html", data)
 	if err != nil {
 		log.Println("Error executing savings-goal template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)
@@ -204,7 +209,8 @@ func financeSavingsGoalHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func financeFIREHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "fire.html", nil)
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "fire.html", data)
 	if err != nil {
 		log.Println("Error executing fire template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)
@@ -212,7 +218,8 @@ func financeFIREHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func financeInflationHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "inflation.html", nil)
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "inflation.html", data)
 	if err != nil {
 		log.Println("Error executing inflation template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)
@@ -220,7 +227,8 @@ func financeInflationHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func financeDebtHandler(w http.ResponseWriter, r *http.Request) {
-	err := templates.ExecuteTemplate(w, "debt.html", nil)
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "debt.html", data)
 	if err != nil {
 		log.Println("Error executing debt template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)

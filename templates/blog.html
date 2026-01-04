@@ -4,32 +4,84 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{.Title}} - Wyat</title>
+    <meta name="description" content="{{.Title}} - Blog post by Wyat">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <span class="prompt">wyat@site:~/blogs$</span>
-        <nav hx-boost="true">
-            <a href="/">[home]</a>
-            <a href="/blogs">[blogs]</a>
-            <a href="/finance">[finance]</a>
-            <a href="https://github.com/wsoule" target="_blank">[github]</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
 
-    <main>
-        <p class="text-dim">$ cat {{.Title | printf "%s.md"}}</p>
+            <nav class="page-toc">
+                <h3>Contents</h3>
+                <ul id="toc-list"></ul>
+            </nav>
+        </aside>
 
-        <article class="box">
-            {{.Content}}
-        </article>
+        <div class="divider"></div>
 
-        <p><a href="/blogs">[← back to blogs]</a></p>
-    </main>
+        <main class="content">
+            <p class="text-muted"><a href="/blogs">&larr; Back to Blog</a></p>
 
-    <footer>
-        <p>&copy; 2025 Wyat</p>
-    </footer>
+            <article>
+                {{.Content}}
+            </article>
+
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const article = document.querySelector('article');
+        const tocList = document.getElementById('toc-list');
+        const headings = article.querySelectorAll('h2, h3');
+
+        headings.forEach((heading, index) => {
+            if (!heading.id) {
+                heading.id = 'section-' + index;
+            }
+
+            const li = document.createElement('li');
+            if (heading.tagName === 'H3') {
+                li.classList.add('toc-h3');
+            }
+
+            const a = document.createElement('a');
+            a.href = '#' + heading.id;
+            a.textContent = heading.textContent;
+            a.dataset.section = heading.id;
+
+            li.appendChild(a);
+            tocList.appendChild(li);
+        });
+
+        // Scrollspy
+        const tocLinks = document.querySelectorAll('.page-toc a[data-section]');
+        if (headings.length > 0 && tocLinks.length > 0) {
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(link => link.classList.remove('active'));
+                        const activeLink = document.querySelector(
+                            '.page-toc a[data-section="' + entry.target.id + '"]'
+                        );
+                        if (activeLink) {
+                            activeLink.classList.add('active');
+                        }
+                    }
+                });
+            }, {
+                rootMargin: '-20% 0px -60% 0px',
+                threshold: 0
+            });
+
+            headings.forEach(heading => observer.observe(heading));
+        }
+    });
+    </script>
 </body>
 </html>

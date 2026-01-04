@@ -1,8 +1,8 @@
 {{define "counter"}}
-<p class="text-dim">count: <span id="counter">{{.Count}}</span></p>
-<div class="counter-controls">
-    <button hx-post="/decrement" hx-target="#counter-section" hx-swap="innerHTML">[-]</button>
-    <button hx-post="/increment" hx-target="#counter-section" hx-swap="innerHTML">[+]</button>
+<p class="counter-display" id="counter-value">{{.Count}}</p>
+<div class="counter-buttons">
+    <button hx-post="/decrement" hx-target="#counter-section" hx-swap="innerHTML">-</button>
+    <button hx-post="/increment" hx-target="#counter-section" hx-swap="innerHTML">+</button>
 </div>
-<p class="text-dim">total_clicks: {{.TotalClicks}}</p>
+<p class="text-muted mt-1">Total clicks: <span id="total-clicks">{{.TotalClicks}}</span></p>
 {{end}}

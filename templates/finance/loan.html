@@ -4,52 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loan vs Investing - Wyat</title>
+    <meta name="description" content="Compare paying off a loan early vs investing the difference.">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <span class="prompt">wyat@site:~/finance$</span>
-        <nav hx-boost="true">
-            <a href="/">[home]</a>
-            <a href="/blogs">[blogs]</a>
-            <a href="/finance">[finance]</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
 
-    <main>
-        <section class="box">
+            <nav class="page-toc">
+                <h3>On This Page</h3>
+                <ul>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#result">Result</a></li>
+                </ul>
+                <h3>Other Calculators</h3>
+                <ul>
+                    <li><a href="/finance/savings-goal">Savings Goal</a></li>
+                    <li><a href="/finance/investment">Investment</a></li>
+                    <li><a href="/finance/return">Return</a></li>
+                    <li><a href="/finance/fire">FIRE</a></li>
+                    <li><a href="/finance/inflation">Inflation</a></li>
+                    <li><a href="/finance/debt">Debt</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="divider"></div>
+
+        <main class="content">
             <h1>Loan vs Investing</h1>
-            <p class="text-dim">$ ./loan --compare</p>
+            <p class="text-secondary">Compare the cost of a loan against potential investment returns.</p>
 
-            <form hx-post="/api/loan-comparison" hx-target="#result">
-                <div class="form-row">
-                    <label>loan_amount:</label>
-                    <input type="number" name="loanAmount" placeholder="10000" step="0.01" required>
-                </div>
-                <div class="form-row">
-                    <label>interest_rate:</label>
-                    <input type="number" name="interestRate" placeholder="5.5" step="0.01" required>
-                </div>
-                <div class="form-row">
-                    <label>term_months:</label>
-                    <input type="number" name="termMonths" placeholder="60" required>
-                </div>
-                <div class="form-row">
-                    <label>invest_return:</label>
-                    <input type="number" name="investmentReturnRate" placeholder="7" step="0.01" required>
-                </div>
-                <button type="submit">[execute]</button>
-            </form>
+            <section id="calculator">
+                <h2>Input</h2>
+                <form hx-post="/api/loan-comparison" hx-target="#result">
+                    <div class="form-row">
+                        <label>Loan Amount ($)</label>
+                        <input type="number" name="loanAmount" placeholder="10000" step="0.01" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Interest Rate (%)</label>
+                        <input type="number" name="interestRate" placeholder="5.5" step="0.01" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Term (Months)</label>
+                        <input type="number" name="termMonths" placeholder="60" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Investment Return (%)</label>
+                        <input type="number" name="investmentReturnRate" placeholder="7" step="0.01" required>
+                    </div>
+                    <button type="submit">Calculate</button>
+                </form>
+            </section>
 
-            <div id="result"></div>
-        </section>
+            <section id="result"></section>
 
-        <p><a href="/finance">[← back]</a></p>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Wyat</p>
-    </footer>
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
 </body>
 </html>

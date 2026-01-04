@@ -4,60 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Finance Calculators - Wyat</title>
+    <meta name="description" content="Free finance calculators for savings goals, investments, FIRE, loans, and more.">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <span class="prompt">wyat@site:~/finance$</span>
-        <nav hx-boost="true">
-            <a href="/">[home]</a>
-            <a href="/blogs">[blogs]</a>
-            <a href="/finance">[finance]</a>
-            <a href="https://github.com/wsoule" target="_blank">[github]</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
 
-    <main>
-        <section class="box">
+            <nav class="page-toc">
+                <h3>Calculators</h3>
+                <ul>
+                    <li><a href="/finance/savings-goal">Savings Goal</a></li>
+                    <li><a href="/finance/investment">Investment</a></li>
+                    <li><a href="/finance/return">Return</a></li>
+                    <li><a href="/finance/loan">Loan</a></li>
+                    <li><a href="/finance/fire">FIRE</a></li>
+                    <li><a href="/finance/inflation">Inflation</a></li>
+                    <li><a href="/finance/debt">Debt</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="divider"></div>
+
+        <main class="content">
             <h1>Finance Calculators</h1>
-            <p class="text-dim">$ ls -la ./calculators/</p>
+            <p class="text-secondary">Tools to help you plan and understand your finances.</p>
 
-            <div class="repo-item">
-                <a href="/finance/savings-goal">savings-goal</a>
-                <span class="text-dim">How much to save monthly</span>
-            </div>
-            <div class="repo-item">
-                <a href="/finance/investment">investment</a>
-                <span class="text-dim">Recurring stock investments</span>
-            </div>
-            <div class="repo-item">
-                <a href="/finance/return">return</a>
-                <span class="text-dim">Total and annualized returns</span>
-            </div>
-            <div class="repo-item">
-                <a href="/finance/loan">loan</a>
-                <span class="text-dim">Loan vs investing comparison</span>
-            </div>
-            <div class="repo-item">
-                <a href="/finance/fire">fire</a>
-                <span class="text-dim">When can you retire?</span>
-            </div>
-            <div class="repo-item">
-                <a href="/finance/inflation">inflation</a>
-                <span class="text-dim">Future purchasing power</span>
-            </div>
-            <div class="repo-item">
-                <a href="/finance/debt">debt</a>
-                <span class="text-dim">Debt payoff calculator</span>
-            </div>
-        </section>
+            <section>
+                <div class="repo-item">
+                    <a href="/finance/savings-goal">Savings Goal</a>
+                    <span class="text-muted">How much to save monthly</span>
+                </div>
+                <div class="repo-item">
+                    <a href="/finance/investment">Investment</a>
+                    <span class="text-muted">Recurring stock investments</span>
+                </div>
+                <div class="repo-item">
+                    <a href="/finance/return">Return</a>
+                    <span class="text-muted">Total and annualized returns</span>
+                </div>
+                <div class="repo-item">
+                    <a href="/finance/loan">Loan</a>
+                    <span class="text-muted">Loan vs investing comparison</span>
+                </div>
+                <div class="repo-item">
+                    <a href="/finance/fire">FIRE</a>
+                    <span class="text-muted">When can you retire?</span>
+                </div>
+                <div class="repo-item">
+                    <a href="/finance/inflation">Inflation</a>
+                    <span class="text-muted">Future purchasing power</span>
+                </div>
+                <div class="repo-item">
+                    <a href="/finance/debt">Debt</a>
+                    <span class="text-muted">Debt payoff calculator</span>
+                </div>
+            </section>
 
-        <p><a href="/">[← back]</a></p>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Wyat</p>
-    </footer>
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
 </body>
 </html>

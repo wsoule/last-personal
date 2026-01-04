@@ -33,10 +33,17 @@ type GitHubRepo struct {
 	HTMLURL         string `json:"html_url"`
 	Language        string `json:"language"`
 	StargazersCount int    `json:"stargazers_count"`
+	Archived        bool   `json:"archived"`
+}
+
+// BasePageData contains common fields for all page templates
+type BasePageData struct {
+	CurrentPage string
 }
 
 // PageData represents the data passed to the home page template
 type PageData struct {
+	BasePageData
 	Name          string
 	WebhookCount  int
 	PageViewCount int
@@ -51,8 +58,15 @@ type BlogInfo struct {
 	Filename string
 }
 
+// BlogsPageData represents the data passed to the blogs listing page
+type BlogsPageData struct {
+	BasePageData
+	Blogs []BlogInfo
+}
+
 // BlogPageData represents the data passed to individual blog pages
 type BlogPageData struct {
+	BasePageData
 	Title   string
 	Content template.HTML
 }
@@ -200,6 +214,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 
 	// Render template
 	data := PageData{
+		BasePageData:  BasePageData{CurrentPage: "home"},
 		Name:          "Wyat",
 		WebhookCount:  webhookCounter.Count,
 		PageViewCount: pageViewCounter.Count,
@@ -239,11 +254,19 @@ func getGitHubRepos(username string) []GitHubRepo {
 		return []GitHubRepo{}
 	}
 
-	var repos []GitHubRepo
-	err = json.NewDecoder(resp.Body).Decode(&repos)
+	var allRepos []GitHubRepo
+	err = json.NewDecoder(resp.Body).Decode(&allRepos)
 	if err != nil {
 		log.Println("Error decoding GitHub response:", err)
 		return []GitHubRepo{}
+	}
+
+	// Filter out archived repositories
+	var repos []GitHubRepo
+	for _, repo := range allRepos {
+		if !repo.Archived {
+			repos = append(repos, repo)
+		}
 	}
 
 	return repos
@@ -282,10 +305,9 @@ func blogsHandler(w http.ResponseWriter, r *http.Request) {
 		})
 	}
 
-	data := struct {
-		Blogs []BlogInfo
-	}{
-		Blogs: blogs,
+	data := BlogsPageData{
+		BasePageData: BasePageData{CurrentPage: "blogs"},
+		Blogs:        blogs,
 	}
 
 	err = templates.ExecuteTemplate(w, "blogs.html", data)
@@ -330,8 +352,9 @@ func blogHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := BlogPageData{
-		Title:   title,
-		Content: template.HTML(buf.String()),
+		BasePageData: BasePageData{CurrentPage: "blogs"},
+		Title:        title,
+		Content:      template.HTML(buf.String()),
 	}
 
 	err = templates.ExecuteTemplate(w, "blog.html", data)

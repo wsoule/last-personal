@@ -3,25 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Blogs - Wyat</title>
+    <title>Blog - Wyat</title>
+    <meta name="description" content="Blog posts by Wyat, a Full Stack Developer.">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <span class="prompt">wyat@site:~/blogs$</span>
-        <nav hx-boost="true">
-            <a href="/">[home]</a>
-            <a href="/blogs">[blogs]</a>
-            <a href="/finance">[finance]</a>
-            <a href="https://github.com/wsoule" target="_blank">[github]</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
 
-    <main>
-        <section class="box">
-            <h1>Blogs</h1>
-            <p class="text-dim">$ ls -la ./posts/</p>
+            <nav class="page-toc">
+                <h3>Posts</h3>
+                <ul>
+                    {{range .Blogs}}
+                    <li><a href="/blog/{{.Filename}}">{{.Title}}</a></li>
+                    {{end}}
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="divider"></div>
+
+        <main class="content">
+            <h1>Blog</h1>
 
             {{if .Blogs}}
                 {{range .Blogs}}
@@ -30,15 +35,13 @@
                 </div>
                 {{end}}
             {{else}}
-                <p class="text-dim">No blog posts yet.</p>
+                <p class="text-secondary">No blog posts yet.</p>
             {{end}}
-        </section>
 
-        <p><a href="/">[← back]</a></p>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Wyat</p>
-    </footer>
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
 </body>
 </html>

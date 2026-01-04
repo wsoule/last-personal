@@ -4,52 +4,68 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Debt Payoff Calculator - Wyat</title>
+    <meta name="description" content="Calculate how long it takes to pay off debt and how extra payments save money.">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <span class="prompt">wyat@site:~/finance$</span>
-        <nav hx-boost="true">
-            <a href="/">[home]</a>
-            <a href="/blogs">[blogs]</a>
-            <a href="/finance">[finance]</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
 
-    <main>
-        <section class="box">
-            <h1>Debt Payoff</h1>
-            <p class="text-dim">$ ./debt --payoff</p>
+            <nav class="page-toc">
+                <h3>On This Page</h3>
+                <ul>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#result">Result</a></li>
+                </ul>
+                <h3>Other Calculators</h3>
+                <ul>
+                    <li><a href="/finance/savings-goal">Savings Goal</a></li>
+                    <li><a href="/finance/investment">Investment</a></li>
+                    <li><a href="/finance/return">Return</a></li>
+                    <li><a href="/finance/loan">Loan</a></li>
+                    <li><a href="/finance/fire">FIRE</a></li>
+                    <li><a href="/finance/inflation">Inflation</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-            <form hx-post="/api/debt-calc" hx-target="#result">
-                <div class="form-row">
-                    <label>debt_amount:</label>
-                    <input type="number" name="debtAmount" placeholder="10000" step="0.01" required>
-                </div>
-                <div class="form-row">
-                    <label>interest_rate:</label>
-                    <input type="number" name="interestRate" placeholder="18" step="0.01" required>
-                </div>
-                <div class="form-row">
-                    <label>min_payment:</label>
-                    <input type="number" name="minimumPayment" placeholder="200" step="0.01" required>
-                </div>
-                <div class="form-row">
-                    <label>extra_payment:</label>
-                    <input type="number" name="extraPayment" placeholder="100" value="0">
-                </div>
-                <button type="submit">[execute]</button>
-            </form>
+        <div class="divider"></div>
 
-            <div id="result"></div>
-        </section>
+        <main class="content">
+            <h1>Debt Payoff Calculator</h1>
+            <p class="text-secondary">See how long it takes to pay off debt and how extra payments help.</p>
 
-        <p><a href="/finance">[← back]</a></p>
-    </main>
+            <section id="calculator">
+                <h2>Input</h2>
+                <form hx-post="/api/debt-calc" hx-target="#result">
+                    <div class="form-row">
+                        <label>Debt Amount ($)</label>
+                        <input type="number" name="debtAmount" placeholder="10000" step="0.01" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Interest Rate (%)</label>
+                        <input type="number" name="interestRate" placeholder="18" step="0.01" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Minimum Payment ($)</label>
+                        <input type="number" name="minimumPayment" placeholder="200" step="0.01" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Extra Payment ($)</label>
+                        <input type="number" name="extraPayment" placeholder="100" value="0">
+                    </div>
+                    <button type="submit">Calculate</button>
+                </form>
+            </section>
 
-    <footer>
-        <p>&copy; 2025 Wyat</p>
-    </footer>
+            <section id="result"></section>
+
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
 </body>
 </html>

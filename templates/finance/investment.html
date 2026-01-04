@@ -4,59 +4,75 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Investment Calculator - Wyat</title>
+    <meta name="description" content="Calculate returns on recurring stock investments with historical data.">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
-    <header>
-        <span class="prompt">wyat@site:~/finance$</span>
-        <nav hx-boost="true">
-            <a href="/">[home]</a>
-            <a href="/blogs">[blogs]</a>
-            <a href="/finance">[finance]</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
 
-    <main>
-        <section class="box">
+            <nav class="page-toc">
+                <h3>On This Page</h3>
+                <ul>
+                    <li><a href="#calculator">Calculator</a></li>
+                    <li><a href="#result">Result</a></li>
+                </ul>
+                <h3>Other Calculators</h3>
+                <ul>
+                    <li><a href="/finance/savings-goal">Savings Goal</a></li>
+                    <li><a href="/finance/return">Return</a></li>
+                    <li><a href="/finance/loan">Loan</a></li>
+                    <li><a href="/finance/fire">FIRE</a></li>
+                    <li><a href="/finance/inflation">Inflation</a></li>
+                    <li><a href="/finance/debt">Debt</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="divider"></div>
+
+        <main class="content">
             <h1>Investment Calculator</h1>
-            <p class="text-dim">$ ./investment --ticker AAPL</p>
+            <p class="text-secondary">Calculate returns on recurring stock investments using historical data.</p>
 
-            <form hx-post="/api/investment-calc" hx-target="#result">
-                <div class="form-row">
-                    <label>ticker:</label>
-                    <input type="text" name="ticker" placeholder="AAPL" required>
-                </div>
-                <div class="form-row">
-                    <label>start_date:</label>
-                    <input type="date" name="startDate" required>
-                </div>
-                <div class="form-row">
-                    <label>end_date:</label>
-                    <input type="date" name="endDate" required>
-                </div>
-                <div class="form-row">
-                    <label>amount:</label>
-                    <input type="number" name="amount" placeholder="100" step="0.01" required>
-                </div>
-                <div class="form-row">
-                    <label>frequency:</label>
-                    <select name="frequency">
-                        <option value="monthly">monthly</option>
-                        <option value="weekly">weekly</option>
-                    </select>
-                </div>
-                <button type="submit">[execute]</button>
-            </form>
+            <section id="calculator">
+                <h2>Input</h2>
+                <form hx-post="/api/investment-calc" hx-target="#result">
+                    <div class="form-row">
+                        <label>Ticker Symbol</label>
+                        <input type="text" name="ticker" placeholder="AAPL" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Start Date</label>
+                        <input type="date" name="startDate" required>
+                    </div>
+                    <div class="form-row">
+                        <label>End Date</label>
+                        <input type="date" name="endDate" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Amount ($)</label>
+                        <input type="number" name="amount" placeholder="100" step="0.01" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Frequency</label>
+                        <select name="frequency">
+                            <option value="monthly">Monthly</option>
+                            <option value="weekly">Weekly</option>
+                        </select>
+                    </div>
+                    <button type="submit">Calculate</button>
+                </form>
+            </section>
 
-            <div id="result"></div>
-        </section>
+            <section id="result"></section>
 
-        <p><a href="/finance">[← back]</a></p>
-    </main>
-
-    <footer>
-        <p>&copy; 2025 Wyat</p>
-    </footer>
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
 </body>
 </html>
