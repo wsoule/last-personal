@@ -1,9 +1,22 @@
 {{define "inflation-result"}}
 <div class="output">
-    <p class="text-dim">--- output ---</p>
-    <p>future_value:      ${{printf "%.2f" .FutureValueNeeded}}</p>
-    <p>power_lost:        ${{printf "%.2f" .PurchasingPowerLost}} ({{printf "%.1f" .PercentLost}}%)</p>
-
-    <p class="text-dim">In {{.Years}} years, ${{printf "%.2f" .FutureValueNeeded}} = ${{printf "%.2f" .CurrentAmount}} today</p>
+    <div class="result-section">
+        <div class="result-highlight">
+            <div class="result-row">
+                <span class="result-label">Future Value Needed</span>
+                <span class="result-value">${{printf "%.2f" .FutureValueNeeded}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Purchasing Power</div>
+        <div class="result-row">
+            <span class="result-label">Power Lost</span>
+            <span class="result-value">${{printf "%.2f" .PurchasingPowerLost}} ({{printf "%.1f" .PercentLost}}%)</span>
+        </div>
+    </div>
+    <p class="text-muted" style="margin-top: 0.75rem; font-size: 0.875rem;">
+        In {{.Years}} years, ${{printf "%.2f" .FutureValueNeeded}} will buy what ${{printf "%.2f" .CurrentAmount}} buys today.
+    </p>
 </div>
 {{end}}

@@ -1,23 +1,44 @@
 {{define "loan-result"}}
 <div class="output">
-    <p class="text-dim">--- summary ---</p>
-    <p>monthly_payment:   ${{printf "%.2f" .MonthlyPayment}}</p>
-    <p>total_paid:        ${{printf "%.2f" .TotalPaid}}</p>
-    <p>total_interest:    ${{printf "%.2f" .TotalInterest}}</p>
-    <p>final_invest_val:  ${{printf "%.2f" .FinalInvestValue}}</p>
-    <p>difference:        ${{printf "%.2f" .Difference}} {{if gt .Difference 0}}[investing wins]{{else}}[loan payoff wins]{{end}}</p>
+    <div class="result-section">
+        <div class="result-highlight">
+            <div class="result-row">
+                <span class="result-label">Difference</span>
+                <span class="result-value">${{printf "%.2f" .Difference}} {{if gt .Difference 0}}(investing wins){{else}}(loan payoff wins){{end}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Summary</div>
+        <div class="result-row">
+            <span class="result-label">Monthly Payment</span>
+            <span class="result-value">${{printf "%.2f" .MonthlyPayment}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Paid</span>
+            <span class="result-value">${{printf "%.2f" .TotalPaid}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Interest</span>
+            <span class="result-value">${{printf "%.2f" .TotalInterest}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Final Investment Value</span>
+            <span class="result-value">${{printf "%.2f" .FinalInvestValue}}</span>
+        </div>
+    </div>
 
     <details>
-        <summary class="text-dim">[view amortization schedule - {{len .Schedule}} months]</summary>
+        <summary class="text-muted">[view amortization schedule — {{len .Schedule}} months]</summary>
         <table>
             <thead>
                 <tr>
-                    <th>month</th>
-                    <th>payment</th>
-                    <th>principal</th>
-                    <th>interest</th>
-                    <th>balance</th>
-                    <th>invested</th>
+                    <th>Month</th>
+                    <th>Payment</th>
+                    <th>Principal</th>
+                    <th>Interest</th>
+                    <th>Balance</th>
+                    <th>Invested</th>
                 </tr>
             </thead>
             <tbody>

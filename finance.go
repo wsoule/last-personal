@@ -109,6 +109,7 @@ type FIRERequest struct {
 	AnnualExpenses float64
 	CurrentSavings float64
 	AnnualReturn   float64 // percentage
+	WithdrawalRate float64 // percentage (e.g., 4.0 for 4% rule)
 }
 
 // FIREResult represents output of FIRE calculator
@@ -120,6 +121,7 @@ type FIREResult struct {
 	AnnualSavings   float64
 	MonthlySavings  float64
 	PortfolioAtFIRE float64
+	WithdrawalRate  float64
 }
 
 // InflationRequest represents input for inflation calculator
@@ -697,6 +699,11 @@ func fireCalcHandler(w http.ResponseWriter, r *http.Request) {
 	annualExpenses, _ := strconv.ParseFloat(r.FormValue("annualExpenses"), 64)
 	currentSavings, _ := strconv.ParseFloat(r.FormValue("currentSavings"), 64)
 	annualReturn, _ := strconv.ParseFloat(r.FormValue("annualReturn"), 64)
+	withdrawalRate, _ := strconv.ParseFloat(r.FormValue("withdrawalRate"), 64)
+
+	if withdrawalRate <= 0 {
+		withdrawalRate = 4.0 // Default to 4% rule
+	}
 
 	if annualIncome <= 0 || annualExpenses <= 0 || annualExpenses >= annualIncome {
 		http.Error(w, "Invalid input: expenses must be less than income", http.StatusBadRequest)
@@ -709,6 +716,7 @@ func fireCalcHandler(w http.ResponseWriter, r *http.Request) {
 		AnnualExpenses: annualExpenses,
 		CurrentSavings: currentSavings,
 		AnnualReturn:   annualReturn,
+		WithdrawalRate: withdrawalRate,
 	})
 
 	if isHTMXRequest(r) {
@@ -726,8 +734,8 @@ func fireCalcHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func calculateFIRE(req FIRERequest) FIREResult {
-	// FIRE number = 25x annual expenses (4% safe withdrawal rate)
-	fireNumber := req.AnnualExpenses * 25
+	// FIRE number = annual expenses / withdrawal rate
+	fireNumber := req.AnnualExpenses / (req.WithdrawalRate / 100)
 
 	annualSavings := req.AnnualIncome - req.AnnualExpenses
 	savingsRate := (annualSavings / req.AnnualIncome) * 100
@@ -755,6 +763,7 @@ func calculateFIRE(req FIRERequest) FIREResult {
 		AnnualSavings:   annualSavings,
 		MonthlySavings:  monthlySavings,
 		PortfolioAtFIRE: portfolio,
+		WithdrawalRate:  req.WithdrawalRate,
 	}
 }
 

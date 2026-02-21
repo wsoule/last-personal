@@ -1,10 +1,28 @@
 {{define "investment-result"}}
 <div class="output">
-    <p class="text-dim">--- output: {{.Ticker}} ---</p>
-    <p class="text-dim">period: {{.StartDate}} to {{.EndDate}}</p>
-    <p>total_invested:    ${{printf "%.2f" .TotalInvested}} ({{.Investments}} buys)</p>
-    <p>total_shares:      {{printf "%.4f" .TotalShares}}</p>
-    <p>final_value:       ${{printf "%.2f" .FinalValue}}</p>
-    <p>total_return:      ${{printf "%.2f" .TotalReturn}} ({{printf "%.2f" .PercentReturn}}%)</p>
+    <div class="result-section">
+        <div class="result-section-header">{{.Ticker}} — {{.StartDate}} to {{.EndDate}}</div>
+        <div class="result-highlight">
+            <div class="result-row">
+                <span class="result-label">Final Value</span>
+                <span class="result-value">${{printf "%.2f" .FinalValue}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Investment Details</div>
+        <div class="result-row">
+            <span class="result-label">Total Invested</span>
+            <span class="result-value">${{printf "%.2f" .TotalInvested}} ({{.Investments}} buys)</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Shares</span>
+            <span class="result-value">{{printf "%.4f" .TotalShares}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Return</span>
+            <span class="result-value">${{printf "%.2f" .TotalReturn}} ({{printf "%.2f" .PercentReturn}}%)</span>
+        </div>
+    </div>
 </div>
 {{end}}
