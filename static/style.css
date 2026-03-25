@@ -610,6 +610,141 @@ img {
 }
 
 /* =============================================================================
+   Projects Page
+   ============================================================================= */
+
+.project-card {
+    padding-bottom: 2.5rem;
+    border-bottom: 1px solid var(--divider);
+    margin-bottom: 2.5rem;
+}
+
+.project-card:last-of-type {
+    border-bottom: none;
+}
+
+.project-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.75rem;
+}
+
+.project-header h3 {
+    margin-bottom: 0;
+}
+
+.project-links {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+}
+
+.project-description {
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+
+/* Inline link-style button (for preview toggle) */
+.btn-link {
+    background: none;
+    border: none;
+    padding: 0;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: inherit;
+    cursor: pointer;
+    text-decoration: none;
+    text-transform: none;
+    letter-spacing: inherit;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+    opacity: 1;
+}
+
+/* Tech tags */
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.tech-tag {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 3px;
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    letter-spacing: 0.03em;
+    margin-bottom: 0;
+    padding: 0.2rem 0.6rem;
+}
+
+/* Iframe preview container */
+.iframe-container {
+    margin-top: 1.25rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.iframe-container iframe {
+    display: block;
+    width: 100%;
+    height: 520px;
+    border: none;
+    border-radius: 0;
+}
+
+/* =============================================================================
+   Life Page
+   ============================================================================= */
+
+.feat-entry {
+    margin-bottom: 2rem;
+    padding-left: 1.25rem;
+    border-left: 2px solid var(--border);
+}
+
+.feat-title {
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+}
+
+.feat-date {
+    font-size: 0.875rem;
+    margin-bottom: 0.5rem;
+}
+
+.currently-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.currently-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: baseline;
+}
+
+.currently-label {
+    color: var(--text-muted);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    min-width: 80px;
+}
+
+/* =============================================================================
    Utility Classes
    ============================================================================= */
 
