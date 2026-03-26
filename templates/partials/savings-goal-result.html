@@ -1,14 +1,46 @@
 {{define "savings-goal-result"}}
 <div class="output">
-    <p class="text-dim">--- required savings ---</p>
-    <p>monthly:           ${{printf "%.2f" .MonthlySavings}}</p>
-    <p>weekly:            ${{printf "%.2f" .WeeklySavings}}</p>
-    <p>yearly:            ${{printf "%.2f" .YearlySavings}}</p>
-
-    <p class="text-dim">--- breakdown ---</p>
-    <p>years_to_goal:     {{.YearsToGoal}}</p>
-    <p>contributions:     ${{printf "%.2f" .TotalContributions}}</p>
-    <p>interest_earned:   ${{printf "%.2f" .InterestEarned}}</p>
-    <p>current_growth:    ${{printf "%.2f" .CurrentSavingsGrowth}}</p>
+    {{if eq (printf "%.2f" .MonthlySavings) "0.00"}}
+    <div class="result-success">
+        Your current savings will grow to exceed your goal — no additional contributions needed!
+    </div>
+    {{else}}
+    <div class="result-section">
+        <div class="result-section-header">Required Savings</div>
+        <div class="result-highlight">
+            <div class="result-row">
+                <span class="result-label">Monthly</span>
+                <span class="result-value">${{printf "%.2f" .MonthlySavings}}</span>
+            </div>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Weekly</span>
+            <span class="result-value">${{printf "%.2f" .WeeklySavings}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Yearly</span>
+            <span class="result-value">${{printf "%.2f" .YearlySavings}}</span>
+        </div>
+    </div>
+    {{end}}
+    <div class="result-section">
+        <div class="result-section-header">Breakdown</div>
+        <div class="result-row">
+            <span class="result-label">Years to Goal</span>
+            <span class="result-value">{{.YearsToGoal}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Contributions</span>
+            <span class="result-value">${{printf "%.2f" .TotalContributions}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Interest Earned</span>
+            <span class="result-value">${{printf "%.2f" .InterestEarned}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Current Savings Growth</span>
+            <span class="result-value">${{printf "%.2f" .CurrentSavingsGrowth}}</span>
+        </div>
+    </div>
 </div>
 {{end}}

@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects – Wyat</title>
+    <meta name="description" content="Projects built by Wyat – finance calculators, audiobook platform, and more.">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
+
+            <nav class="page-toc">
+                <h3>On This Page</h3>
+                <ul>
+                    <li><a href="#finance-calculators">Finance Calculators</a></li>
+                    <li><a href="#audioparrot">Audioparrot</a></li>
+                    <li><a href="#personal-site">Personal Site</a></li>
+                    <li><a href="#repositories">Repositories</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="divider"></div>
+
+        <main class="content">
+            <section>
+                <h2>Projects</h2>
+                <p class="text-secondary">Things I've built — some live, some in progress.</p>
+            </section>
+
+            {{range .Projects}}
+            <section class="project-card">
+                <div class="project-header">
+                    <h3>{{.Name}}</h3>
+                    <div class="project-links">
+                        {{if .GitHubURL}}<a href="{{.GitHubURL}}" target="_blank" rel="noopener">source</a>{{end}}
+                        {{if and .GitHubURL .LiveURL}}<span class="text-muted"> · </span>{{end}}
+                        {{if .LiveURL}}<a href="{{.LiveURL}}" target="_blank" rel="noopener">live</a>{{end}}
+                        {{if .IframeURL}}
+                        <span class="text-muted"> · </span>
+                        <button class="btn-link" onclick="togglePreview(this, '{{.IframeURL}}')">preview</button>
+                        {{end}}
+                    </div>
+                </div>
+
+                <p class="project-description">{{.Description}}</p>
+
+                <ul class="tech-tags">
+                    {{range .Tech}}
+                    <li class="tech-tag">{{.}}</li>
+                    {{end}}
+                </ul>
+
+                {{if .IframeURL}}
+                <div class="iframe-container" style="display:none;"></div>
+                {{end}}
+
+            </section>
+            {{end}}
+
+            <!-- GitHub Repos -->
+            <section id="repositories">
+                <h2>Repositories</h2>
+                <p class="text-secondary">All public GitHub repos, sorted by last updated.</p>
+                {{if .GitHubRepos}}
+                    {{range .GitHubRepos}}
+                    <div class="repo-item">
+                        <div>
+                            <a href="{{.HTMLURL}}" target="_blank" class="repo-name">{{.Name}}</a>
+                            {{if .Description}}<span class="text-muted"> - {{.Description}}</span>{{end}}
+                        </div>
+                        <div class="repo-meta">
+                            {{if .Language}}{{.Language}}{{end}}
+                            {{if .StargazersCount}} · ★{{.StargazersCount}}{{end}}
+                        </div>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <p class="text-muted">No repositories found.</p>
+                {{end}}
+            </section>
+
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        function togglePreview(btn, url) {
+            const container = btn.closest('.project-card').querySelector('.iframe-container');
+            if (!container.querySelector('iframe')) {
+                const iframe = document.createElement('iframe');
+                iframe.src = url;
+                iframe.loading = 'lazy';
+                container.appendChild(iframe);
+            }
+            const isHidden = container.style.display === 'none';
+            container.style.display = isHidden ? 'block' : 'none';
+            btn.textContent = isHidden ? 'close preview' : 'preview';
+        }
+    </script>
+</body>
+</html>

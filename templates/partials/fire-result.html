@@ -1,14 +1,42 @@
 {{define "fire-result"}}
 <div class="output">
-    <p class="text-dim">--- FIRE analysis ---</p>
-    <p>fire_number:       ${{printf "%.0f" .FIRENumber}} (25x expenses)</p>
-    <p>years_to_fire:     {{printf "%.1f" .YearsToFIRE}}</p>
-    <p>fire_age:          {{.FIREAge}}</p>
-    <p>savings_rate:      {{printf "%.1f" .SavingsRate}}%</p>
-
-    <p class="text-dim">--- details ---</p>
-    <p>annual_savings:    ${{printf "%.2f" .AnnualSavings}}</p>
-    <p>monthly_savings:   ${{printf "%.2f" .MonthlySavings}}</p>
-    <p>portfolio_at_fire: ${{printf "%.0f" .PortfolioAtFIRE}}</p>
+    <div class="result-section">
+        <div class="result-highlight">
+            <div class="result-row">
+                <span class="result-label">FIRE Number ({{printf "%.1f" .WithdrawalRate}}% withdrawal)</span>
+                <span class="result-value">${{printf "%.0f" .FIRENumber}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Timeline</div>
+        <div class="result-row">
+            <span class="result-label">Years to FIRE</span>
+            <span class="result-value">{{printf "%.1f" .YearsToFIRE}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">FIRE Age</span>
+            <span class="result-value">{{.FIREAge}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Savings Rate</span>
+            <span class="result-value">{{printf "%.1f" .SavingsRate}}%</span>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Details</div>
+        <div class="result-row">
+            <span class="result-label">Annual Savings</span>
+            <span class="result-value">${{printf "%.2f" .AnnualSavings}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Monthly Savings</span>
+            <span class="result-value">${{printf "%.2f" .MonthlySavings}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Portfolio at FIRE</span>
+            <span class="result-value">${{printf "%.0f" .PortfolioAtFIRE}}</span>
+        </div>
+    </div>
 </div>
 {{end}}

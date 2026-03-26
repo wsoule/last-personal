@@ -36,39 +36,46 @@
         <main class="content">
             <h1>FIRE Calculator</h1>
             <p class="text-secondary">Calculate when you can achieve Financial Independence and Retire Early.</p>
-            <p class="text-muted">Uses 4% safe withdrawal rate (25x annual expenses).</p>
+            <p class="text-muted">Uses safe withdrawal rate to calculate your FIRE number.</p>
 
             <section id="calculator">
                 <h2>Input</h2>
-                <form hx-post="/api/fire-calc" hx-target="#result">
+                <form hx-post="/api/fire-calc" hx-target="#result" hx-indicator="#loading">
                     <div class="form-row">
                         <label>Current Age</label>
-                        <input type="number" name="currentAge" placeholder="30" required>
+                        <input type="number" name="currentAge" placeholder="30" min="1" max="120" required>
                     </div>
                     <div class="form-row">
                         <label>Annual Income ($)</label>
-                        <input type="number" name="annualIncome" placeholder="75000" step="0.01" required>
+                        <input type="number" name="annualIncome" placeholder="75000" min="1" step="0.01" required>
                     </div>
                     <div class="form-row">
                         <label>Annual Expenses ($)</label>
-                        <input type="number" name="annualExpenses" placeholder="50000" step="0.01" required>
+                        <input type="number" name="annualExpenses" placeholder="50000" min="1" step="0.01" required>
                     </div>
                     <div class="form-row">
                         <label>Current Savings ($)</label>
-                        <input type="number" name="currentSavings" placeholder="50000" value="0">
+                        <input type="number" name="currentSavings" placeholder="50000" min="0" step="0.01" value="0">
                     </div>
                     <div class="form-row">
                         <label>Annual Return (%)</label>
-                        <input type="number" name="annualReturn" placeholder="7" step="0.1" required>
+                        <input type="number" name="annualReturn" placeholder="7" min="0" max="50" step="0.1" required>
                     </div>
-                    <button type="submit">Calculate</button>
+                    <div class="form-row">
+                        <label>Withdrawal Rate (%)</label>
+                        <input type="number" name="withdrawalRate" placeholder="4" min="1" max="10" step="0.1" value="4">
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit">Calculate</button>
+                        <span id="loading" class="htmx-indicator">Calculating...</span>
+                    </div>
                 </form>
             </section>
 
             <section id="result"></section>
 
             <footer>
-                <p>&copy; 2025 Wyat</p>
+                <p>&copy; 2026 Wyat</p>
             </footer>
         </main>
     </div>

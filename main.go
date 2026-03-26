@@ -58,6 +58,28 @@ type BlogInfo struct {
 	Filename string
 }
 
+// Project represents a showcase project with optional live preview
+type Project struct {
+	Name        string
+	Description string
+	Tech        []string
+	GitHubURL   string
+	LiveURL     string
+	IframeURL   string // empty means no live preview
+}
+
+// ProjectsPageData represents data passed to the projects page
+type ProjectsPageData struct {
+	BasePageData
+	Projects    []Project
+	GitHubRepos []GitHubRepo
+}
+
+// LifePageData represents data passed to the life/personal page
+type LifePageData struct {
+	BasePageData
+}
+
 // BlogsPageData represents the data passed to the blogs listing page
 type BlogsPageData struct {
 	BasePageData
@@ -119,6 +141,8 @@ func main() {
 	http.HandleFunc("/ws", wsHandler)
 	http.HandleFunc("/blogs", blogsHandler)
 	http.HandleFunc("/blog/", blogHandler)
+	http.HandleFunc("/projects", projectsHandler)
+	http.HandleFunc("/life", lifeHandler)
 
 	// Finance calculator pages
 	http.HandleFunc("/finance", financeIndexHandler)
@@ -209,9 +233,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		cursor.All(ctx, &quotes)
 	}
 
-	// Get GitHub repos
-	repos := getGitHubRepos("wsoule")
-
 	// Render template
 	data := PageData{
 		BasePageData:  BasePageData{CurrentPage: "home"},
@@ -220,7 +241,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		PageViewCount: pageViewCounter.Count,
 		TotalClicks:   totalClicksCounter.Count,
 		Quotes:        quotes,
-		GitHubRepos:   repos,
 	}
 
 	err = templates.ExecuteTemplate(w, "index.html", data)
@@ -311,6 +331,58 @@ func blogsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	err = templates.ExecuteTemplate(w, "blogs.html", data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// projectsHandler renders the projects showcase page
+func projectsHandler(w http.ResponseWriter, r *http.Request) {
+	projects := []Project{
+		{
+			Name:        "Finance Calculators",
+			Description: "A suite of financial planning tools: investment growth, FIRE number, loan comparisons, debt payoff, savings goals, and inflation impact.",
+			Tech:        []string{"Go", "HTMX", "MongoDB"},
+			LiveURL:     "https://wyat.me/finance",
+			IframeURL:   "/finance",
+		},
+		{
+			Name:        "Audioparrot",
+			Description: "Audiobook creation platform. Upload text, get back narrated audio. Built with Python Flask microservices, RabbitMQ for job queuing, and Redis for caching.",
+			Tech:        []string{"Python", "Flask", "RabbitMQ", "Redis"},
+			GitHubURL:   "",
+			LiveURL:     "",
+			IframeURL:   "",
+		},
+		{
+			Name:        "Personal Site",
+			Description: "This site. Go backend, HTMX for interactivity, MongoDB for persistence. Real-time counter via WebSockets. No JavaScript framework.",
+			Tech:        []string{"Go", "HTMX", "MongoDB", "WebSockets"},
+			GitHubURL:   "https://github.com/wsoule",
+			LiveURL:     "https://wyat.me",
+			IframeURL:   "",
+		},
+	}
+
+	data := ProjectsPageData{
+		BasePageData: BasePageData{CurrentPage: "projects"},
+		Projects:     projects,
+		GitHubRepos:  getGitHubRepos("wsoule"),
+	}
+
+	err := templates.ExecuteTemplate(w, "projects.html", data)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+}
+
+// lifeHandler renders the personal/life page
+func lifeHandler(w http.ResponseWriter, r *http.Request) {
+	data := LifePageData{
+		BasePageData: BasePageData{CurrentPage: "life"},
+	}
+
+	err := templates.ExecuteTemplate(w, "life.html", data)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}

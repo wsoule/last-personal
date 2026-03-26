@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Life – Wyat</title>
+    <meta name="description" content="What Wyat does outside of code — dirt biking, personal feats, and interests.">
+    <link rel="stylesheet" href="/static/style.css">
+    <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="layout">
+        <aside class="sidebar">
+            {{template "nav" .}}
+
+            <nav class="page-toc">
+                <h3>On This Page</h3>
+                <ul>
+                    <li><a href="#dirt-bikes" data-section="dirt-bikes">Dirt Bikes</a></li>
+                    <li><a href="#feats" data-section="feats">Feats</a></li>
+                    <li><a href="#currently" data-section="currently">Currently</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <div class="divider"></div>
+
+        <main class="content">
+            <!-- Dirt Bikes -->
+            <section id="dirt-bikes">
+                <h2>Dirt Bikes</h2>
+                <p>I ride. It's the fastest way to feel both completely in control and completely at the mercy of the trail at the same time.</p>
+
+                <div class="feat-entry">
+                    <p class="feat-title">Current Ride</p>
+                    <p class="text-secondary">— add your bike here —</p>
+                </div>
+
+                <div class="feat-entry">
+                    <p class="feat-title">Favorite Trails</p>
+                    <ul>
+                        <li class="text-secondary">— add your go-to spots —</li>
+                    </ul>
+                </div>
+
+                <div class="feat-entry">
+                    <p class="feat-title">Notable Rides</p>
+                    <ul>
+                        <li class="text-secondary">— add memorable rides or events —</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Personal Feats -->
+            <section id="feats">
+                <h2>Feats</h2>
+                <p class="text-muted">Things I've done that aren't on a resume.</p>
+
+                <div class="feat-entry">
+                    <p class="feat-title">— add a feat —</p>
+                    <p class="feat-date text-muted">year</p>
+                    <p>Description of what it took and why it matters to you.</p>
+                </div>
+
+                <div class="feat-entry">
+                    <p class="feat-title">Co-founded a startup</p>
+                    <p class="feat-date text-muted">2022</p>
+                    <p>Built Audioparrot from scratch with a co-founder — from idea to deployed product. Learned that the hardest part of building software isn't the code.</p>
+                </div>
+            </section>
+
+            <!-- Currently -->
+            <section id="currently">
+                <h2>Currently</h2>
+
+                <div class="currently-list">
+                    <div class="currently-item">
+                        <span class="currently-label">riding</span>
+                        <span class="text-secondary">— add your current bike or trail pursuit —</span>
+                    </div>
+                    <div class="currently-item">
+                        <span class="currently-label">building</span>
+                        <span class="text-secondary">enterprise fintech at Waggoner Financial</span>
+                    </div>
+                    <div class="currently-item">
+                        <span class="currently-label">reading</span>
+                        <span class="text-secondary">— add what you're reading —</span>
+                    </div>
+                    <div class="currently-item">
+                        <span class="currently-label">learning</span>
+                        <span class="text-secondary">— add what you're learning outside of work —</span>
+                    </div>
+                </div>
+            </section>
+
+            <footer>
+                <p>&copy; 2025 Wyat</p>
+            </footer>
+        </main>
+    </div>
+
+    <script>
+        function initScrollspy() {
+            const sections = document.querySelectorAll('section[id]');
+            const tocLinks = document.querySelectorAll('.page-toc a[data-section]');
+            if (sections.length === 0 || tocLinks.length === 0) return;
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        tocLinks.forEach(link => link.classList.remove('active'));
+                        const activeLink = document.querySelector('.page-toc a[data-section="' + entry.target.id + '"]');
+                        if (activeLink) activeLink.classList.add('active');
+                    }
+                });
+            }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+            sections.forEach(section => observer.observe(section));
+        }
+        initScrollspy();
+    </script>
+</body>
+</html>

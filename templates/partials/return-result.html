@@ -1,8 +1,23 @@
 {{define "return-result"}}
 <div class="output">
-    <p class="text-dim">--- output ---</p>
-    <p>total_return:      ${{printf "%.2f" .TotalReturn}}</p>
-    <p>percent_return:    {{printf "%.2f" .PercentReturn}}%</p>
-    <p>cagr:              {{printf "%.2f" .AnnualizedReturn}}%</p>
+    <div class="result-section">
+        <div class="result-highlight">
+            <div class="result-row">
+                <span class="result-label">CAGR</span>
+                <span class="result-value">{{printf "%.2f" .AnnualizedReturn}}%</span>
+            </div>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Returns</div>
+        <div class="result-row">
+            <span class="result-label">Total Return</span>
+            <span class="result-value">${{printf "%.2f" .TotalReturn}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Percent Return</span>
+            <span class="result-value">{{printf "%.2f" .PercentReturn}}%</span>
+        </div>
+    </div>
 </div>
 {{end}}

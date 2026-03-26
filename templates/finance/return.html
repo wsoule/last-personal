@@ -39,27 +39,30 @@
 
             <section id="calculator">
                 <h2>Input</h2>
-                <form hx-post="/api/return-calc" hx-target="#result">
+                <form hx-post="/api/return-calc" hx-target="#result" hx-indicator="#loading">
                     <div class="form-row">
                         <label>Initial Investment ($)</label>
-                        <input type="number" name="initialInvestment" placeholder="1000" step="0.01" required>
+                        <input type="number" name="initialInvestment" placeholder="1000" min="0.01" step="0.01" required>
                     </div>
                     <div class="form-row">
                         <label>Final Value ($)</label>
-                        <input type="number" name="finalValue" placeholder="1500" step="0.01" required>
+                        <input type="number" name="finalValue" placeholder="1500" min="0.01" step="0.01" required>
                     </div>
                     <div class="form-row">
                         <label>Years</label>
-                        <input type="number" name="years" placeholder="5" step="0.1" required>
+                        <input type="number" name="years" placeholder="5" min="0.1" step="0.1" required>
                     </div>
-                    <button type="submit">Calculate</button>
+                    <div class="form-actions">
+                        <button type="submit">Calculate</button>
+                        <span id="loading" class="htmx-indicator">Calculating...</span>
+                    </div>
                 </form>
             </section>
 
             <section id="result"></section>
 
             <footer>
-                <p>&copy; 2025 Wyat</p>
+                <p>&copy; 2026 Wyat</p>
             </footer>
         </main>
     </div>

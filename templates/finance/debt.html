@@ -39,31 +39,34 @@
 
             <section id="calculator">
                 <h2>Input</h2>
-                <form hx-post="/api/debt-calc" hx-target="#result">
+                <form hx-post="/api/debt-calc" hx-target="#result" hx-indicator="#loading">
                     <div class="form-row">
                         <label>Debt Amount ($)</label>
-                        <input type="number" name="debtAmount" placeholder="10000" step="0.01" required>
+                        <input type="number" name="debtAmount" placeholder="10000" min="1" step="0.01" required>
                     </div>
                     <div class="form-row">
                         <label>Interest Rate (%)</label>
-                        <input type="number" name="interestRate" placeholder="18" step="0.01" required>
+                        <input type="number" name="interestRate" placeholder="18" min="0" max="100" step="0.01" required>
                     </div>
                     <div class="form-row">
                         <label>Minimum Payment ($)</label>
-                        <input type="number" name="minimumPayment" placeholder="200" step="0.01" required>
+                        <input type="number" name="minimumPayment" placeholder="200" min="1" step="0.01" required>
                     </div>
                     <div class="form-row">
                         <label>Extra Payment ($)</label>
-                        <input type="number" name="extraPayment" placeholder="100" value="0">
+                        <input type="number" name="extraPayment" placeholder="100" min="0" step="0.01" value="0">
                     </div>
-                    <button type="submit">Calculate</button>
+                    <div class="form-actions">
+                        <button type="submit">Calculate</button>
+                        <span id="loading" class="htmx-indicator">Calculating...</span>
+                    </div>
                 </form>
             </section>
 
             <section id="result"></section>
 
             <footer>
-                <p>&copy; 2025 Wyat</p>
+                <p>&copy; 2026 Wyat</p>
             </footer>
         </main>
     </div>

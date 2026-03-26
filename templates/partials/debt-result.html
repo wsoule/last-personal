@@ -1,19 +1,57 @@
 {{define "debt-result"}}
 <div class="output">
-    <p class="text-dim">--- minimum payment only ---</p>
-    <p>months_to_payoff:  {{.MinimumMonths}} ({{printf "%.1f" .MinimumYears}} years)</p>
-    <p>total_interest:    ${{printf "%.2f" .MinimumInterest}}</p>
-    <p>total_paid:        ${{printf "%.2f" .MinimumTotal}}</p>
+    {{if ge .MinimumMonths 1000}}
+    <div class="result-warning">
+        <strong>Your minimum payment doesn't cover the monthly interest.</strong> The debt will grow each month instead of shrinking. Try increasing your payment above the monthly interest charge to start making progress.
+    </div>
+    {{else}}
+    <div class="result-section">
+        <div class="result-section-header">Minimum Payment Only</div>
+        <div class="result-highlight">
+            <div class="result-row">
+                <span class="result-label">Time to Payoff</span>
+                <span class="result-value">{{.MinimumMonths}} months ({{printf "%.1f" .MinimumYears}} years)</span>
+            </div>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Interest</span>
+            <span class="result-value">${{printf "%.2f" .MinimumInterest}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Paid</span>
+            <span class="result-value">${{printf "%.2f" .MinimumTotal}}</span>
+        </div>
+    </div>
+    {{end}}
 
 {{if gt .ExtraPayment 0}}
-    <p class="text-dim">--- with extra ${{printf "%.2f" .ExtraPayment}}/month ---</p>
-    <p>months_to_payoff:  {{.ExtraMonths}} ({{printf "%.1f" .ExtraYears}} years)</p>
-    <p>total_interest:    ${{printf "%.2f" .ExtraInterest}}</p>
-    <p>total_paid:        ${{printf "%.2f" .ExtraTotal}}</p>
+    <div class="result-section">
+        <div class="result-section-header">With Extra ${{printf "%.2f" .ExtraPayment}}/month</div>
+        <div class="result-row">
+            <span class="result-label">Time to Payoff</span>
+            <span class="result-value">{{.ExtraMonths}} months ({{printf "%.1f" .ExtraYears}} years)</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Interest</span>
+            <span class="result-value">${{printf "%.2f" .ExtraInterest}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Paid</span>
+            <span class="result-value">${{printf "%.2f" .ExtraTotal}}</span>
+        </div>
+    </div>
 
-    <p class="text-dim">--- savings ---</p>
-    <p>time_saved:        {{.MonthsSaved}} months</p>
-    <p>interest_saved:    ${{printf "%.2f" .InterestSaved}}</p>
+    <div class="result-section">
+        <div class="result-section-header">Savings</div>
+        <div class="result-row">
+            <span class="result-label">Time Saved</span>
+            <span class="result-value">{{.MonthsSaved}} months</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Interest Saved</span>
+            <span class="result-value">${{printf "%.2f" .InterestSaved}}</span>
+        </div>
+    </div>
 {{end}}
 </div>
 {{end}}
