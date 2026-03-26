@@ -19,6 +19,7 @@
                     <li><a href="#finance-calculators">Finance Calculators</a></li>
                     <li><a href="#audioparrot">Audioparrot</a></li>
                     <li><a href="#personal-site">Personal Site</a></li>
+                    <li><a href="#repositories">Repositories</a></li>
                 </ul>
             </nav>
         </aside>
@@ -60,6 +61,28 @@
 
             </section>
             {{end}}
+
+            <!-- GitHub Repos -->
+            <section id="repositories">
+                <h2>Repositories</h2>
+                <p class="text-secondary">All public GitHub repos, sorted by last updated.</p>
+                {{if .GitHubRepos}}
+                    {{range .GitHubRepos}}
+                    <div class="repo-item">
+                        <div>
+                            <a href="{{.HTMLURL}}" target="_blank" class="repo-name">{{.Name}}</a>
+                            {{if .Description}}<span class="text-muted"> - {{.Description}}</span>{{end}}
+                        </div>
+                        <div class="repo-meta">
+                            {{if .Language}}{{.Language}}{{end}}
+                            {{if .StargazersCount}} · ★{{.StargazersCount}}{{end}}
+                        </div>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <p class="text-muted">No repositories found.</p>
+                {{end}}
+            </section>
 
             <footer>
                 <p>&copy; 2025 Wyat</p>

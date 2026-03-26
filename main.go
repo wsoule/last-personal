@@ -71,7 +71,8 @@ type Project struct {
 // ProjectsPageData represents data passed to the projects page
 type ProjectsPageData struct {
 	BasePageData
-	Projects []Project
+	Projects    []Project
+	GitHubRepos []GitHubRepo
 }
 
 // LifePageData represents data passed to the life/personal page
@@ -232,9 +233,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		cursor.All(ctx, &quotes)
 	}
 
-	// Get GitHub repos
-	repos := getGitHubRepos("wsoule")
-
 	// Render template
 	data := PageData{
 		BasePageData:  BasePageData{CurrentPage: "home"},
@@ -243,7 +241,6 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 		PageViewCount: pageViewCounter.Count,
 		TotalClicks:   totalClicksCounter.Count,
 		Quotes:        quotes,
-		GitHubRepos:   repos,
 	}
 
 	err = templates.ExecuteTemplate(w, "index.html", data)
@@ -370,6 +367,7 @@ func projectsHandler(w http.ResponseWriter, r *http.Request) {
 	data := ProjectsPageData{
 		BasePageData: BasePageData{CurrentPage: "projects"},
 		Projects:     projects,
+		GitHubRepos:  getGitHubRepos("wsoule"),
 	}
 
 	err := templates.ExecuteTemplate(w, "projects.html", data)

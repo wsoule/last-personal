@@ -59,11 +59,11 @@
                 <h3>On This Page</h3>
                 <ul>
                     <li><a href="#about" data-section="about">About</a></li>
-                    <li><a href="#skills" data-section="skills">Skills</a></li>
+                    <li><a href="#stack" data-section="stack">Stack</a></li>
                     <li><a href="#experience" data-section="experience">Experience</a></li>
+                    <li><a href="#projects" data-section="projects">Projects</a></li>
+                    <li><a href="#now" data-section="now">Now</a></li>
                     <li><a href="#counter" data-section="counter">Counter</a></li>
-                    <li><a href="#projects" data-section="projects">Repositories</a></li>
-                    <li><a href="#resume" data-section="resume">Resume</a></li>
                     <li><a href="#quotes" data-section="quotes">Quotes</a></li>
                 </ul>
             </nav>
@@ -83,30 +83,48 @@
                     </picture>
                     <div>
                         <p><strong>{{.Name}}</strong></p>
-                        <p class="text-secondary">Full Stack Developer</p>
-                        <p>I always tell people that websites should just be lists.</p>
+                        <p class="text-secondary">Full Stack Developer · Michigan</p>
+                        <div class="contact-links">
+                            <a href="mailto:website@wyat.me">website@wyat.me</a>
+                            <a href="https://github.com/wsoule" target="_blank" rel="noopener">GitHub</a>
+                            <a href="https://linkedin.com/in/wyat-soule" target="_blank" rel="noopener">LinkedIn</a>
+                        </div>
+                        <p>I build software for a living and ride dirt bikes for the rest of it.</p>
+                        <p>Leading a 4-engineer squad at Waggoner Financial building fintech products. Co-founded Audioparrot on the side. I like systems that are fast, code that reads cleanly, and trails that don't.</p>
                     </div>
                 </div>
             </section>
 
-            <!-- Skills Section -->
-            <section id="skills">
-                <h2>Skills</h2>
-                <ul class="skills-list">
-                    <li>Docker</li>
-                    <li>Git</li>
-                    <li>Go</li>
-                    <li>GraphQL</li>
-                    <li>JavaScript</li>
-                    <li>MongoDB</li>
-                    <li>Next.js</li>
-                    <li>Node.js</li>
-                    <li>PostgreSQL</li>
-                    <li>Python</li>
-                    <li>React</li>
-                    <li>Redis</li>
-                    <li>TypeScript</li>
-                </ul>
+            <!-- Stack Section -->
+            <section id="stack">
+                <h2>Stack</h2>
+                <p class="text-secondary">What I reach for, and why.</p>
+                <div class="stack-list">
+                    <div class="stack-item">
+                        <span class="stack-name">Go</span>
+                        <span class="text-muted"> — boring in the best way. Fast, explicit, deploys anywhere.</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-name">TypeScript</span>
+                        <span class="text-muted"> — the guardrails actually matter at scale.</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-name">React / Next.js</span>
+                        <span class="text-muted"> — still the most productive way to ship a frontend.</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-name">HTMX</span>
+                        <span class="text-muted"> — for when you don't need a full framework and you know it.</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-name">PostgreSQL + MongoDB</span>
+                        <span class="text-muted"> — depends on the shape of the data.</span>
+                    </div>
+                    <div class="stack-item">
+                        <span class="stack-name">Docker</span>
+                        <span class="text-muted"> — ships the same everywhere. No surprises.</span>
+                    </div>
+                </div>
             </section>
 
             <!-- Experience Section -->
@@ -132,6 +150,64 @@
                 </div>
             </section>
 
+            <!-- Featured Projects -->
+            <section id="projects">
+                <h2>Projects</h2>
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Finance Calculators</h3>
+                        <div class="project-links">
+                            <a href="/finance">live</a>
+                        </div>
+                    </div>
+                    <p class="project-description">FIRE number, investment growth, loan comparisons, debt payoff, inflation impact. Built with Go and HTMX — no JavaScript framework.</p>
+                    <ul class="tech-tags">
+                        <li class="tech-tag">Go</li>
+                        <li class="tech-tag">HTMX</li>
+                        <li class="tech-tag">MongoDB</li>
+                    </ul>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Audioparrot</h3>
+                    </div>
+                    <p class="project-description">Audiobook creation platform. Upload text, get narrated audio back. Built with Python Flask microservices, RabbitMQ for job queuing, Redis for caching.</p>
+                    <ul class="tech-tags">
+                        <li class="tech-tag">Python</li>
+                        <li class="tech-tag">Flask</li>
+                        <li class="tech-tag">RabbitMQ</li>
+                        <li class="tech-tag">Redis</li>
+                    </ul>
+                </div>
+
+                <p class="mt-1"><a href="/projects">All projects →</a></p>
+            </section>
+
+            <!-- Now Section -->
+            <section id="now">
+                <h2>Now</h2>
+                <div class="currently-list">
+                    <div class="currently-item">
+                        <span class="currently-label">building</span>
+                        <span>enterprise fintech at Waggoner Financial</span>
+                    </div>
+                    <div class="currently-item">
+                        <span class="currently-label">riding</span>
+                        <span class="text-secondary">— fill this in —</span>
+                    </div>
+                    <div class="currently-item">
+                        <span class="currently-label">reading</span>
+                        <span class="text-secondary">— fill this in —</span>
+                    </div>
+                    <div class="currently-item">
+                        <span class="currently-label">thinking about</span>
+                        <span class="text-secondary">— fill this in —</span>
+                    </div>
+                </div>
+                <p class="mt-1"><a href="/life">More outside the code →</a></p>
+            </section>
+
             <!-- Counter Section -->
             <section id="counter">
                 <h2>Counter</h2>
@@ -143,33 +219,6 @@
                     </div>
                     <p class="text-muted mt-1">Total clicks: <span id="total-clicks">{{.TotalClicks}}</span></p>
                 </div>
-            </section>
-
-            <!-- GitHub Repos Section -->
-            <section id="projects">
-                <h2>Repositories</h2>
-                {{if .GitHubRepos}}
-                    {{range .GitHubRepos}}
-                    <div class="repo-item">
-                        <div>
-                            <a href="{{.HTMLURL}}" target="_blank" class="repo-name">{{.Name}}</a>
-                            {{if .Description}}<span class="text-muted"> - {{.Description}}</span>{{end}}
-                        </div>
-                        <div class="repo-meta">
-                            {{if .Language}}{{.Language}}{{end}}
-                            {{if .StargazersCount}} · ★{{.StargazersCount}}{{end}}
-                        </div>
-                    </div>
-                    {{end}}
-                {{else}}
-                    <p class="text-muted">No repositories found.</p>
-                {{end}}
-            </section>
-
-            <!-- Resume Section -->
-            <section id="resume">
-                <h2>Resume</h2>
-                <p><a href="/static/wyat_resume.pdf" target="_blank">Download Resume (PDF)</a></p>
             </section>
 
             <!-- Quotes Section -->

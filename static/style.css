@@ -610,6 +610,35 @@ img {
 }
 
 /* =============================================================================
+   Stack Section (Home)
+   ============================================================================= */
+
+.stack-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    margin-top: 1rem;
+}
+
+.stack-item {
+    line-height: 1.5;
+}
+
+.stack-name {
+    font-weight: 500;
+}
+
+/* Contact links in About */
+.contact-links {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+/* =============================================================================
    Projects Page
    ============================================================================= */
 
