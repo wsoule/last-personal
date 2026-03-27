@@ -59,9 +59,9 @@
                 <h3>On This Page</h3>
                 <ul>
                     <li><a href="#about" data-section="about">About</a></li>
+                    <li><a href="#projects" data-section="projects">Projects</a></li>
                     <li><a href="#stack" data-section="stack">Stack</a></li>
                     <li><a href="#experience" data-section="experience">Experience</a></li>
-                    <li><a href="#projects" data-section="projects">Projects</a></li>
                     <li><a href="#now" data-section="now">Now</a></li>
                     <li><a href="#counter" data-section="counter">Counter</a></li>
                     <li><a href="#quotes" data-section="quotes">Quotes</a></li>
@@ -92,61 +92,6 @@
                         <p>I build software for a living and ride dirt bikes for the rest of it.</p>
                         <p>Leading a 4-engineer squad at Waggoner Financial building fintech products. Co-founded Audioparrot on the side. I like systems that are fast, code that reads cleanly, and trails that don't.</p>
                     </div>
-                </div>
-            </section>
-
-            <!-- Stack Section -->
-            <section id="stack">
-                <h2>Stack</h2>
-                <p class="text-secondary">What I reach for, and why.</p>
-                <div class="stack-list">
-                    <div class="stack-item">
-                        <span class="stack-name">Go</span>
-                        <span class="text-muted"> — boring in the best way. Fast, explicit, deploys anywhere.</span>
-                    </div>
-                    <div class="stack-item">
-                        <span class="stack-name">TypeScript</span>
-                        <span class="text-muted"> — the guardrails actually matter at scale.</span>
-                    </div>
-                    <div class="stack-item">
-                        <span class="stack-name">React / Next.js</span>
-                        <span class="text-muted"> — still the most productive way to ship a frontend.</span>
-                    </div>
-                    <div class="stack-item">
-                        <span class="stack-name">HTMX</span>
-                        <span class="text-muted"> — for when you don't need a full framework and you know it.</span>
-                    </div>
-                    <div class="stack-item">
-                        <span class="stack-name">PostgreSQL + MongoDB</span>
-                        <span class="text-muted"> — depends on the shape of the data.</span>
-                    </div>
-                    <div class="stack-item">
-                        <span class="stack-name">Docker</span>
-                        <span class="text-muted"> — ships the same everywhere. No surprises.</span>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Experience Section -->
-            <section id="experience">
-                <h2>Experience</h2>
-
-                <div class="experience-entry">
-                    <p><span class="company">Waggoner Financial</span> <span class="text-muted">-</span> <span class="role">Software Engineer</span></p>
-                    <p class="date">Jun 2024 – Present</p>
-                    <p>Leading a 4-engineer squad building enterprise fintech solutions with TypeScript, NestJS, GraphQL, Next.js, and React Native.</p>
-                </div>
-
-                <div class="experience-entry">
-                    <p><span class="company">Brass Raven</span> <span class="text-muted">-</span> <span class="role">Co-founder</span></p>
-                    <p class="date">Oct 2022 – Present</p>
-                    <p>Co-founded Audioparrot, an audiobook creation platform. Built Python Flask microservices with RabbitMQ and Redis.</p>
-                </div>
-
-                <div class="experience-entry">
-                    <p><span class="company">State of Michigan – DNR</span> <span class="text-muted">-</span> <span class="role">Student Software Developer</span></p>
-                    <p class="date">May 2023 – Jun 2024</p>
-                    <p>Developed Angular/.NET production application serving 500+ monthly users.</p>
                 </div>
             </section>
 
@@ -203,6 +148,54 @@
                 </div>
 
                 <p class="mt-1"><a href="/projects">All projects →</a></p>
+            </section>
+
+            <!-- Stack Section -->
+            <section id="stack">
+                <h2>Stack</h2>
+                <ul class="skills-list">
+                    <li>Go</li>
+                    <li>TypeScript</li>
+                    <li>React / Next.js</li>
+                    <li>SvelteKit</li>
+                    <li>HTMX</li>
+                    <li>PostgreSQL</li>
+                    <li>Redis</li>
+                    <li>Python</li>
+                    <li>Tauri / Rust</li>
+                    <li>Docker</li>
+                    <li>Railway</li>
+                    <li>NestJS</li>
+                </ul>
+            </section>
+
+            <!-- Experience Section -->
+            <section id="experience">
+                <h2>Experience</h2>
+
+                <div class="experience-entry">
+                    <p><span class="company">Hydrogen</span> <span class="text-muted">-</span> <span class="role">Co-Founder / Co-CEO</span></p>
+                    <p class="date">Jan 2025 – Present</p>
+                    <p>Founded SaaS platform for automated PR review. Architected Go microservice backend with PostgreSQL, Redis, and SvelteKit frontend. Led product design, client acquisition, investor pitching, and go-to-market. Recruited founding team and established engineering culture.</p>
+                </div>
+
+                <div class="experience-entry">
+                    <p><span class="company">Waggoner Financial</span> <span class="text-muted">-</span> <span class="role">Software Engineer</span></p>
+                    <p class="date">Jun 2024 – Present</p>
+                    <p>Led 4-engineer squad through Agile ceremonies; designed full-stack monorepo (TypeScript, NestJS, GraphQL, Next.js, PostgreSQL, Redis) and bootstrapped 5+ greenfield projects. Maintained 250+ Jest tests at 95% coverage, reducing production bugs 70%. Automated legacy Excel workflows via REST/GraphQL APIs, saving 100+ staff-hours monthly.</p>
+                </div>
+
+                <div class="experience-entry">
+                    <p><span class="company">Brass Raven</span> <span class="text-muted">-</span> <span class="role">Co-founder</span></p>
+                    <p class="date">Oct 2022 – Jan 2025</p>
+                    <p>Co-founded Audioparrot audiobook platform. Architected Python Flask microservices and Next.js frontend, improving generation speed 500% via RabbitMQ async processing and Redis caching.</p>
+                </div>
+
+                <div class="experience-entry">
+                    <p><span class="company">State of Michigan – DNR</span> <span class="text-muted">-</span> <span class="role">Student Software Developer</span></p>
+                    <p class="date">May 2023 – Jun 2024</p>
+                    <p>Built Angular/.NET production application serving 500+ monthly users. Designed SSIS packages and SQL scripts to automate legacy data migration. Built CI/CD pipelines eliminating manual builds.</p>
+                </div>
             </section>
 
             <!-- Now Section -->
