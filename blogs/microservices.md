@@ -17,7 +17,7 @@ Microservices is a software architecture style that structures an application as
 
 ## How to build Microservices?
 
-idk, thats why i made one.
+idk, that's why i made one.
 
 [https://github.com/wsoule/infrastructure](https://github.com/wsoule/infrastructure)
 
@@ -41,7 +41,7 @@ I would like to learn more about Go, it is similar, but close to Typescript so i
 ### Physical
 - Handstand 1 minute
 - Run a marathon
-this is just turing into a damn bucket list...
+this is just turning into a damn bucket list...
 
 ### Tech
 - Create a VPS

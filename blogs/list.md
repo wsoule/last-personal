@@ -9,7 +9,7 @@
 ### Physical
 - Handstand 1 minute
 - Run a marathon
-this is just turing into a damn bucket list...
+this is just turning into a damn bucket list...
 
 ### Tech
 - Create a VPS
@@ -21,4 +21,4 @@ this is just turing into a damn bucket list...
 - Learn about renewable energy, costs, etc.
 
 
-okay well the styles dont work on this, sadly.
+okay well the styles don't work on this, sadly.
