@@ -1,0 +1,51 @@
+{{define "contribution-growth-result"}}
+<div class="output">
+    <div class="result-section">
+        <div class="result-section-header">Projection</div>
+        <div class="result-highlight">
+            <div class="result-row">
+                <span class="result-label">Projected Value</span>
+                <span class="result-value">${{printf "%.2f" .ProjectedValue}}</span>
+            </div>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Plan</div>
+        <div class="result-row">
+            <span class="result-label">{{.FrequencyLabel}} Contribution</span>
+            <span class="result-value">${{printf "%.2f" .ContributionAmount}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Target Date</span>
+            <span class="result-value">{{.TargetDate}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Time to Target</span>
+            <span class="result-value">{{printf "%.1f" .Years}} years</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Contributions</span>
+            <span class="result-value">{{.Periods}} periods</span>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Breakdown</div>
+        <div class="result-row">
+            <span class="result-label">Starting Amount</span>
+            <span class="result-value">${{printf "%.2f" .StartingAmount}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Starting Amount Growth</span>
+            <span class="result-value">${{printf "%.2f" .StartingAmountGrowth}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Total Contributions</span>
+            <span class="result-value">${{printf "%.2f" .TotalContributions}}</span>
+        </div>
+        <div class="result-row">
+            <span class="result-label">Interest Earned</span>
+            <span class="result-value">${{printf "%.2f" .InterestEarned}}</span>
+        </div>
+    </div>
+</div>
+{{end}}

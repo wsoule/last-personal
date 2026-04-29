@@ -102,6 +102,59 @@ type SavingsGoalResult struct {
 	CurrentSavingsGrowth float64
 }
 
+// DateSavingsGoalRequest represents input for target-date savings calculator
+type DateSavingsGoalRequest struct {
+	GoalAmount     float64
+	TargetDate     time.Time
+	CurrentSavings float64
+	AnnualReturn   float64 // percentage
+	Frequency      string
+	Periods        int
+	Years          float64
+}
+
+// DateSavingsGoalResult represents output of target-date savings calculator
+type DateSavingsGoalResult struct {
+	GoalAmount           float64
+	TargetDate           string
+	CurrentSavings       float64
+	AnnualReturn         float64
+	FrequencyLabel       string
+	PeriodicContribution float64
+	Periods              int
+	Years                float64
+	TotalContributions   float64
+	ProjectedValue       float64
+	InterestEarned       float64
+	CurrentSavingsGrowth float64
+}
+
+// ContributionGrowthRequest represents input for contribution growth calculator
+type ContributionGrowthRequest struct {
+	ContributionAmount float64
+	TargetDate         time.Time
+	StartingAmount     float64
+	AnnualReturn       float64 // percentage
+	Frequency          string
+	Periods            int
+	Years              float64
+}
+
+// ContributionGrowthResult represents output of contribution growth calculator
+type ContributionGrowthResult struct {
+	ContributionAmount   float64
+	TargetDate           string
+	StartingAmount       float64
+	AnnualReturn         float64
+	FrequencyLabel       string
+	Periods              int
+	Years                float64
+	TotalContributions   float64
+	ProjectedValue       float64
+	InterestEarned       float64
+	StartingAmountGrowth float64
+}
+
 // FIRERequest represents input for FIRE calculator
 type FIRERequest struct {
 	CurrentAge     int
@@ -206,6 +259,24 @@ func financeSavingsGoalHandler(w http.ResponseWriter, r *http.Request) {
 	err := templates.ExecuteTemplate(w, "savings-goal.html", data)
 	if err != nil {
 		log.Println("Error executing savings-goal template:", err)
+		http.Error(w, "Template error", http.StatusInternalServerError)
+	}
+}
+
+func financeTargetDateSavingsHandler(w http.ResponseWriter, r *http.Request) {
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "target-date-savings.html", data)
+	if err != nil {
+		log.Println("Error executing target-date-savings template:", err)
+		http.Error(w, "Template error", http.StatusInternalServerError)
+	}
+}
+
+func financeContributionGrowthHandler(w http.ResponseWriter, r *http.Request) {
+	data := BasePageData{CurrentPage: "finance"}
+	err := templates.ExecuteTemplate(w, "contribution-growth.html", data)
+	if err != nil {
+		log.Println("Error executing contribution-growth template:", err)
 		http.Error(w, "Template error", http.StatusInternalServerError)
 	}
 }
@@ -678,6 +749,216 @@ func calculateSavingsGoal(req SavingsGoalRequest) SavingsGoalResult {
 		InterestEarned:       interestEarned,
 		CurrentSavingsGrowth: currentSavingsGrowth,
 	}
+}
+
+// ================== Date-Based Savings Calculators ==================
+
+func targetDateSavingsHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, "Error parsing form", http.StatusBadRequest)
+		return
+	}
+
+	goalAmount, _ := strconv.ParseFloat(r.FormValue("goalAmount"), 64)
+	currentSavings, _ := strconv.ParseFloat(r.FormValue("currentSavings"), 64)
+	annualReturn, _ := strconv.ParseFloat(r.FormValue("annualReturn"), 64)
+	frequency := r.FormValue("frequency")
+	_, periodsPerYear := contributionFrequency(frequency)
+
+	targetDate, periods, years, err := parseTargetDatePeriods(r.FormValue("targetDate"), periodsPerYear)
+	if err != nil {
+		http.Error(w, "Target date must be a future date", http.StatusBadRequest)
+		return
+	}
+
+	if goalAmount <= 0 || currentSavings < 0 || annualReturn < 0 {
+		http.Error(w, "Invalid input values", http.StatusBadRequest)
+		return
+	}
+
+	result := calculateDateSavingsGoal(DateSavingsGoalRequest{
+		GoalAmount:     goalAmount,
+		TargetDate:     targetDate,
+		CurrentSavings: currentSavings,
+		AnnualReturn:   annualReturn,
+		Frequency:      frequency,
+		Periods:        periods,
+		Years:          years,
+	})
+
+	if isHTMXRequest(r) {
+		w.Header().Set("Content-Type", "text/html")
+		err := templates.ExecuteTemplate(w, "target-date-savings-result", result)
+		if err != nil {
+			log.Println("Error executing target-date-savings template:", err)
+			http.Error(w, "Template error", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(result)
+}
+
+func contributionGrowthHandler(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+
+	err := r.ParseForm()
+	if err != nil {
+		http.Error(w, "Error parsing form", http.StatusBadRequest)
+		return
+	}
+
+	contributionAmount, _ := strconv.ParseFloat(r.FormValue("contributionAmount"), 64)
+	startingAmount, _ := strconv.ParseFloat(r.FormValue("startingAmount"), 64)
+	annualReturn, _ := strconv.ParseFloat(r.FormValue("annualReturn"), 64)
+	frequency := r.FormValue("frequency")
+	_, periodsPerYear := contributionFrequency(frequency)
+
+	targetDate, periods, years, err := parseTargetDatePeriods(r.FormValue("targetDate"), periodsPerYear)
+	if err != nil {
+		http.Error(w, "Target date must be a future date", http.StatusBadRequest)
+		return
+	}
+
+	if contributionAmount <= 0 || startingAmount < 0 || annualReturn < 0 {
+		http.Error(w, "Invalid input values", http.StatusBadRequest)
+		return
+	}
+
+	result := calculateContributionGrowth(ContributionGrowthRequest{
+		ContributionAmount: contributionAmount,
+		TargetDate:         targetDate,
+		StartingAmount:     startingAmount,
+		AnnualReturn:       annualReturn,
+		Frequency:          frequency,
+		Periods:            periods,
+		Years:              years,
+	})
+
+	if isHTMXRequest(r) {
+		w.Header().Set("Content-Type", "text/html")
+		err := templates.ExecuteTemplate(w, "contribution-growth-result", result)
+		if err != nil {
+			log.Println("Error executing contribution-growth template:", err)
+			http.Error(w, "Template error", http.StatusInternalServerError)
+		}
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(result)
+}
+
+func calculateDateSavingsGoal(req DateSavingsGoalRequest) DateSavingsGoalResult {
+	frequencyLabel, periodsPerYear := contributionFrequency(req.Frequency)
+	periodRate := (req.AnnualReturn / 100) / periodsPerYear
+	growthFactor := math.Pow(1+periodRate, float64(req.Periods))
+	currentSavingsGrowth := req.CurrentSavings * growthFactor
+	annuityFactor := futureValueAnnuityFactor(periodRate, req.Periods)
+
+	amountNeeded := req.GoalAmount - currentSavingsGrowth
+	periodicContribution := 0.0
+	if amountNeeded > 0 {
+		periodicContribution = amountNeeded / annuityFactor
+	}
+
+	totalContributions := periodicContribution * float64(req.Periods)
+	projectedValue := currentSavingsGrowth + periodicContribution*annuityFactor
+	interestEarned := projectedValue - req.CurrentSavings - totalContributions
+
+	return DateSavingsGoalResult{
+		GoalAmount:           req.GoalAmount,
+		TargetDate:           req.TargetDate.Format("Jan 02, 2006"),
+		CurrentSavings:       req.CurrentSavings,
+		AnnualReturn:         req.AnnualReturn,
+		FrequencyLabel:       frequencyLabel,
+		PeriodicContribution: periodicContribution,
+		Periods:              req.Periods,
+		Years:                req.Years,
+		TotalContributions:   totalContributions,
+		ProjectedValue:       projectedValue,
+		InterestEarned:       interestEarned,
+		CurrentSavingsGrowth: currentSavingsGrowth,
+	}
+}
+
+func calculateContributionGrowth(req ContributionGrowthRequest) ContributionGrowthResult {
+	frequencyLabel, periodsPerYear := contributionFrequency(req.Frequency)
+	periodRate := (req.AnnualReturn / 100) / periodsPerYear
+	growthFactor := math.Pow(1+periodRate, float64(req.Periods))
+	annuityFactor := futureValueAnnuityFactor(periodRate, req.Periods)
+
+	startingAmountGrowth := req.StartingAmount * growthFactor
+	totalContributions := req.ContributionAmount * float64(req.Periods)
+	projectedValue := startingAmountGrowth + req.ContributionAmount*annuityFactor
+	interestEarned := projectedValue - req.StartingAmount - totalContributions
+
+	return ContributionGrowthResult{
+		ContributionAmount:   req.ContributionAmount,
+		TargetDate:           req.TargetDate.Format("Jan 02, 2006"),
+		StartingAmount:       req.StartingAmount,
+		AnnualReturn:         req.AnnualReturn,
+		FrequencyLabel:       frequencyLabel,
+		Periods:              req.Periods,
+		Years:                req.Years,
+		TotalContributions:   totalContributions,
+		ProjectedValue:       projectedValue,
+		InterestEarned:       interestEarned,
+		StartingAmountGrowth: startingAmountGrowth,
+	}
+}
+
+func contributionFrequency(frequency string) (string, float64) {
+	switch frequency {
+	case "biweekly":
+		return "Biweekly", 26
+	case "yearly":
+		return "Yearly", 1
+	default:
+		return "Monthly", 12
+	}
+}
+
+func parseTargetDatePeriods(targetDateStr string, periodsPerYear float64) (time.Time, int, float64, error) {
+	now := time.Now()
+	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
+	targetDate, err := time.ParseInLocation("2006-01-02", targetDateStr, today.Location())
+	if err != nil {
+		return time.Time{}, 0, 0, err
+	}
+
+	if !targetDate.After(today) {
+		return time.Time{}, 0, 0, fmt.Errorf("target date must be in the future")
+	}
+
+	days := targetDate.Sub(today).Hours() / 24
+	years := days / 365.2425
+	periods := int(math.Ceil(years * periodsPerYear))
+	if periods < 1 {
+		periods = 1
+	}
+
+	return targetDate, periods, years, nil
+}
+
+func futureValueAnnuityFactor(periodRate float64, periods int) float64 {
+	if periods <= 0 {
+		return 0
+	}
+	if periodRate == 0 {
+		return float64(periods)
+	}
+	return (math.Pow(1+periodRate, float64(periods)) - 1) / periodRate
 }
 
 // ================== FIRE Calculator ==================

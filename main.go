@@ -104,8 +104,8 @@ func main() {
 	var err error
 	clientOptions := options.Client().
 		ApplyURI(mongoURI).
-		SetMaxPoolSize(100).    // Max 100 concurrent connections
-		SetMinPoolSize(10)       // Keep 10 warm connections
+		SetMaxPoolSize(100). // Max 100 concurrent connections
+		SetMinPoolSize(10)   // Keep 10 warm connections
 
 	client, err = mongo.Connect(context.Background(), clientOptions)
 	if err != nil {
@@ -125,7 +125,10 @@ func main() {
 	initializeCounters()
 
 	// Parse templates (main templates, partials, and finance)
-	templates = template.Must(template.ParseGlob("templates/*.html"))
+	funcMap := template.FuncMap{
+		"currentYear": func() int { return time.Now().Year() },
+	}
+	templates = template.Must(template.New("").Funcs(funcMap).ParseGlob("templates/*.html"))
 	template.Must(templates.ParseGlob("templates/partials/*.html"))
 	template.Must(templates.ParseGlob("templates/finance/*.html"))
 
@@ -150,6 +153,8 @@ func main() {
 	http.HandleFunc("/finance/return", financeReturnHandler)
 	http.HandleFunc("/finance/loan", financeLoanHandler)
 	http.HandleFunc("/finance/savings-goal", financeSavingsGoalHandler)
+	http.HandleFunc("/finance/target-date-savings", financeTargetDateSavingsHandler)
+	http.HandleFunc("/finance/contribution-growth", financeContributionGrowthHandler)
 	http.HandleFunc("/finance/fire", financeFIREHandler)
 	http.HandleFunc("/finance/inflation", financeInflationHandler)
 	http.HandleFunc("/finance/debt", financeDebtHandler)
@@ -159,6 +164,8 @@ func main() {
 	http.HandleFunc("/api/return-calc", returnCalcHandler)
 	http.HandleFunc("/api/loan-comparison", loanComparisonHandler)
 	http.HandleFunc("/api/savings-goal", savingsGoalHandler)
+	http.HandleFunc("/api/target-date-savings", targetDateSavingsHandler)
+	http.HandleFunc("/api/contribution-growth", contributionGrowthHandler)
 	http.HandleFunc("/api/fire-calc", fireCalcHandler)
 	http.HandleFunc("/api/inflation-calc", inflationCalcHandler)
 	http.HandleFunc("/api/debt-calc", debtCalcHandler)

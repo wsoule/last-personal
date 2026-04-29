@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Loan vs Investing - Wyat</title>
-    <meta name="description" content="Compare paying off a loan early vs investing the difference.">
+    <title>Contribution Growth Calculator - Wyat</title>
+    <meta name="description" content="Project how monthly, biweekly, or yearly contributions can grow by a target date.">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
@@ -23,9 +23,9 @@
                 <ul>
                     <li><a href="/finance/savings-goal">Savings Goal</a></li>
                     <li><a href="/finance/target-date-savings">Target Date Savings</a></li>
-                    <li><a href="/finance/contribution-growth">Contribution Growth</a></li>
                     <li><a href="/finance/investment">Investment</a></li>
                     <li><a href="/finance/return">Return</a></li>
+                    <li><a href="/finance/loan">Loan</a></li>
                     <li><a href="/finance/fire">FIRE</a></li>
                     <li><a href="/finance/inflation">Inflation</a></li>
                     <li><a href="/finance/debt">Debt</a></li>
@@ -36,27 +36,35 @@
         <div class="divider"></div>
 
         <main class="content">
-            <h1>Loan vs Investing</h1>
-            <p class="text-secondary">Compare the cost of a loan against potential investment returns.</p>
+            <h1>Contribution Growth Calculator</h1>
+            <p class="text-secondary">Project what recurring contributions could be worth by a specific date.</p>
 
             <section id="calculator">
                 <h2>Input</h2>
-                <form hx-post="/api/loan-comparison" hx-target="#result" hx-indicator="#loading">
+                <form hx-post="/api/contribution-growth" hx-target="#result" hx-indicator="#loading">
                     <div class="form-row">
-                        <label>Loan Amount ($)</label>
-                        <input type="number" name="loanAmount" placeholder="10000" min="1" step="0.01" required>
+                        <label>Contribution Amount ($)</label>
+                        <input type="number" name="contributionAmount" placeholder="500" min="0.01" step="0.01" required>
                     </div>
                     <div class="form-row">
-                        <label>Interest Rate (%)</label>
-                        <input type="number" name="interestRate" placeholder="5.5" min="0" max="50" step="0.01" required>
+                        <label>Target Date</label>
+                        <input type="date" name="targetDate" required>
                     </div>
                     <div class="form-row">
-                        <label>Term (Months)</label>
-                        <input type="number" name="termMonths" placeholder="60" min="1" max="600" required>
+                        <label>Starting Amount ($)</label>
+                        <input type="number" name="startingAmount" placeholder="5000" min="0" step="0.01" value="0">
                     </div>
                     <div class="form-row">
-                        <label>Investment Return (%)</label>
-                        <input type="number" name="investmentReturnRate" placeholder="7" min="0" max="50" step="0.01" required>
+                        <label>Annual Return (%)</label>
+                        <input type="number" name="annualReturn" placeholder="7" min="0" max="50" step="0.1" required>
+                    </div>
+                    <div class="form-row">
+                        <label>Contribution Frequency</label>
+                        <select name="frequency">
+                            <option value="monthly">Monthly</option>
+                            <option value="biweekly">Biweekly</option>
+                            <option value="yearly">Yearly</option>
+                        </select>
                     </div>
                     <div class="form-actions">
                         <button type="submit">Calculate</button>
