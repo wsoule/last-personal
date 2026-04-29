@@ -8,6 +8,21 @@
                 <span class="result-value">${{printf "%.2f" .ProjectedValue}}</span>
             </div>
         </div>
+        {{if .ShowTarget}}
+            {{if .TargetReached}}
+            <div class="result-success">
+                Target reached on {{.TargetDate}}.
+            </div>
+            {{else}}
+            <div class="result-warning">
+                Target was not reached within the projection window.
+            </div>
+            {{end}}
+        {{else}}
+        <div class="result-warning">
+            Showing a 30-year projection. Add a target amount to stop at the first matching date.
+        </div>
+        {{end}}
     </div>
     <div class="result-section">
         <div class="result-section-header">Plan</div>
@@ -15,12 +30,14 @@
             <span class="result-label">{{.FrequencyLabel}} Contribution</span>
             <span class="result-value">${{printf "%.2f" .ContributionAmount}}</span>
         </div>
+        {{if .ShowTarget}}
         <div class="result-row">
-            <span class="result-label">Target Date</span>
-            <span class="result-value">{{.TargetDate}}</span>
+            <span class="result-label">Target Amount</span>
+            <span class="result-value">${{printf "%.2f" .TargetAmount}}</span>
         </div>
+        {{end}}
         <div class="result-row">
-            <span class="result-label">Time to Target</span>
+            <span class="result-label">Time Shown</span>
             <span class="result-value">{{printf "%.1f" .Years}} years</span>
         </div>
         <div class="result-row">
@@ -35,16 +52,41 @@
             <span class="result-value">${{printf "%.2f" .StartingAmount}}</span>
         </div>
         <div class="result-row">
-            <span class="result-label">Starting Amount Growth</span>
-            <span class="result-value">${{printf "%.2f" .StartingAmountGrowth}}</span>
-        </div>
-        <div class="result-row">
             <span class="result-label">Total Contributions</span>
             <span class="result-value">${{printf "%.2f" .TotalContributions}}</span>
         </div>
         <div class="result-row">
             <span class="result-label">Interest Earned</span>
             <span class="result-value">${{printf "%.2f" .InterestEarned}}</span>
+        </div>
+    </div>
+    <div class="result-section">
+        <div class="result-section-header">Dates</div>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Period</th>
+                        <th>Date</th>
+                        <th>Contribution</th>
+                        <th>Total Contributions</th>
+                        <th>Projected Value</th>
+                        <th>Interest Earned</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{range .Rows}}
+                    <tr {{if .TargetReached}}class="target-row"{{end}}>
+                        <td>{{.Period}}</td>
+                        <td>{{.Date}}</td>
+                        <td>${{printf "%.2f" .Contribution}}</td>
+                        <td>${{printf "%.2f" .TotalContributions}}</td>
+                        <td>${{printf "%.2f" .ProjectedValue}}</td>
+                        <td>${{printf "%.2f" .InterestEarned}}</td>
+                    </tr>
+                    {{end}}
+                </tbody>
+            </table>
         </div>
     </div>
 </div>

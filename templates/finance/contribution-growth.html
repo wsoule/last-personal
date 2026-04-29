@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contribution Growth Calculator - Wyat</title>
-    <meta name="description" content="Project how monthly, biweekly, or yearly contributions can grow by a target date.">
+    <meta name="description" content="Project how monthly, biweekly, or yearly contributions can grow over time.">
     <link rel="stylesheet" href="/static/style.css">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
@@ -36,7 +36,7 @@
 
         <main class="content">
             <h1>Contribution Growth Calculator</h1>
-            <p class="text-secondary">Project what recurring contributions could be worth by a specific date.</p>
+            <p class="text-secondary">Project recurring contributions over time and optionally highlight a target amount.</p>
 
             <section id="calculator">
                 <h2>Input</h2>
@@ -46,8 +46,8 @@
                         <input type="number" name="contributionAmount" placeholder="500" min="0.01" step="0.01" required>
                     </div>
                     <div class="form-row">
-                        <label>Target Date</label>
-                        <input type="date" name="targetDate" required>
+                        <label>Target Amount ($) Optional</label>
+                        <input type="number" name="targetAmount" placeholder="100000" min="0" step="0.01">
                     </div>
                     <div class="form-row">
                         <label>Starting Amount ($)</label>

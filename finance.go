@@ -105,27 +105,41 @@ type SavingsGoalResult struct {
 // ContributionGrowthRequest represents input for contribution growth calculator
 type ContributionGrowthRequest struct {
 	ContributionAmount float64
-	TargetDate         time.Time
 	StartingAmount     float64
 	AnnualReturn       float64 // percentage
+	TargetAmount       float64
 	Frequency          string
-	Periods            int
-	Years              float64
+	StartDate          time.Time
+	MaxPeriods         int
 }
 
 // ContributionGrowthResult represents output of contribution growth calculator
 type ContributionGrowthResult struct {
-	ContributionAmount   float64
-	TargetDate           string
-	StartingAmount       float64
-	AnnualReturn         float64
-	FrequencyLabel       string
-	Periods              int
-	Years                float64
-	TotalContributions   float64
-	ProjectedValue       float64
-	InterestEarned       float64
-	StartingAmountGrowth float64
+	ContributionAmount float64
+	StartingAmount     float64
+	AnnualReturn       float64
+	TargetAmount       float64
+	FrequencyLabel     string
+	Periods            int
+	Years              float64
+	TotalContributions float64
+	ProjectedValue     float64
+	InterestEarned     float64
+	TargetReached      bool
+	TargetDate         string
+	ShowTarget         bool
+	Rows               []ContributionGrowthRow
+}
+
+// ContributionGrowthRow represents one point in the contribution projection table
+type ContributionGrowthRow struct {
+	Period             int
+	Date               string
+	Contribution       float64
+	TotalContributions float64
+	ProjectedValue     float64
+	InterestEarned     float64
+	TargetReached      bool
 }
 
 // FIRERequest represents input for FIRE calculator
@@ -732,28 +746,21 @@ func contributionGrowthHandler(w http.ResponseWriter, r *http.Request) {
 	contributionAmount, _ := strconv.ParseFloat(r.FormValue("contributionAmount"), 64)
 	startingAmount, _ := strconv.ParseFloat(r.FormValue("startingAmount"), 64)
 	annualReturn, _ := strconv.ParseFloat(r.FormValue("annualReturn"), 64)
+	targetAmount, _ := strconv.ParseFloat(r.FormValue("targetAmount"), 64)
 	frequency := r.FormValue("frequency")
-	_, periodsPerYear := contributionFrequency(frequency)
 
-	targetDate, periods, years, err := parseTargetDatePeriods(r.FormValue("targetDate"), periodsPerYear)
-	if err != nil {
-		http.Error(w, "Target date must be a future date", http.StatusBadRequest)
-		return
-	}
-
-	if contributionAmount <= 0 || startingAmount < 0 || annualReturn < 0 {
+	if contributionAmount <= 0 || startingAmount < 0 || annualReturn < 0 || targetAmount < 0 {
 		http.Error(w, "Invalid input values", http.StatusBadRequest)
 		return
 	}
 
 	result := calculateContributionGrowth(ContributionGrowthRequest{
 		ContributionAmount: contributionAmount,
-		TargetDate:         targetDate,
 		StartingAmount:     startingAmount,
 		AnnualReturn:       annualReturn,
+		TargetAmount:       targetAmount,
 		Frequency:          frequency,
-		Periods:            periods,
-		Years:              years,
+		StartDate:          today(),
 	})
 
 	if isHTMXRequest(r) {
@@ -773,27 +780,85 @@ func contributionGrowthHandler(w http.ResponseWriter, r *http.Request) {
 func calculateContributionGrowth(req ContributionGrowthRequest) ContributionGrowthResult {
 	frequencyLabel, periodsPerYear := contributionFrequency(req.Frequency)
 	periodRate := (req.AnnualReturn / 100) / periodsPerYear
-	growthFactor := math.Pow(1+periodRate, float64(req.Periods))
-	annuityFactor := futureValueAnnuityFactor(periodRate, req.Periods)
+	showTarget := req.TargetAmount > 0
+	maxPeriods := contributionProjectionPeriods(showTarget, periodsPerYear)
+	if req.MaxPeriods > 0 {
+		maxPeriods = req.MaxPeriods
+	}
+	startDate := req.StartDate
+	if startDate.IsZero() {
+		startDate = today()
+	}
 
-	startingAmountGrowth := req.StartingAmount * growthFactor
-	totalContributions := req.ContributionAmount * float64(req.Periods)
-	projectedValue := startingAmountGrowth + req.ContributionAmount*annuityFactor
-	interestEarned := projectedValue - req.StartingAmount - totalContributions
+	rows := make([]ContributionGrowthRow, 0, maxPeriods+1)
+	projectedValue := req.StartingAmount
+	totalContributions := 0.0
+	targetReached := showTarget && projectedValue >= req.TargetAmount
+	targetDate := ""
+
+	if targetReached {
+		targetDate = startDate.Format("Jan 02, 2006")
+	}
+
+	rows = append(rows, ContributionGrowthRow{
+		Period:             0,
+		Date:               startDate.Format("Jan 02, 2006"),
+		Contribution:       0,
+		TotalContributions: 0,
+		ProjectedValue:     projectedValue,
+		InterestEarned:     projectedValue - req.StartingAmount,
+		TargetReached:      targetReached,
+	})
+
+	currentDate := startDate
+	periods := 0
+	for periods < maxPeriods && (!showTarget || !targetReached) {
+		periods++
+		currentDate = nextContributionDate(currentDate, req.Frequency)
+		projectedValue = projectedValue*(1+periodRate) + req.ContributionAmount
+		totalContributions += req.ContributionAmount
+
+		rowTargetReached := showTarget && !targetReached && projectedValue >= req.TargetAmount
+		if rowTargetReached {
+			targetReached = true
+			targetDate = currentDate.Format("Jan 02, 2006")
+		}
+
+		rows = append(rows, ContributionGrowthRow{
+			Period:             periods,
+			Date:               currentDate.Format("Jan 02, 2006"),
+			Contribution:       req.ContributionAmount,
+			TotalContributions: totalContributions,
+			ProjectedValue:     projectedValue,
+			InterestEarned:     projectedValue - req.StartingAmount - totalContributions,
+			TargetReached:      rowTargetReached,
+		})
+	}
 
 	return ContributionGrowthResult{
-		ContributionAmount:   req.ContributionAmount,
-		TargetDate:           req.TargetDate.Format("Jan 02, 2006"),
-		StartingAmount:       req.StartingAmount,
-		AnnualReturn:         req.AnnualReturn,
-		FrequencyLabel:       frequencyLabel,
-		Periods:              req.Periods,
-		Years:                req.Years,
-		TotalContributions:   totalContributions,
-		ProjectedValue:       projectedValue,
-		InterestEarned:       interestEarned,
-		StartingAmountGrowth: startingAmountGrowth,
+		ContributionAmount: req.ContributionAmount,
+		StartingAmount:     req.StartingAmount,
+		AnnualReturn:       req.AnnualReturn,
+		TargetAmount:       req.TargetAmount,
+		FrequencyLabel:     frequencyLabel,
+		Periods:            periods,
+		Years:              float64(periods) / periodsPerYear,
+		TotalContributions: totalContributions,
+		ProjectedValue:     projectedValue,
+		InterestEarned:     projectedValue - req.StartingAmount - totalContributions,
+		TargetReached:      targetReached,
+		TargetDate:         targetDate,
+		ShowTarget:         showTarget,
+		Rows:               rows,
 	}
+}
+
+func contributionProjectionPeriods(showTarget bool, periodsPerYear float64) int {
+	years := 30
+	if showTarget {
+		years = 100
+	}
+	return int(math.Ceil(float64(years) * periodsPerYear))
 }
 
 func contributionFrequency(frequency string) (string, float64) {
@@ -807,36 +872,20 @@ func contributionFrequency(frequency string) (string, float64) {
 	}
 }
 
-func parseTargetDatePeriods(targetDateStr string, periodsPerYear float64) (time.Time, int, float64, error) {
-	now := time.Now()
-	today := time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
-	targetDate, err := time.ParseInLocation("2006-01-02", targetDateStr, today.Location())
-	if err != nil {
-		return time.Time{}, 0, 0, err
+func nextContributionDate(date time.Time, frequency string) time.Time {
+	switch frequency {
+	case "biweekly":
+		return date.AddDate(0, 0, 14)
+	case "yearly":
+		return date.AddDate(1, 0, 0)
+	default:
+		return date.AddDate(0, 1, 0)
 	}
-
-	if !targetDate.After(today) {
-		return time.Time{}, 0, 0, fmt.Errorf("target date must be in the future")
-	}
-
-	days := targetDate.Sub(today).Hours() / 24
-	years := days / 365.2425
-	periods := int(math.Ceil(years * periodsPerYear))
-	if periods < 1 {
-		periods = 1
-	}
-
-	return targetDate, periods, years, nil
 }
 
-func futureValueAnnuityFactor(periodRate float64, periods int) float64 {
-	if periods <= 0 {
-		return 0
-	}
-	if periodRate == 0 {
-		return float64(periods)
-	}
-	return (math.Pow(1+periodRate, float64(periods)) - 1) / periodRate
+func today() time.Time {
+	now := time.Now()
+	return time.Date(now.Year(), now.Month(), now.Day(), 0, 0, 0, 0, now.Location())
 }
 
 // ================== FIRE Calculator ==================
