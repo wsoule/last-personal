@@ -18,14 +18,16 @@
     <meta property="og:url" content="https://wyat.me">
     <meta property="og:title" content="Wyat - Full Stack Developer">
     <meta property="og:description" content="Full Stack Developer specializing in TypeScript, React, Next.js, NestJS, and Go.">
-    <meta property="og:image" content="https://wyat.me/static/headshot.jpg">
+    <meta property="og:image" content="https://wyat.me/static/og-image.jpg">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://wyat.me">
     <meta property="twitter:title" content="Wyat - Full Stack Developer">
     <meta property="twitter:description" content="Full Stack Developer specializing in TypeScript, React, Next.js, NestJS, and Go.">
-    <meta property="twitter:image" content="https://wyat.me/static/headshot.jpg">
+    <meta property="twitter:image" content="https://wyat.me/static/og-image.jpg">
 
     <!-- Structured Data (JSON-LD) -->
     <script type="application/ld+json">
@@ -79,7 +81,7 @@
                     <picture>
                         <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
                         <source srcset="/static/headshot.jpg 1x, /static/headshot-2x.jpg 2x" type="image/jpeg">
-                        <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="150" height="225">
+                        <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="180" height="180">
                     </picture>
                     <div>
                         <p><strong>{{.Name}}</strong></p>
@@ -90,7 +92,7 @@
                             <a href="https://linkedin.com/in/wyat-soule" target="_blank" rel="noopener">LinkedIn</a>
                         </div>
                         <p>I build cool stuff for a living.</p>
-                        <p>Leading a 4-engineer team at Waggoner Financial building fintech products. Co-founding Hydrogen on the side. I enjoy working on hard problems and working with high scale systems.</p>
+                        <p>Leading a 4-engineer team at Waggoner Financial building fintech products. Building Dispatch and Loggit on the side. I enjoy working on hard problems and working with high scale systems.</p>
                     </div>
                 </div>
             </section>
@@ -98,6 +100,40 @@
             <!-- Featured Projects -->
             <section id="projects">
                 <h2>Projects</h2>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Dispatch</h3>
+                        <div class="project-links">
+                            <a href="https://dispatch.foo" target="_blank" rel="noopener">live</a>
+                        </div>
+                    </div>
+                    <p class="project-description">Mission control for coding agents. Tasks are markdown files in your repo, synced by git. Agents run in isolated worktrees scoped to the paths a task declares, with budget caps and verify gates. Local-first.</p>
+                    <ul class="tech-tags">
+                        <li class="tech-tag">Tauri</li>
+                        <li class="tech-tag">Rust</li>
+                        <li class="tech-tag">TypeScript</li>
+                        <li class="tech-tag">Bun</li>
+                    </ul>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-header">
+                        <h3>Loggit</h3>
+                        <div class="project-links">
+                            <a href="https://useloggit.app" target="_blank" rel="noopener">live</a>
+                            <span class="text-muted"> · </span>
+                            <a href="https://apps.apple.com/us/app/loggit-movies-books-games/id6766703437" target="_blank" rel="noopener">App Store</a>
+                        </div>
+                    </div>
+                    <p class="project-description">One feed for everything you watch, read and play — films, TV, books, video games and board games under a single 0–100 rating, with recommendations scored to your taste and boards you share.</p>
+                    <ul class="tech-tags">
+                        <li class="tech-tag">React Native</li>
+                        <li class="tech-tag">Expo</li>
+                        <li class="tech-tag">Fastify</li>
+                        <li class="tech-tag">PostgreSQL</li>
+                    </ul>
+                </div>
 
                 <div class="project-card">
                     <div class="project-header">
@@ -112,22 +148,6 @@
                         <li class="tech-tag">PostgreSQL</li>
                         <li class="tech-tag">Redis</li>
                         <li class="tech-tag">HTMX</li>
-                    </ul>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Hydrogen</h3>
-                        <div class="project-links">
-                            <a href="https://hydrogenpr.dev" target="_blank" rel="noopener">live</a>
-                        </div>
-                    </div>
-                    <p class="project-description">Context-first PR review tool. GitHub App that syncs PR state, computes review slices, and surfaces a custom diff viewer. No code stored.</p>
-                    <ul class="tech-tags">
-                        <li class="tech-tag">Go</li>
-                        <li class="tech-tag">SvelteKit</li>
-                        <li class="tech-tag">PostgreSQL</li>
-                        <li class="tech-tag">Redis</li>
                     </ul>
                 </div>
 
@@ -175,7 +195,7 @@
 
                 <div class="experience-entry">
                     <p><span class="company">Hydrogen</span> <span class="text-muted">-</span> <span class="role">Co-Founder / Co-CEO</span></p>
-                    <p class="date">Jan 2025 – Present</p>
+                    <p class="date">Jan 2025 – Aug 2026</p>
                     <p>Founded SaaS platform for automated PR review. Architected Go microservice backend with PostgreSQL, Redis, and SvelteKit frontend. Led product design, client acquisition, investor pitching, and go-to-market. Recruited founding team and established engineering culture.</p>
                 </div>
 
@@ -204,7 +224,7 @@
                 <div class="currently-list">
                     <div class="currently-item">
                         <span class="currently-label">building</span>
-                        <span>enterprise fintech at Waggoner Financial | Hydrogen</span>
+                        <span>enterprise fintech at Waggoner Financial | Dispatch | Loggit</span>
                     </div>
                     <div class="currently-item">
                         <span class="currently-label">reading</span>
@@ -256,9 +276,9 @@
 
             <p class="text-muted">Page views: {{.PageViewCount}}</p>
 
-            <footer>
-                <p>&copy; 2025 Wyat</p>
-            </footer>
+
+
+            {{template "footer" .}}
         </main>
     </div>
 

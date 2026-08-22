@@ -16,8 +16,9 @@
             <nav class="page-toc">
                 <h3>On This Page</h3>
                 <ul>
+                    <li><a href="#dispatch">Dispatch</a></li>
+                    <li><a href="#loggit">Loggit</a></li>
                     <li><a href="#ngmi">ngmi</a></li>
-                    <li><a href="#hydrogen">Hydrogen</a></li>
                     <li><a href="#audioparrot">Audioparrot</a></li>
                     <li><a href="#query">Query</a></li>
                     <li><a href="#repositories">Repositories</a></li>
@@ -34,13 +35,17 @@
             </section>
 
             {{range .Projects}}
-            <section class="project-card">
+            <section class="project-card" id="{{.Slug}}">
                 <div class="project-header">
                     <h3>{{.Name}}</h3>
                     <div class="project-links">
                         {{if .GitHubURL}}<a href="{{.GitHubURL}}" target="_blank" rel="noopener">source</a>{{end}}
                         {{if and .GitHubURL .LiveURL}}<span class="text-muted"> · </span>{{end}}
                         {{if .LiveURL}}<a href="{{.LiveURL}}" target="_blank" rel="noopener">live</a>{{end}}
+                        {{if .AppStoreURL}}
+                        {{if .LiveURL}}<span class="text-muted"> · </span>{{end}}
+                        <a href="{{.AppStoreURL}}" target="_blank" rel="noopener">App Store</a>
+                        {{end}}
                         {{if .IframeURL}}
                         <span class="text-muted"> · </span>
                         <button class="btn-link" onclick="togglePreview(this, '{{.IframeURL}}')">preview</button>
@@ -85,9 +90,9 @@
                 {{end}}
             </section>
 
-            <footer>
-                <p>&copy; 2025 Wyat</p>
-            </footer>
+
+
+            {{template "footer" .}}
         </main>
     </div>
 

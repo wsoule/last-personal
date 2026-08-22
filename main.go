@@ -20,10 +20,18 @@ import (
 )
 
 var (
-	client    *mongo.Client
-	db        *mongo.Database
-	templates *template.Template
-	hub       *Hub
+	client       *mongo.Client
+	db           *mongo.Database
+	templates    *template.Template
+	hub          *Hub
+	substackFeed *substackCache
+)
+
+const (
+	// substackURL is the publication home; the feed lives at /feed.
+	substackURL = "https://wyatdoesathing.substack.com"
+	// substackFeedTTL bounds how often the live feed is refetched.
+	substackFeedTTL = 30 * time.Minute
 )
 
 // GitHubRepo represents a GitHub repository
@@ -61,10 +69,12 @@ type BlogInfo struct {
 // Project represents a showcase project with optional live preview
 type Project struct {
 	Name        string
+	Slug        string // anchor id, must match the page-toc link
 	Description string
 	Tech        []string
 	GitHubURL   string
 	LiveURL     string
+	AppStoreURL string // empty means not shipped on the App Store
 	IframeURL   string // empty means no live preview
 }
 
@@ -83,7 +93,9 @@ type LifePageData struct {
 // BlogsPageData represents the data passed to the blogs listing page
 type BlogsPageData struct {
 	BasePageData
-	Blogs []BlogInfo
+	Blogs         []BlogInfo
+	SubstackPosts []SubstackPost
+	SubstackURL   string
 }
 
 // BlogPageData represents the data passed to individual blog pages
@@ -135,6 +147,11 @@ func main() {
 	// Initialize and start WebSocket hub
 	hub = NewHub()
 	go hub.Run()
+
+	// Warm the Substack feed cache off the startup path so a slow or
+	// unreachable feed never delays the server coming up.
+	substackFeed = newSubstackCache(substackURL+"/feed", substackFeedTTL)
+	go substackFeed.Posts()
 
 	// Routes
 	http.HandleFunc("/", homeHandler)
@@ -331,8 +348,10 @@ func blogsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	data := BlogsPageData{
-		BasePageData: BasePageData{CurrentPage: "blogs"},
-		Blogs:        blogs,
+		BasePageData:  BasePageData{CurrentPage: "blogs"},
+		Blogs:         blogs,
+		SubstackPosts: substackFeed.Posts(),
+		SubstackURL:   substackURL,
 	}
 
 	err = templates.ExecuteTemplate(w, "blogs.html", data)
@@ -341,25 +360,39 @@ func blogsHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// projectsHandler renders the projects showcase page
-func projectsHandler(w http.ResponseWriter, r *http.Request) {
-	projects := []Project{
+// showcaseProjects returns the hand-curated project list, newest first.
+// These are separate from the GitHub repo dump: several live in private
+// repos, and each carries copy the API cannot provide.
+func showcaseProjects() []Project {
+	return []Project{
+		{
+			Name:        "Dispatch",
+			Slug:        "dispatch",
+			Description: "Mission control for coding agents. Tasks are markdown files in your repo, synced by git. Dispatching one runs an agent in an isolated worktree scoped to the paths that task declared, with budget caps, verify gates, and human-gated scope escalation. Local-first — nothing leaves the machine.",
+			Tech:        []string{"Tauri", "Rust", "TypeScript", "Bun"},
+			LiveURL:     "https://dispatch.foo",
+			IframeURL:   "https://dispatch.foo",
+		},
+		{
+			Name:        "Loggit",
+			Slug:        "loggit",
+			Description: "One feed for everything you watch, read and play — films, TV, books, video games and board games under a single 0–100 rating. Ratings are normalized against your own history, recommendations are scored to your taste, and boards are shared with the people you watch with. Works fully offline as a guest.",
+			Tech:        []string{"React Native", "Expo", "Fastify", "PostgreSQL"},
+			LiveURL:     "https://useloggit.app",
+			AppStoreURL: "https://apps.apple.com/us/app/loggit-movies-books-games/id6766703437",
+			// useloggit.app sends frame-ancestors 'self'; a preview would render blank.
+		},
 		{
 			Name:        "ngmi",
+			Slug:        "ngmi",
 			Description: "Global leaderboards for GitHub PR review time. Search any public repo, user, or org — see avg/fastest/slowest merge times, top reviewers, and recent PRs. BFS crawler continuously expands coverage.",
 			Tech:        []string{"Go", "PostgreSQL", "Redis", "HTMX"},
 			LiveURL:     "https://ngmi.review",
 			IframeURL:   "https://ngmi.review",
 		},
 		{
-			Name:        "Hydrogen",
-			Description: "Context-first PR review tool. Integrates with GitHub via a GitHub App — syncs PR state via webhooks, computes deterministic review slices, and renders a custom diff viewer. No code stored.",
-			Tech:        []string{"Go", "SvelteKit", "PostgreSQL", "Redis"},
-			LiveURL:     "https://hydrogenpr.dev",
-			IframeURL:   "https://hydrogenpr.dev",
-		},
-		{
 			Name:        "Audioparrot",
+			Slug:        "audioparrot",
 			Description: "Professional audiobook production platform. Multi-provider TTS (OpenAI, ElevenLabs, Google, local Piper), per-character voice profiles, async chapter processing, M4B export with chapter markers.",
 			Tech:        []string{"Python", "RabbitMQ", "Redis", "FastAPI"},
 			GitHubURL:   "",
@@ -368,6 +401,7 @@ func projectsHandler(w http.ResponseWriter, r *http.Request) {
 		},
 		{
 			Name:        "Query",
+			Slug:        "query",
 			Description: "Desktop SQL client built with Tauri and React. Monaco editor with IntelliSense (tables, columns, keywords), schema browser, query history, saved queries, command palette, and OS keychain for passwords.",
 			Tech:        []string{"Tauri", "Rust", "React", "TypeScript"},
 			GitHubURL:   "https://github.com/brass-raven/Query",
@@ -375,10 +409,13 @@ func projectsHandler(w http.ResponseWriter, r *http.Request) {
 			IframeURL:   "",
 		},
 	}
+}
 
+// projectsHandler renders the projects showcase page
+func projectsHandler(w http.ResponseWriter, r *http.Request) {
 	data := ProjectsPageData{
 		BasePageData: BasePageData{CurrentPage: "projects"},
-		Projects:     projects,
+		Projects:     showcaseProjects(),
 		GitHubRepos:  getGitHubRepos("wsoule"),
 	}
 

@@ -20,6 +20,11 @@
                     <li><a href="/blog/{{.Filename}}">{{.Title}}</a></li>
                     {{end}}
                 </ul>
+
+                <h3>Subscribe</h3>
+                <ul>
+                    <li><a href="{{.SubstackURL}}" target="_blank" rel="noopener">Substack &#8599;</a></li>
+                </ul>
             </nav>
         </aside>
 
@@ -28,19 +33,38 @@
         <main class="content">
             <h1>Blog</h1>
 
-            {{if .Blogs}}
-                {{range .Blogs}}
+            <section id="posts">
+                <h2>Posts</h2>
+                {{if .Blogs}}
+                    {{range .Blogs}}
+                    <div class="repo-item">
+                        <a href="/blog/{{.Filename}}">{{.Title}}</a>
+                    </div>
+                    {{end}}
+                {{else}}
+                    <p class="text-secondary">No blog posts yet.</p>
+                {{end}}
+            </section>
+
+            {{if .SubstackPosts}}
+            <section id="substack">
+                <h2>From Substack</h2>
+                <p class="text-secondary">Longer pieces, delivered by email. <a href="{{.SubstackURL}}" target="_blank" rel="noopener">Subscribe &#8599;</a></p>
+                {{range .SubstackPosts}}
                 <div class="repo-item">
-                    <a href="/blog/{{.Filename}}">{{.Title}}</a>
+                    <div>
+                        <a href="{{.Link}}" target="_blank" rel="noopener">{{.Title}}</a>
+                        {{if .Description}}<span class="text-muted"> - {{.Description}}</span>{{end}}
+                    </div>
+                    <div class="repo-meta">{{.PublishedOn}}</div>
                 </div>
                 {{end}}
-            {{else}}
-                <p class="text-secondary">No blog posts yet.</p>
+            </section>
             {{end}}
 
-            <footer>
-                <p>&copy; 2025 Wyat</p>
-            </footer>
+
+
+            {{template "footer" .}}
         </main>
     </div>
 </body>
