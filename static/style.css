@@ -640,6 +640,30 @@ img {
     font-weight: 500;
 }
 
+/* Home headline */
+.hero {
+    margin-bottom: 2.5rem;
+}
+
+.hero h1 {
+    margin-bottom: 0;
+    line-height: 1.5;
+}
+
+.hero a {
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 0.2em;
+}
+
+.hero a:hover {
+    text-decoration-color: var(--text-primary);
+}
+
+.hero + section h2 {
+    margin-top: 0;
+}
+
 /* Contact links in About */
 .contact-links {
     display: flex;

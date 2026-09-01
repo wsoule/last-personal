@@ -74,6 +74,12 @@
         <div class="divider"></div>
 
         <main class="content">
+            {{if .LatestProject.Name}}
+            <header class="hero">
+                <h1>I have abandoned <a href="/projects">{{.AbandonedCount}}</a> projects, let's see how long until I abandon {{with .LatestProject}}{{if .PrimaryURL}}<a href="{{.PrimaryURL}}" target="_blank" rel="noopener">{{.Name}}</a>{{else}}<a href="/projects#{{.Slug}}">{{.Name}}</a>{{end}}{{end}}.</h1>
+            </header>
+            {{end}}
+
             <!-- About Section -->
             <section id="about">
                 <h2>About</h2>

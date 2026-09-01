@@ -58,6 +58,10 @@ type PageData struct {
 	TotalClicks   int
 	Quotes        []Quote
 	GitHubRepos   []GitHubRepo
+	// AbandonedCount is every showcase project except the newest one.
+	AbandonedCount int
+	// LatestProject is the newest showcase project; zero value when there are none.
+	LatestProject Project
 }
 
 // BlogInfo represents a blog post listing
@@ -76,6 +80,26 @@ type Project struct {
 	LiveURL     string
 	AppStoreURL string // empty means not shipped on the App Store
 	IframeURL   string // empty means no live preview
+}
+
+// PrimaryURL is where a project's name should link: the live site when it
+// has one, otherwise its GitHub repo, otherwise empty.
+func (p Project) PrimaryURL() string {
+	if p.LiveURL != "" {
+		return p.LiveURL
+	}
+	return p.GitHubURL
+}
+
+// latestAndAbandoned splits a newest-first project list into the project
+// still being worked on and the count of everything that came before it.
+// The count is the joke on the home page: every earlier project is
+// "abandoned" the moment a newer one exists.
+func latestAndAbandoned(projects []Project) (latest Project, abandoned int) {
+	if len(projects) == 0 {
+		return Project{}, 0
+	}
+	return projects[0], len(projects) - 1
 }
 
 // ProjectsPageData represents data passed to the projects page
@@ -256,13 +280,16 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Render template
+	latest, abandoned := latestAndAbandoned(showcaseProjects())
 	data := PageData{
-		BasePageData:  BasePageData{CurrentPage: "home"},
-		Name:          "Wyat",
-		WebhookCount:  webhookCounter.Count,
-		PageViewCount: pageViewCounter.Count,
-		TotalClicks:   totalClicksCounter.Count,
-		Quotes:        quotes,
+		BasePageData:   BasePageData{CurrentPage: "home"},
+		Name:           "Wyat",
+		WebhookCount:   webhookCounter.Count,
+		PageViewCount:  pageViewCounter.Count,
+		TotalClicks:    totalClicksCounter.Count,
+		Quotes:         quotes,
+		AbandonedCount: abandoned,
+		LatestProject:  latest,
 	}
 
 	err = templates.ExecuteTemplate(w, "index.html", data)
