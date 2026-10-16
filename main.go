@@ -139,6 +139,7 @@ func main() {
 	// Parse templates (main templates, partials, and finance)
 	funcMap := template.FuncMap{
 		"currentYear": func() int { return time.Now().Year() },
+		"asset":       assetURL,
 	}
 	templates = template.Must(template.New("").Funcs(funcMap).ParseGlob("templates/*.html"))
 	template.Must(templates.ParseGlob("templates/partials/*.html"))

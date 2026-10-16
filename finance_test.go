@@ -59,6 +59,7 @@ func TestCalculateContributionGrowthTargetHighlight(t *testing.T) {
 func TestTemplatesParse(t *testing.T) {
 	funcMap := template.FuncMap{
 		"currentYear": func() int { return 2026 },
+		"asset":       assetURL,
 	}
 
 	parsedTemplates := template.Must(template.New("").Funcs(funcMap).ParseGlob("templates/*.html"))

@@ -49,7 +49,7 @@
     }
     </script>
 
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="{{asset "style.css"}}">
     <script src="https://unpkg.com/htmx.org@2.0.4" integrity="sha384-HGfztofotfshcF7+8n44JQL2oJmowVChPTg48S+jvZoztPfvwD79OC/LTtG6dMp+" crossorigin="anonymous"></script>
 </head>
 <body>
@@ -76,8 +76,6 @@
         <div class="divider"></div>
 
         <main class="content">
-            <!-- About: dhh.dk-style intro. Everything below is prose you own —
-                 paragraphs marked DRAFT are starting points pulled from the old page. -->
             <section id="about" class="intro">
                 <picture>
                     <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
@@ -97,28 +95,24 @@
 
             <section id="waggoner" class="prose">
                 <h2>Engineer at Waggoner Financial</h2>
-                <!-- DRAFT -->
                 <p>Since June 2024 I've been building fintech products at Waggoner Financial, where I lead a team of four engineers. We run a TypeScript monorepo (NestJS, GraphQL, Next.js, PostgreSQL, Redis), and I've bootstrapped more than five greenfield projects inside it.</p>
                 <p>A lot of the job is replacing spreadsheets with software. Moving legacy Excel workflows onto real APIs has given staff back more than 100 hours a month.</p>
             </section>
 
             <section id="dispatch" class="prose">
                 <h2>Builder of Dispatch</h2>
-                <!-- DRAFT -->
                 <p><a href="https://dispatch.foo" target="_blank" rel="noopener">Dispatch</a> is mission control for coding agents. Tasks are markdown files that live in your repo and sync through git. Each agent runs in an isolated worktree, limited to the paths its task declares, with budget caps and verify gates. It's local-first and built with Tauri, Rust, TypeScript and Bun.</p>
                 <p>We are currently in the age of "We can build anything", so I built a tool to make building easier.</p>
             </section>
 
             <section id="loggit" class="prose">
                 <h2>Builder of Loggit</h2>
-                <!-- DRAFT -->
                 <p><a href="https://useloggit.app" target="_blank" rel="noopener">Loggit</a> is one feed for everything you watch, read and play: films, TV, books, video games and board games, all on a matrix rating scale. Recommendations are scored against your taste, and you can share boards with friends. It's on the <a href="https://apps.apple.com/us/app/loggit-movies-books-games/id6766703437" target="_blank" rel="noopener">App Store</a>.</p>
                 <p>I built Loggit because all apps right now have no good way to show the quality of the media, and your personal rating. Also, no platform can help you visualize your taste across media. Loggit does both.</p>
             </section>
 
             <section id="founder" class="prose">
                 <h2>Two-time co-founder</h2>
-                <!-- DRAFT -->
                 <p>I co-founded Hydrogen, a SaaS platform for automated PR review, and was co-CEO from January 2025 to August 2026. I built the Go backend and also handled product, sales, fundraising and hiring the founding team.</p>
                 <p>Before that I co-founded Brass Raven, where we built the Audioparrot audiobook platform. Moving generation onto async queues made it five times faster.</p>
                 <p>Other things I've shipped: <a href="https://ngmi.review" target="_blank" rel="noopener">ngmi</a> (global leaderboards for GitHub PR review time), <a href="https://github.com/brass-raven/Query" target="_blank" rel="noopener">Query</a> (a desktop SQL client), and <a href="/projects">more</a>.</p>
@@ -126,13 +120,11 @@
 
             <section id="writing" class="prose">
                 <h2>Writer</h2>
-                <!-- DRAFT -->
                 <p>I write about software, mostly what I learn by building it. I post on <a href="https://wyatdoesathing.substack.com" target="_blank" rel="noopener">Substack</a> and on <a href="/blogs">the blog here</a>.</p>
             </section>
 
             <section id="life" class="prose">
                 <h2>Michigander</h2>
-                <!-- DRAFT -->
                 <p>I live in Michigan. Right now I'm reading <em>7 Habits of Highly Effective People</em>, <em>Dungeon Crawler Carl</em> and <em>The Eye of the World</em>. I like to ride dirtbikes, play airsoft, and just make things on the side. There's <a href="/life">more here</a>.</p>
             </section>
 

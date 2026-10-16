@@ -265,7 +265,7 @@ func TestParseSubstackFeedKeepsShortDescriptionIntact(t *testing.T) {
 // parseSiteTemplates loads the real templates the way main() does.
 func parseSiteTemplates(t *testing.T) {
 	t.Helper()
-	funcMap := template.FuncMap{"currentYear": func() int { return 2026 }}
+	funcMap := template.FuncMap{"currentYear": func() int { return 2026 }, "asset": assetURL}
 	templates = template.Must(template.New("").Funcs(funcMap).ParseGlob("templates/*.html"))
 	template.Must(templates.ParseGlob("templates/partials/*.html"))
 	template.Must(templates.ParseGlob("templates/finance/*.html"))
