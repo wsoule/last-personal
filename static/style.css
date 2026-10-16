@@ -7,19 +7,21 @@
 
 /* CSS Variables */
 :root {
+    color-scheme: dark;
+
     /* Background Colors */
-    --bg-primary: #faf9f7;
-    --bg-secondary: #f5f4f2;
-    --bg-hover: #efeee9;
+    --bg-primary: #141412;
+    --bg-secondary: #1b1b18;
+    --bg-hover: #25241f;
 
     /* Text Colors */
-    --text-primary: #1a1a1a;
-    --text-secondary: #6b6b6b;
-    --text-muted: #9a9a9a;
+    --text-primary: #ecebe6;
+    --text-secondary: #a9a79f;
+    --text-muted: #75736c;
 
     /* Accent & Dividers */
-    --divider: #e0ddd8;
-    --border: #d4d1cc;
+    --divider: #2a2925;
+    --border: #3a3833;
 
     /* Layout */
     --sidebar-width: 260px;
@@ -253,7 +255,7 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus {
     outline: none;
     border-color: var(--text-secondary);
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.08);
 }
 
 input::placeholder, textarea::placeholder {
@@ -901,6 +903,16 @@ img {
 
 .prose {
     max-width: 68ch;
+}
+
+.intro-lede a {
+    text-decoration: underline;
+    text-decoration-color: var(--border);
+    text-underline-offset: 4px;
+}
+
+.intro-lede a:hover {
+    text-decoration-color: var(--text-primary);
 }
 
 .prose h2 {
