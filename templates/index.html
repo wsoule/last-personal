@@ -61,10 +61,12 @@
                 <h3>On This Page</h3>
                 <ul>
                     <li><a href="#about" data-section="about">About</a></li>
-                    <li><a href="#projects" data-section="projects">Projects</a></li>
-                    <li><a href="#stack" data-section="stack">Stack</a></li>
-                    <li><a href="#experience" data-section="experience">Experience</a></li>
-                    <li><a href="#now" data-section="now">Now</a></li>
+                    <li><a href="#waggoner" data-section="waggoner">Waggoner</a></li>
+                    <li><a href="#dispatch" data-section="dispatch">Dispatch</a></li>
+                    <li><a href="#loggit" data-section="loggit">Loggit</a></li>
+                    <li><a href="#founder" data-section="founder">Founder</a></li>
+                    <li><a href="#writing" data-section="writing">Writing</a></li>
+                    <li><a href="#life" data-section="life">Life</a></li>
                     <li><a href="#counter" data-section="counter">Counter</a></li>
                     <li><a href="#quotes" data-section="quotes">Quotes</a></li>
                 </ul>
@@ -74,164 +76,65 @@
         <div class="divider"></div>
 
         <main class="content">
-            <!-- About Section -->
-            <section id="about">
-                <h2>About</h2>
-                <div class="flex gap-2 flex-wrap items-start">
-                    <picture>
-                        <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
-                        <source srcset="/static/headshot.jpg 1x, /static/headshot-2x.jpg 2x" type="image/jpeg">
-                        <img src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="180" height="180">
-                    </picture>
-                    <div>
-                        <p><strong>{{.Name}}</strong></p>
-                        <p class="text-secondary">Full Stack Developer · Michigan</p>
-                        <div class="contact-links">
-                            <a href="mailto:website@wyat.me">website@wyat.me</a>
-                            <a href="https://github.com/wsoule" target="_blank" rel="noopener">GitHub</a>
-                            <a href="https://linkedin.com/in/wyat-soule" target="_blank" rel="noopener">LinkedIn</a>
-                        </div>
-                        <p>I build cool stuff for a living.</p>
-                        <p>Leading a 4-engineer team at Waggoner Financial building fintech products. Building Dispatch and Loggit on the side. I enjoy working on hard problems and working with high scale systems.</p>
-                    </div>
+            <!-- About: dhh.dk-style intro. Everything below is prose you own —
+                 paragraphs marked DRAFT are starting points pulled from the old page. -->
+            <section id="about" class="intro">
+                <picture>
+                    <source srcset="/static/headshot.webp 1x, /static/headshot-2x.webp 2x" type="image/webp">
+                    <source srcset="/static/headshot.jpg 1x, /static/headshot-2x.jpg 2x" type="image/jpeg">
+                    <img class="intro-photo" src="/static/headshot.jpg" alt="{{.Name}}'s headshot" width="240" height="240">
+                </picture>
+
+                <!-- TODO(human): write the opening line(s) -->
+                <p class="intro-lede">I'm {{.Name}}. [Your opening line goes here.]</p>
+
+                <div class="contact-links">
+                    <a href="mailto:website@wyat.me">website@wyat.me</a>
+                    <a href="https://github.com/wsoule" target="_blank" rel="noopener">GitHub</a>
+                    <a href="https://linkedin.com/in/wyat-soule" target="_blank" rel="noopener">LinkedIn</a>
+                    <a href="/static/wyat_resume.pdf" target="_blank" rel="noopener">Resume</a>
                 </div>
             </section>
 
-            <!-- Featured Projects -->
-            <section id="projects">
-                <h2>Projects</h2>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Dispatch</h3>
-                        <div class="project-links">
-                            <a href="https://dispatch.foo" target="_blank" rel="noopener">live</a>
-                        </div>
-                    </div>
-                    <p class="project-description">Mission control for coding agents. Tasks are markdown files in your repo, synced by git. Agents run in isolated worktrees scoped to the paths a task declares, with budget caps and verify gates. Local-first.</p>
-                    <ul class="tech-tags">
-                        <li class="tech-tag">Tauri</li>
-                        <li class="tech-tag">Rust</li>
-                        <li class="tech-tag">TypeScript</li>
-                        <li class="tech-tag">Bun</li>
-                    </ul>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Loggit</h3>
-                        <div class="project-links">
-                            <a href="https://useloggit.app" target="_blank" rel="noopener">live</a>
-                            <span class="text-muted"> · </span>
-                            <a href="https://apps.apple.com/us/app/loggit-movies-books-games/id6766703437" target="_blank" rel="noopener">App Store</a>
-                        </div>
-                    </div>
-                    <p class="project-description">One feed for everything you watch, read and play — films, TV, books, video games and board games under a single 0–100 rating, with recommendations scored to your taste and boards you share.</p>
-                    <ul class="tech-tags">
-                        <li class="tech-tag">React Native</li>
-                        <li class="tech-tag">Expo</li>
-                        <li class="tech-tag">Fastify</li>
-                        <li class="tech-tag">PostgreSQL</li>
-                    </ul>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>ngmi</h3>
-                        <div class="project-links">
-                            <a href="https://ngmi.review" target="_blank" rel="noopener">live</a>
-                        </div>
-                    </div>
-                    <p class="project-description">Global leaderboards for GitHub PR review time. Search any repo, user, or org — see merge times, top reviewers, and recent PRs.</p>
-                    <ul class="tech-tags">
-                        <li class="tech-tag">Go</li>
-                        <li class="tech-tag">PostgreSQL</li>
-                        <li class="tech-tag">Redis</li>
-                        <li class="tech-tag">HTMX</li>
-                    </ul>
-                </div>
-
-                <div class="project-card">
-                    <div class="project-header">
-                        <h3>Query</h3>
-                        <div class="project-links">
-                            <a href="https://github.com/brass-raven/Query" target="_blank" rel="noopener">source</a>
-                        </div>
-                    </div>
-                    <p class="project-description">Desktop SQL client. Monaco editor with IntelliSense, schema browser, query history, command palette. Passwords stored in OS keychain.</p>
-                    <ul class="tech-tags">
-                        <li class="tech-tag">Tauri</li>
-                        <li class="tech-tag">Rust</li>
-                        <li class="tech-tag">React</li>
-                        <li class="tech-tag">TypeScript</li>
-                    </ul>
-                </div>
-
-                <p class="mt-1"><a href="/projects">All projects →</a></p>
+            <section id="waggoner" class="prose">
+                <h2>Engineer at Waggoner Financial</h2>
+                <!-- DRAFT -->
+                <p>Since June 2024 I've been building fintech products at Waggoner Financial, where I lead a team of four engineers. We run a TypeScript monorepo (NestJS, GraphQL, Next.js, PostgreSQL, Redis), and I've bootstrapped more than five greenfield projects inside it.</p>
+                <p>A lot of the job is replacing spreadsheets with software. Moving legacy Excel workflows onto real APIs has given staff back more than 100 hours a month.</p>
             </section>
 
-            <!-- Stack Section -->
-            <section id="stack">
-                <h2>Stack</h2>
-                <ul class="skills-list">
-                    <li>Go</li>
-                    <li>TypeScript</li>
-                    <li>React / Next.js</li>
-                    <li>SvelteKit</li>
-                    <li>HTMX</li>
-                    <li>PostgreSQL</li>
-                    <li>Redis</li>
-                    <li>Python</li>
-                    <li>Tauri / Rust</li>
-                    <li>Docker</li>
-                    <li>Railway</li>
-                    <li>NestJS</li>
-                </ul>
+            <section id="dispatch" class="prose">
+                <h2>Builder of Dispatch</h2>
+                <!-- DRAFT -->
+                <p><a href="https://dispatch.foo" target="_blank" rel="noopener">Dispatch</a> is mission control for coding agents. Tasks are markdown files that live in your repo and sync through git. Each agent runs in an isolated worktree, limited to the paths its task declares, with budget caps and verify gates. It's local-first and built with Tauri, Rust, TypeScript and Bun.</p>
+                <p>[Why you built it, and what you've learned running agents this way.]</p>
             </section>
 
-            <!-- Experience Section -->
-            <section id="experience">
-                <h2>Experience</h2>
-
-                <div class="experience-entry">
-                    <p><span class="company">Hydrogen</span> <span class="text-muted">-</span> <span class="role">Co-Founder / Co-CEO</span></p>
-                    <p class="date">Jan 2025 – Aug 2026</p>
-                    <p>Founded SaaS platform for automated PR review. Architected Go microservice backend with PostgreSQL, Redis, and SvelteKit frontend. Led product design, client acquisition, investor pitching, and go-to-market. Recruited founding team and established engineering culture.</p>
-                </div>
-
-                <div class="experience-entry">
-                    <p><span class="company">Waggoner Financial</span> <span class="text-muted">-</span> <span class="role">Software Engineer</span></p>
-                    <p class="date">Jun 2024 – Present</p>
-                    <p>Led 4-engineer squad through Agile ceremonies; designed full-stack monorepo (TypeScript, NestJS, GraphQL, Next.js, PostgreSQL, Redis) and bootstrapped 5+ greenfield projects. Maintained 250+ Jest tests at 95% coverage, reducing production bugs 70%. Automated legacy Excel workflows via REST/GraphQL APIs, saving 100+ staff-hours monthly.</p>
-                </div>
-
-                <div class="experience-entry">
-                    <p><span class="company">Brass Raven</span> <span class="text-muted">-</span> <span class="role">Co-founder</span></p>
-                    <p class="date">Oct 2022 – Jan 2025</p>
-                    <p>Co-founded Audioparrot audiobook platform. Architected Python Flask microservices and Next.js frontend, improving generation speed 500% via RabbitMQ async processing and Redis caching.</p>
-                </div>
-
-                <div class="experience-entry">
-                    <p><span class="company">State of Michigan – DNR</span> <span class="text-muted">-</span> <span class="role">Student Software Developer</span></p>
-                    <p class="date">May 2023 – Jun 2024</p>
-                    <p>Built Angular/.NET production application serving 500+ monthly users. Designed SSIS packages and SQL scripts to automate legacy data migration. Built CI/CD pipelines eliminating manual builds.</p>
-                </div>
+            <section id="loggit" class="prose">
+                <h2>Builder of Loggit</h2>
+                <!-- DRAFT -->
+                <p><a href="https://useloggit.app" target="_blank" rel="noopener">Loggit</a> is one feed for everything you watch, read and play: films, TV, books, video games and board games, all on a single 0–100 rating scale. Recommendations are scored against your taste, and you can share boards with friends. It's on the <a href="https://apps.apple.com/us/app/loggit-movies-books-games/id6766703437" target="_blank" rel="noopener">App Store</a>.</p>
+                <p>[What made you want one app for all of it?]</p>
             </section>
 
-            <!-- Now Section -->
-            <section id="now">
-                <h2>Now</h2>
-                <div class="currently-list">
-                    <div class="currently-item">
-                        <span class="currently-label">building</span>
-                        <span>enterprise fintech at Waggoner Financial | Dispatch | Loggit</span>
-                    </div>
-                    <div class="currently-item">
-                        <span class="currently-label">reading</span>
-                        <span class="text-secondary">7 Habits of Highly Effective People | Dungeon Crawler Carl | Eye of the World</span>
-                    </div>
-                </div>
-                <p class="mt-1"><a href="/life">More</a></p>
+            <section id="founder" class="prose">
+                <h2>Two-time co-founder</h2>
+                <!-- DRAFT -->
+                <p>I co-founded Hydrogen, a SaaS platform for automated PR review, and was co-CEO from January 2025 to August 2026. I built the Go backend and also handled product, sales, fundraising and hiring the founding team.</p>
+                <p>Before that I co-founded Brass Raven, where we built the Audioparrot audiobook platform. Moving generation onto async queues made it five times faster.</p>
+                <p>Other things I've shipped: <a href="https://ngmi.review" target="_blank" rel="noopener">ngmi</a> (global leaderboards for GitHub PR review time), <a href="https://github.com/brass-raven/Query" target="_blank" rel="noopener">Query</a> (a desktop SQL client), and <a href="/projects">more</a>.</p>
+            </section>
+
+            <section id="writing" class="prose">
+                <h2>Writer</h2>
+                <!-- DRAFT -->
+                <p>I write about software, mostly what I learn by building it. I post on <a href="https://wyatdoesathing.substack.com" target="_blank" rel="noopener">Substack</a> and on <a href="/blogs">the blog here</a>.</p>
+            </section>
+
+            <section id="life" class="prose">
+                <h2>Michigander</h2>
+                <!-- DRAFT -->
+                <p>I live in Michigan. Right now I'm reading <em>7 Habits of Highly Effective People</em>, <em>Dungeon Crawler Carl</em> and <em>The Eye of the World</em>. [Family, hobbies, whatever you'd tell someone over dinner.] There's <a href="/life">more here</a>.</p>
             </section>
 
             <!-- Counter Section -->
