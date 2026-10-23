@@ -34,6 +34,7 @@
   .skills { margin: 0 0 0 6pt; font-size: 9.7pt; }
   .skills p { margin: 0 0 1pt; }
   .skills b { font-weight: 700; }
+  code { font-family: "CMU Serif", serif; font-size: inherit; }
 </style>
 </head>
 <body>
@@ -49,7 +50,7 @@
     <a href="https://linkedin.com/in/wyat-soule">linkedin.com/in/wyat-soule</a>
   </div>
 </header>
-<p class="summary">Full-stack product engineer and two-time co-founder. I take products from 0 to 1 across backend, frontend and infra, then sell, support and iterate on them with the people using them.</p>
+<p class="summary">Full-stack product engineer and two-time co-founder. I take products from 0 to 1, including tools coding agents drive directly (an MCP server, an A2A bridge, a JSON CLI), and own them end to end, from code to pricing.</p>
 
 <h2>Experience</h2>
 
@@ -59,10 +60,8 @@
   <ul>
     <li>Lead a team of 4 engineers (grew it from 1 by interviewing and hiring) shipping fintech products in a TypeScript monorepo I designed (NestJS, GraphQL, Next.js, PostgreSQL, Redis); bootstrapped 5+ greenfield products in it.</li>
     <li>Replaced legacy Excel workflows with REST/GraphQL APIs and ETL scripts, giving staff back 100+ hours a month.</li>
-    <li>Halved page load times with query indexing, Redis caching and React code-splitting.</li>
-    <li>Maintain 2,500+ Jest tests at 95% coverage, cutting production bugs by 70%.</li>
-    <li>Provisioned cloud infra on Railway and built GitHub Actions pipelines (lint → test → build → Docker publish → zero-downtime deploy); new environments went from days to hours to stand up.</li>
-    <li>Demo to clients every two weeks and write the architecture specs and roadmaps; spoke at university tech clubs and on an engineering podcast.</li>
+    <li>Halved page load times with query indexing, Redis caching and React code-splitting; keep 2,500+ Jest tests at 95% coverage, cutting production bugs by 70%.</li>
+    <li>Set up Railway infra and GitHub Actions CI/CD with zero-downtime deploys; new environments take hours, not days.</li>
   </ul>
 </div>
 
@@ -79,8 +78,7 @@
   <div class="row"><span class="title">Brass Raven</span><span>Reed City, MI</span></div>
   <div class="row sub"><span>Co-founder</span><span>Oct 2022 – Jan 2025</span></div>
   <ul>
-    <li>Built Audioparrot, an audiobook production platform: Python microservices, Next.js frontend, multi-provider TTS (OpenAI, ElevenLabs, Google, Piper) and M4B export with chapter markers.</li>
-    <li>Made generation 5× faster by moving chapter processing onto RabbitMQ async workers with Redis caching.</li>
+    <li>Built Audioparrot, an AI audiobook platform (Python microservices, Next.js, TTS from OpenAI, ElevenLabs, Google and Piper); made generation 5× faster by moving chapters onto RabbitMQ async workers with Redis caching.</li>
     <li>Pitched 20 prospects through direct sales and conferences, and landed a technology partnership.</li>
   </ul>
 </div>
@@ -96,9 +94,11 @@
 <h2>Projects</h2>
 
 <div class="entry">
-  <div class="row"><span><span class="title">Dispatch</span> · <i>Tauri, Rust, TypeScript, Bun</i></span><span><a href="https://dispatch.foo">dispatch.foo</a> · 2026 – Present</span></div>
+  <div class="row"><span><span class="title">Dispatch</span> · <i>TypeScript, Bun, Tauri, Rust</i></span><span><a href="https://dispatch.foo">dispatch.foo</a> · <a href="https://github.com/wsoule/dispatch">github.com/wsoule/dispatch</a> · 2026 – Present</span></div>
   <ul>
-    <li>Local-first mission control for coding agents. Tasks are markdown files in the repo, synced through git; each agent runs in an isolated worktree limited to the paths its task declares, with budget caps and verify gates.</li>
+    <li>Local-first task board coding agents work from (Claude Code, Codex and 7 others). Each run gets an isolated git worktree scoped to its task’s declared files, with budget caps, verify gates and human-approved scope changes.</li>
+    <li>Built the surface agents use: an MCP server with 36 tools published to npm and the official MCP registry, a Claude Code plugin whose skills teach agents the workflow, an A2A 1.0 bridge, and <code>--json</code> output on every CLI read.</li>
+    <li>A/B test harness changes (tool pruning, prompt-cache TTL) on cost per completed task before making them default; ship signed macOS and Linux releases and set the open-core pricing.</li>
   </ul>
 </div>
 
@@ -112,15 +112,12 @@
 <div class="entry">
   <div class="row"><span><span class="title">ngmi</span> · <i>Go, PostgreSQL, Redis, HTMX</i></span><span><a href="https://ngmi.review">ngmi.review</a></span></div>
   <ul>
-    <li>Global leaderboards for GitHub PR review time across public repos, users and orgs; a breadth-first crawler keeps expanding coverage.</li>
+    <li>Global leaderboards for GitHub PR review time across public repos, users and orgs, fed by a breadth-first crawler.</li>
   </ul>
 </div>
 
 <div class="entry">
-  <div class="row"><span><span class="title">Query</span> · <i>Tauri, Rust, React, TypeScript</i></span><span><a href="https://github.com/brass-raven/Query">github.com/brass-raven/Query</a> · 2025</span></div>
-  <ul>
-    <li>Desktop SQL client with sub-1s startup, Monaco editor with schema-aware autocomplete, OS keychain credentials and inline editing on 1M+ row results.</li>
-  </ul>
+  <div class="row"><span><span class="title">Also built</span> · <b>WikAI Race</b>, LLMs from 7 providers racing each other through Wikipedia links (Next.js); <b>Query</b>, a Tauri/Rust SQL client with inline editing on 1M+ row results.</span></div>
 </div>
 
 <h2>Education &amp; Writing</h2>
@@ -131,6 +128,7 @@
 
 <h2>Technical Skills</h2>
 <div class="skills">
+  <p><b>AI &amp; agents:</b> MCP server development, A2A, Claude Code and Codex harnesses, Anthropic, OpenAI and ElevenLabs APIs</p>
   <p><b>Languages:</b> TypeScript, JavaScript, Python, Go, Rust, SQL (PostgreSQL, MySQL), C#, HTML/CSS</p>
   <p><b>Frameworks:</b> React, Next.js, React Native, NestJS, Fastify, Flask, FastAPI, Tauri, Angular, .NET Core</p>
   <p><b>Data &amp; Infra:</b> PostgreSQL, Redis, RabbitMQ, GraphQL, REST, Docker, Kubernetes, AWS, Railway, GitHub Actions, Jest</p>
