@@ -1,6 +1,6 @@
 Hi PostHog team,
 
-I've used PostHog for a couple of years now and love working with the product. It's been sweet watching the company grow over that time, and the product grow with it. At Waggoner Financial I set it up myself, tracking conversions on our marketing website and catching errors in our internal portal.
+I've used PostHog for a couple of years now and love working with the product. It's been sweet watching the company grow over that time, and the product grow with it. At Waggoner Financial I set it up myself, tracking conversions on our marketing website and catching errors in our internal portal. I even opened a PR against posthog.com to make tooltips work on tap for mobile users.
 
 PostHog Code actually inspired me to build my own agentic workflows. It was a great app to play around with before I moved over to my own: Dispatch, a local-first task board that Claude Code, Codex and other coding agents work from. Agents drive it through an MCP server, a Claude Code plugin and an A2A bridge, and I find its users, talk to them and handle its support myself. I do the same for Loggit, my media-tracking iOS app, which now has 100 users.
 
