@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Wyat Soule – Resume</title>
+<style>
+  @font-face { font-family: "CMU Serif"; font-weight: 400; font-style: normal; src: url("fonts/cmu-serif-500-roman.woff2") format("woff2"); }
+  @font-face { font-family: "CMU Serif"; font-weight: 700; font-style: normal; src: url("fonts/cmu-serif-700-roman.woff2") format("woff2"); }
+  @font-face { font-family: "CMU Serif"; font-weight: 400; font-style: italic; src: url("fonts/cmu-serif-500-italic.woff2") format("woff2"); }
+  @font-face { font-family: "CMU Serif"; font-weight: 700; font-style: italic; src: url("fonts/cmu-serif-700-italic.woff2") format("woff2"); }
+
+  @page { size: Letter; margin: 0.45in 0.5in; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body { font-family: "CMU Serif", serif; font-size: 10.1pt; line-height: 1.24; color: #000; }
+  a { color: inherit; text-decoration: none; }
+
+  header { display: grid; grid-template-columns: 1fr auto 1fr; align-items: end; margin-bottom: 2pt; }
+  header .left, header .right { font-size: 9.6pt; line-height: 1.3; }
+  header .right { text-align: right; }
+  header h1 { font-size: 22pt; font-weight: 700; margin: 0; text-align: center; letter-spacing: 0.2pt; }
+  .summary { text-align: center; margin: 3pt 0 0; font-size: 9.9pt; }
+
+  h2 { font-variant: small-caps; font-size: 12pt; font-weight: 400; margin: 7pt 0 3pt; padding-bottom: 1pt; border-bottom: 0.6pt solid #000; letter-spacing: 0.3pt; }
+
+  .entry { margin: 0 0 3.5pt 6pt; }
+  .row { display: flex; justify-content: space-between; gap: 12pt; }
+  .row .title { font-weight: 700; }
+  .row.sub { font-style: italic; font-size: 9.7pt; }
+  ul { margin: 1pt 0 0; padding-left: 16pt; list-style: none; }
+  li { position: relative; margin: 0 0 0.6pt; font-size: 9.7pt; }
+  li::before { content: "\25E6"; position: absolute; left: -10pt; }
+
+  .skills { margin: 0 0 0 6pt; font-size: 9.7pt; }
+  .skills p { margin: 0 0 1pt; }
+  .skills b { font-weight: 700; }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="left">
+    <a href="mailto:wsoule679+resume@gmail.com">wsoule679+resume@gmail.com</a><br>
+    +1 (231) 253 4037
+  </div>
+  <h1>Wyat Soule</h1>
+  <div class="right">
+    <a href="https://wyat.me">wyat.me</a> · <a href="https://github.com/wsoule">github.com/wsoule</a><br>
+    <a href="https://linkedin.com/in/wyat-soule">linkedin.com/in/wyat-soule</a>
+  </div>
+</header>
+<p class="summary">Full-stack product engineer and two-time co-founder. I take products from 0 to 1 across backend, frontend and infra, then sell, support and iterate on them with the people using them.</p>
+
+<h2>Experience</h2>
+
+<div class="entry">
+  <div class="row"><span class="title">Waggoner Financial</span><span>Lansing, MI</span></div>
+  <div class="row sub"><span>Software Engineer</span><span>Jun 2024 – Present</span></div>
+  <ul>
+    <li>Lead a team of 4 engineers (grew it from 1 by interviewing and hiring) shipping fintech products in a TypeScript monorepo I designed (NestJS, GraphQL, Next.js, PostgreSQL, Redis); bootstrapped 5+ greenfield products in it.</li>
+    <li>Replaced legacy Excel workflows with REST/GraphQL APIs and ETL scripts, giving staff back 100+ hours a month.</li>
+    <li>Halved page load times with query indexing, Redis caching and React code-splitting.</li>
+    <li>Maintain 2,500+ Jest tests at 95% coverage, cutting production bugs by 70%.</li>
+    <li>Provisioned cloud infra on Railway and built GitHub Actions pipelines (lint → test → build → Docker publish → zero-downtime deploy); new environments went from days to hours to stand up.</li>
+    <li>Demo to clients every two weeks and write the architecture specs and roadmaps; spoke at university tech clubs and on an engineering podcast.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row"><span class="title">Hydrogen</span><span></span></div>
+  <div class="row sub"><span>Co-founder &amp; Co-CEO</span><span>Jan 2025 – Aug 2026</span></div>
+  <ul>
+    <li>Co-founded a SaaS platform for automated pull-request review and built its Go backend.</li>
+    <li>Owned product, sales, fundraising and hiring the founding team.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row"><span class="title">Brass Raven</span><span>Reed City, MI</span></div>
+  <div class="row sub"><span>Co-founder</span><span>Oct 2022 – Jan 2025</span></div>
+  <ul>
+    <li>Built Audioparrot, an audiobook production platform: Python microservices, Next.js frontend, multi-provider TTS (OpenAI, ElevenLabs, Google, Piper) and M4B export with chapter markers.</li>
+    <li>Made generation 5× faster by moving chapter processing onto RabbitMQ async workers with Redis caching.</li>
+    <li>Pitched 20 prospects through direct sales and conferences, and landed a technology partnership.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row"><span class="title">State of Michigan – DNR</span><span>Lansing, MI</span></div>
+  <div class="row sub"><span>Student Software Developer</span><span>May 2023 – Jun 2024</span></div>
+  <ul>
+    <li>Built an Angular/.NET production app serving 500+ monthly users; automated legacy data migration with SSIS packages and SQL, and set up CI/CD to replace manual builds.</li>
+  </ul>
+</div>
+
+<h2>Projects</h2>
+
+<div class="entry">
+  <div class="row"><span><span class="title">Dispatch</span> · <i>Tauri, Rust, TypeScript, Bun</i></span><span><a href="https://dispatch.foo">dispatch.foo</a> · 2026 – Present</span></div>
+  <ul>
+    <li>Local-first mission control for coding agents. Tasks are markdown files in the repo, synced through git; each agent runs in an isolated worktree limited to the paths its task declares, with budget caps and verify gates.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row"><span><span class="title">Loggit</span> · <i>React Native, Expo, Fastify, PostgreSQL</i></span><span><a href="https://useloggit.app">useloggit.app</a> · 2026 – Present</span></div>
+  <ul>
+    <li>iOS app on the App Store with 80 users: one feed for films, TV, books, video games and board games. Wrote a cross-media recommender (“you liked this book, try this film”) scored to each user’s taste.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row"><span><span class="title">ngmi</span> · <i>Go, PostgreSQL, Redis, HTMX</i></span><span><a href="https://ngmi.review">ngmi.review</a></span></div>
+  <ul>
+    <li>Global leaderboards for GitHub PR review time across public repos, users and orgs; a breadth-first crawler keeps expanding coverage.</li>
+  </ul>
+</div>
+
+<div class="entry">
+  <div class="row"><span><span class="title">Query</span> · <i>Tauri, Rust, React, TypeScript</i></span><span><a href="https://github.com/brass-raven/Query">github.com/brass-raven/Query</a> · 2025</span></div>
+  <ul>
+    <li>Desktop SQL client with sub-1s startup, Monaco editor with schema-aware autocomplete, OS keychain credentials and inline editing on 1M+ row results.</li>
+  </ul>
+</div>
+
+<h2>Education &amp; Writing</h2>
+<div class="entry">
+  <div class="row"><span><span class="title">Michigan State University</span> · B.S. Computer Science, GPA 3.8</span><span></span></div>
+  <div class="row"><span><span class="title">Writing</span> · Posts on what I learn building software at <a href="https://wyatdoesathing.substack.com">wyatdoesathing.substack.com</a> and <a href="https://wyat.me/blogs">wyat.me/blogs</a></span><span></span></div>
+</div>
+
+<h2>Technical Skills</h2>
+<div class="skills">
+  <p><b>Languages:</b> TypeScript, JavaScript, Python, Go, Rust, SQL (PostgreSQL, MySQL), C#, HTML/CSS</p>
+  <p><b>Frameworks:</b> React, Next.js, React Native, NestJS, Fastify, Flask, FastAPI, Tauri, Angular, .NET Core</p>
+  <p><b>Data &amp; Infra:</b> PostgreSQL, Redis, RabbitMQ, GraphQL, REST, Docker, Kubernetes, AWS, Railway, GitHub Actions, Jest</p>
+</div>
+
+</body>
+</html>
