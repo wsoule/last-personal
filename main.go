@@ -367,6 +367,15 @@ func blogsHandler(w http.ResponseWriter, r *http.Request) {
 func showcaseProjects() []Project {
 	return []Project{
 		{
+			Name:        "Rankodex",
+			Slug:        "rankodex",
+			Description: "Rank, compare and overlay thousands of statistics about countries, US states, cities and counties. Every matchup gets a head-to-head page — California vs Texas, USA vs China — with a plain answer, per-category leads and the biggest gaps, plus correlations between any two metrics. Every page is prerendered to static HTML.",
+			Tech:        []string{"TanStack Start", "React", "TypeScript", "Bun"},
+			GitHubURL:   "https://github.com/wsoule/world-data",
+			LiveURL:     "https://rankodex.com",
+			// rankodex.com sends frame-ancestors 'self'; a preview would render blank.
+		},
+		{
 			Name:        "Dispatch",
 			Slug:        "dispatch",
 			Description: "Mission control for coding agents. Tasks are markdown files in your repo, synced by git. Dispatching one runs an agent in an isolated worktree scoped to the paths that task declared, with budget caps, verify gates, and human-gated scope escalation. Local-first — nothing leaves the machine.",
